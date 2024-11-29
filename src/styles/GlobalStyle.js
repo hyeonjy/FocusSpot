@@ -5,25 +5,28 @@ export const GlobalStyle = createGlobalStyle`
   ${normalize}
 
   :root {
+    --primary-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --color-primary: #00115e;
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --color-gray: #666666;
   }
 
   * {
     margin: 0;
-    font-family: 'Noto Sans KR', sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     box-sizing: border-box;
   }
 
   html {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: var(--primary-font);
     font-size: 16px;
   }
 
   body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background-color: var(--background);
-  }
+    /* background-color: var(--background);*/
+  } 
 
   h1 {
     margin: 0;
