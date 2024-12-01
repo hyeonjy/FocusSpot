@@ -3,6 +3,8 @@ import Button from '../components/Button';
 import InputText from '../components/InputText';
 import ListItem from '../components/ListItem';
 import Modal from '../components/Modal';
+import AuthForm from '../components/AuthForm';
+import AuthContainer from '../components/AuthContainer';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
@@ -32,10 +34,15 @@ const Home = () => {
       </div>
 
       <ul style={{ marginTop: '20px', maxWidth: '300px' }}>
-        <ListItem handleClick={openModal}/>
+        <ListItem handleClick={openModal} />
       </ul>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <AuthForm mode="edit"></AuthForm>
+      </Modal>
+
+      <AuthContainer mode="login"></AuthContainer>
+      <AuthContainer mode="signup"></AuthContainer>
     </>
   );
 };

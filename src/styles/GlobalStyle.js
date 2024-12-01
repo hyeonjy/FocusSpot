@@ -90,4 +90,6 @@ export const GlobalStyle = createGlobalStyle`
   address {
     font-style: normal;
   }
+
+  main { padding-top: 100px; }
 `;
