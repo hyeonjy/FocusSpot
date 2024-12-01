@@ -1,38 +1,45 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Button from '../components/Button';
+import Modal from '../components/Modal';
+import ListItem from '../components/ListItem';
 
 const Bookmark = () => {
-  // css 영역 확인용 토글
-  const [enableBG, setEnableBG] = useState(false);
   const emptyCard = Array(8).fill({});
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const handleShowDetail = (i) => {
+    console.log(`spot's [${i}] card clicked`);
+    // TODO 정보 모달이 뜨게금 구현 필요
+    openModal();
+  };
+
   return (
     <StBookmarkPage>
       {/* 프로파일 섹션 */}
-      <StProfileSection enableBG={enableBG}>
+      <StProfileSection>
         <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />
-        <StProfileDetails enableBG={enableBG}>
+        <StProfileDetails>
           <StH1>김철수</StH1>
           <StUserEmail>test1234@naver.com</StUserEmail>
-          <StProfileEditButton onClick={openModal}>컴포넌트로 변경</StProfileEditButton>
+          <Button size="small" color="primary" fill={false} label="프로필 수정" handleClick={openModal} />
         </StProfileDetails>
       </StProfileSection>
 
       {/* 북마크 섹션 */}
-      <StBookmarkSection enableBG={enableBG}>
+      <StBookmarkSection>
         <StH1>내가 북마크한 곳</StH1>
         <StHr />
-        <StBookmarkGird enableBG={enableBG}>
+        <StBookmarkGird>
           {/* 8개 기준 */}
           {emptyCard.map((_, i) => {
             return (
-              <StCard key={i} enableBG={enableBG}>
-                컴포넌트로 변경
-              </StCard>
+              <StItemWrapper key={i}>
+                <ListItem handleClick={() => handleShowDetail(i)} />
+              </StItemWrapper>
             );
           })}
         </StBookmarkGird>
@@ -40,11 +47,9 @@ const Bookmark = () => {
 
       {/* 모달 */}
       {isModalOpen && (
-        <StModalSection onClick={closeModal}>
-          <StModalContent>
-            컴포넌트로 변경
-          </StModalContent>
-        </StModalSection>
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          컴포넌트 조건부 렌더링 필요
+        </Modal>
       )}
     </StBookmarkPage>
   );
@@ -57,7 +62,6 @@ const StBookmarkPage = styled.div`
 `;
 
 const StProfileSection = styled.div`
-  background-color: ${({ enableBG }) => (enableBG ? 'rgba(170, 170, 170, 0.3)' : 'transparent')};
   /* TODO 반응형 구현시 바꾸어야 할 부분 */
   height: 140px;
   width: 1280px;
@@ -78,7 +82,6 @@ const StProfilePicture = styled.img`
 `;
 
 const StProfileDetails = styled.div`
-  background-color: ${({ enableBG }) => (enableBG ? 'rgba(170, 170, 170, 0.3)' : 'transparent')};
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -94,20 +97,11 @@ const StH1 = styled.p`
 
 const StUserEmail = styled.p`
   font-size: 15px;
-  color: var(--color-gray);
-`;
-
-const StProfileEditButton = styled.button`
-  font-size: 13px;
-  color: var(--color-primary);
-  width: 100px;
-  aspect-ratio: 10/3;
-  border: var(--color-primary) 1px solid;
-  border-radius: 30px;
+  color: var(--color-gray2);
 `;
 
 const StBookmarkSection = styled.div`
-  background-color: ${({ enableBG }) => (enableBG ? 'rgba(170, 170, 170, 0.3)' : 'transparent')};
+  /* TODO 반응형 구현시 바꾸어야 할 부분 */
   width: 1280px;
 
   display: flex;
@@ -120,46 +114,27 @@ const StBookmarkSection = styled.div`
 const StHr = styled.hr`
   margin-top: 25px;
   margin-bottom: 30px;
-  border-top: 1px solid var(--color-gray);
+  border-top: 1px solid var(--color-gray5);
 `;
 
 const StBookmarkGird = styled.div`
-  background-color: ${({ enableBG }) => (enableBG ? 'rgba(170, 170, 170, 0.3)' : 'transparent')};
-
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(300px, auto));
   gap: 25px;
 `;
 
-const StCard = styled.div`
-  background-color: ${({ enableBG }) => (enableBG ? 'rgba(170, 170, 170, 0.3)' : 'transparent')};
-
-  width: 300px;
-  height: 200px;
-
-  border: var(--color-gray) 1px solid;
-`;
-
-const StModalSection = styled.div`
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
+const StItemWrapper = styled.div`
+  border: var(--color-gray6) 1px solid;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(3px);
-  z-index: 5;
-`;
+  padding: 35px 40px 35px 20px;
 
-const StModalContent = styled.div`
-  position: relative;
-  z-index: 10;
-  background-color: white;
-  width: 750px;
-  height: 580px;
-`
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border: var(--color-primary) 1px solid;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px;
+    transform: translateY(-7px);
+  }
+`;
 
 export default Bookmark;

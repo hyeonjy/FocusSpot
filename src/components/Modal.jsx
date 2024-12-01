@@ -1,13 +1,14 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
   return (
     <StOverlay onClick={onClose}>
       <StModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
         <StCloseButton onClick={onClose}>X</StCloseButton>
+        {children}
       </StModalContainer>
     </StOverlay>
   );
