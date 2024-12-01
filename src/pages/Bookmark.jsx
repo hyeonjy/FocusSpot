@@ -150,7 +150,7 @@ const StModalSection = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   z-index: 5;
 `;
 
