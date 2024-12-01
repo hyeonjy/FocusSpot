@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 const InputText = ({ inputType, inputName, placeholderText, handleChange }) => {
-  return <Container type={inputType} name={inputName} placeholder={placeholderText} onChange={handleChange} />;
+  return <StContainer type={inputType} name={inputName} placeholder={placeholderText} onChange={handleChange} />;
 };
 
-const Container = styled.input`
+const StContainer = styled.input`
   display: block;
   width: 100%;
   height: 40px;

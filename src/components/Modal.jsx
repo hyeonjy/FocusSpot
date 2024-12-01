@@ -1,6 +1,18 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const Modal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <StOverlay onClick={onClose}>
+      <StModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
+        <StCloseButton onClick={onClose}>X</StCloseButton>
+      </StModalContainer>
+    </StOverlay>
+  );
+};
+
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -51,17 +63,5 @@ const StCloseButton = styled.button`
   top: 40px;
   font-size: 25px;
 `;
-
-const Modal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <StOverlay onClick={onClose}>
-      <StModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        <StCloseButton onClick={onClose}>X</StCloseButton>
-      </StModalContainer>
-    </StOverlay>
-  );
-};
 
 export default Modal;
