@@ -7,10 +7,19 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --primary-font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     --color-primary: #00115e;
+    --color-secondary: #ada9ba;
     --color-white: #ffffff;
     --color-black: #000000;
-    --color-gray: #666666;
-    --color-red: red;
+    --color-gray1: #333333;
+    --color-gray2: #666666;
+    --color-gray3: #999999;
+    --color-gray4: #ababab;
+    --color-gray5: #cccccc;
+    --color-gray6: #dddddd;
+    --color-gray7: #eeeeee;
+    --color-red: #DE0505;
+    --drop-shadow: 3px 4px 13px rgba(0, 0, 0, 0.15);
+    --inner-width: 1280px; 
   }
 
   * {
@@ -42,8 +51,10 @@ export const GlobalStyle = createGlobalStyle`
   input,
   select,
   textarea {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 16px;
+    font-family: var(--primary-font);
+    font-size: 1rem;
+    line-height: 1;
+    vertical-align: middle;
     background-color: transparent;
     border: 0;
   }
