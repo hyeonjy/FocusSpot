@@ -48,7 +48,7 @@ const Bookmark = () => {
       {/* 모달 */}
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          컴포넌트 조건부 렌더링 필요
+          {/* 조건부 컴포넌트 내용 필요 */}
         </Modal>
       )}
     </StBookmarkPage>
