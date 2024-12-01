@@ -32,7 +32,7 @@ const Home = () => {
       </div>
 
       <ul style={{ marginTop: '20px', maxWidth: '300px' }}>
-        <ListItem handleClick={openModal}/>
+        <ListItem handleClick={openModal} />
       </ul>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} />
