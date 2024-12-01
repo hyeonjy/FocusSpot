@@ -82,7 +82,7 @@ const StTitle = styled.h2`
   }
 `;
 
-const StSearchList = styled.ol`
+const StSearchList = styled.ul`
   height: 100%;
   overflow-y: auto;
   padding: 25px 0;
