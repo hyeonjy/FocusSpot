@@ -10,9 +10,10 @@ const StContainer = styled.input`
   height: 40px;
   padding: 0 10px;
   border-bottom: 1px solid var(--color-gray5);
+  font-size: 15px;
 
   &::placeholder {
-    color: var(--color-gray4);
+    color: var(--color-gray5);
   }
 `;
 

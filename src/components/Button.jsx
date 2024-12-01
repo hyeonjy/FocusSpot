@@ -32,6 +32,7 @@ const StContainer = styled.button`
     }
 
     return `
+    display: block;
     min-width: ${minWidth};
     padding: ${padding};
     background-color: ${$fill ? `var(--color-${$color})` : 'var(--color-white)'};
