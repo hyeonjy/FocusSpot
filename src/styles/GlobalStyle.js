@@ -42,8 +42,10 @@ export const GlobalStyle = createGlobalStyle`
   input,
   select,
   textarea {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 16px;
+    font-family: var(--primary-font);
+    font-size: 1rem;
+    line-height: 1;
+    vertical-align: middle;
     background-color: transparent;
     border: 0;
   }
