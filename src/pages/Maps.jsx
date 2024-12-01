@@ -1,10 +1,12 @@
 import React from 'react';
 import useKakaoLoader from '../hooks/useKakaoLoader';
 import SearchSidebar from '../components/SearchSidebar';
+import AddressList from '../components/AddressList';
 import { Map } from 'react-kakao-maps-sdk';
 
 const Maps = () => {
   const { loading, error } = useKakaoLoader();
+  const addresses = ['경기도', '부천시 원미구', '상2동']; // NOTE : 임시 현재 주소 데이터
 
   if (loading) {
     // NOTE : 로딩바? 만들지..?
@@ -28,6 +30,7 @@ const Maps = () => {
         }}
         level={3}
       />
+      <AddressList addresses={addresses} />
       <SearchSidebar />
     </>
   );
