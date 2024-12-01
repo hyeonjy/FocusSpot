@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const Button = ({ size = 'small', color = 'primary', fill = false, label, handleClick }) => {
+  return (
+    <Container type="button" $size={size} $color={color} $fill={fill} onClick={handleClick}>
+      {label}
+    </Container>
+  );
+};
+
 const Container = styled.button`
   ${({ $size, $color, $fill }) => {
     let minWidth;
@@ -34,13 +42,5 @@ const Container = styled.button`
   `;
   }}
 `;
-
-const Button = ({ size = 'small', color = 'primary', fill = false, label, handleClick }) => {
-  return (
-    <Container type="button" $size={size} $color={color} $fill={fill} onClick={handleClick}>
-      {label}
-    </Container>
-  );
-};
 
 export default Button;

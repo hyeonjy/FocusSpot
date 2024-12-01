@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+const InputText = ({ inputType, inputName, placeholderText, handleChange }) => {
+  return <Container type={inputType} name={inputName} placeholder={placeholderText} onChange={handleChange} />;
+};
+
 const Container = styled.input`
   display: block;
   width: 100%;
@@ -11,9 +15,5 @@ const Container = styled.input`
     color: var(--color-gray4);
   }
 `;
-
-const InputText = ({ inputType, inputName, placeholderText, handleChange }) => {
-  return <Container type={inputType} name={inputName} placeholder={placeholderText} onChange={handleChange} />;
-};
 
 export default InputText;

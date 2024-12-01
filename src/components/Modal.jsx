@@ -20,7 +20,7 @@ const fadeOut = keyframes`
   }
 `;
 
-const Overlay = styled.div`
+const StOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -34,7 +34,7 @@ const Overlay = styled.div`
   z-index: 1000;
 `;
 
-const ModalContainer = styled.div`
+const StModalContainer = styled.div`
   position: relative;
   width: 90%;
   max-width: 750px;
@@ -45,7 +45,7 @@ const ModalContainer = styled.div`
   animation: ${({ isOpen }) => (isOpen ? fadeIn : fadeOut)} 0.3s ease-in-out;
 `;
 
-const CloseButton = styled.button`
+const StCloseButton = styled.button`
   position: absolute;
   right: 40px;
   top: 40px;
@@ -56,11 +56,11 @@ const Modal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <Overlay onClick={onClose}>
-      <ModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={onClose}>X</CloseButton>
-      </ModalContainer>
-    </Overlay>
+    <StOverlay onClick={onClose}>
+      <StModalContainer isOpen={isOpen} onClick={(e) => e.stopPropagation()}>
+        <StCloseButton onClick={onClose}>X</StCloseButton>
+      </StModalContainer>
+    </StOverlay>
   );
 };
 

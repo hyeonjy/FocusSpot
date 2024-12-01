@@ -19,6 +19,7 @@ export const GlobalStyle = createGlobalStyle`
     --color-gray7: #eeeeee;
     --color-red: #DE0505;
     --drop-shadow: 3px 4px 13px rgba(0, 0, 0, 0.15);
+    --inner-width: 1280px; 
   }
 
   * {
