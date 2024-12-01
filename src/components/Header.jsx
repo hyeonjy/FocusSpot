@@ -19,20 +19,19 @@ const Header = () => {
             <li>
               <Link to="/map">지도보기</Link>
             </li>
-            <li>
-              <Link to="/login">로그인</Link>
-            </li>
-
             {isLogin ? (
               <>
                 <li>
                   <Link to="/bookmark">마이페이지</Link>
                 </li>
+                <li>
+                  <button type="button">로그아웃</button>
+                </li>
               </>
             ) : (
               <>
                 <li>
-                  <button type="button">로그아웃</button>
+                  <Link to="/login">로그인</Link>
                 </li>
               </>
             )}

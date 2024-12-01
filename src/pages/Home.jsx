@@ -3,6 +3,7 @@ import Button from '../components/Button';
 import InputText from '../components/InputText';
 import ListItem from '../components/ListItem';
 import Modal from '../components/Modal';
+import AuthForm from '../components/AuthForm';
 
 const Home = () => {
   const [inputValue, setInputValue] = useState('');
@@ -36,6 +37,8 @@ const Home = () => {
       </ul>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} />
+
+      <AuthForm mode="로그인"></AuthForm>
     </>
   );
 };
