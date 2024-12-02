@@ -14,3 +14,5 @@ export const getBookmarkByUserId = async (userId) => {
     throw error;
   }
 };
+
+// 주변 카페 찾기

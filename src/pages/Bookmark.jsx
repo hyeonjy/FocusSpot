@@ -16,10 +16,10 @@ const Bookmark = () => {
   // 테스트용 유저 uuid
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
-  const { bookmarks, isLoading, isError, error } = useFetchUserBookmarks(userId);
+  const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
   // // TODO 로딩화면 및 낙관적 업데이트 반영하기
-  if (isLoading) {
+  if (isPending) {
     return <div>로딩중...</div>;
   }
 
@@ -58,10 +58,7 @@ const Bookmark = () => {
           {/* TODO 북마크가 존재하지 않을때 처리 구현 필요 */}
           {bookmarks.map((bookmark) => {
             return (
-              <StItemWrapper key={bookmark.spot_id}>
-                {/* 현재 공용 컴포넌트 내용이 고정되어있어 유저 데이터로 변환 필요 */}
-                <ListItem handleClick={() => handleShowDetail(bookmark.spots)} itemData={bookmark.spots} />
-              </StItemWrapper>
+              <ListItem key={bookmark.spot_id} handleClick={() => handleShowDetail(bookmark.spots)} itemData={bookmark.spots} />
             );
           })}
         </StBookmarkGird>
@@ -104,21 +101,20 @@ const StHr = styled.hr`
   border-top: 1px solid var(--color-gray5);
 `;
 
-const StBookmarkGird = styled.div`
+const StBookmarkGird = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, minmax(300px, auto));
   gap: 25px;
-`;
-
-const StItemWrapper = styled.div`
-  border: var(--color-gray6) 1px solid;
-  width: 100%;
-  padding: 35px 40px 35px 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  &:hover {
-    border: var(--color-primary) 1px solid;
-    box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px;
-    transform: translateY(-7px);
+  li {
+    border: var(--color-gray6) 1px solid;
+    width: 100%;
+    padding: 35px 40px 35px 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    &:hover {
+      border: var(--color-primary) 1px solid;
+      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px;
+      transform: translateY(-7px);
+    }
   }
 `;
 
