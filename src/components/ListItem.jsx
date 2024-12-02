@@ -16,7 +16,7 @@ const ListItem = ({ handleClick, itemData = defaultData }) => {
       <button onClick={handleClick}></button>
       <StTitle>{itemData.place_name}</StTitle>
       <StCategory>{combinedAddress}</StCategory>
-      <StAddress>{itemData.road_address_name}</StAddress>
+      <StAddress>{itemData.road_address_name || itemData.address_name}</StAddress>
       <StPhone>{itemData.phone || '전화번호 없음'}</StPhone>
     </StContainer>
   );
