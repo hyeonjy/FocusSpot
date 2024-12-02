@@ -48,6 +48,7 @@ const StHeader = styled.header`
   top: 0;
   width: 100%;
   height: 100px;
+  background: var(--color-white);
 `;
 
 const StInner = styled.div`
