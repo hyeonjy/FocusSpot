@@ -5,8 +5,8 @@ const useFetchUserBookmarks = (userId) => {
   const { data, isPending, isError } = useQuery({
     queryKey: ['bookmarks', userId],
     queryFn: () => getBookmarkByUserId(userId),
-    enabled: !!userId,  // 아이디 확인!
-    retry: 2,   // TODO 
+    enabled: !!userId, // 아이디 확인!
+    retry: 2 // TODO
   });
 
   return {

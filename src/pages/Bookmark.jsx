@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
-import ListItem from '../components/ListItem';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
+import BookmarksContainer from '../components/bookmark/BookmarksContainer';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -39,7 +39,6 @@ const Bookmark = () => {
 
   const handleShowDetail = (itemData) => {
     console.log(`spot's card clicked`);
-    // TODO 정보 모달이 뜨게금 구현 필요
     setModalContent({ type: 'detail', data: itemData });
     setModalOpen(true);
   };
@@ -47,22 +46,11 @@ const Bookmark = () => {
   return (
     <StBookmarkPage>
       {/* 프로파일 섹션 */}
-      {/* openModal 부분이 props drilling 되고 있음 */}
+      {/* openModal 부분이 props drilling 되고 있음 2단계 정도*/}
       <ProfileContainer openModal={handleShowProfile} />
 
       {/* 북마크 섹션 */}
-      <StBookmarkSection>
-        <StH1>내가 북마크한 곳</StH1>
-        <StHr />
-        <StBookmarkGird>
-          {/* TODO 북마크가 존재하지 않을때 처리 구현 필요 */}
-          {bookmarks.map((bookmark) => {
-            return (
-              <ListItem key={bookmark.spot_id} handleClick={() => handleShowDetail(bookmark.spots)} itemData={bookmark.spots} />
-            );
-          })}
-        </StBookmarkGird>
-      </StBookmarkSection>
+      <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
 
       {/* 모달 */}
       {modalOpen && (
@@ -78,44 +66,6 @@ const StBookmarkPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const StH1 = styled.p`
-  font-size: 30px;
-`;
-
-const StBookmarkSection = styled.div`
-  /* TODO 반응형 구현시 바꾸어야 할 부분 */
-  width: 1280px;
-
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 80px;
-  margin-bottom: 50px;
-`;
-
-const StHr = styled.hr`
-  margin-top: 25px;
-  margin-bottom: 30px;
-  border-top: 1px solid var(--color-gray5);
-`;
-
-const StBookmarkGird = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, minmax(300px, auto));
-  gap: 25px;
-  li {
-    border: var(--color-gray6) 1px solid;
-    width: 100%;
-    padding: 35px 40px 35px 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    &:hover {
-      border: var(--color-primary) 1px solid;
-      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px;
-      transform: translateY(-7px);
-    }
-  }
 `;
 
 export default Bookmark;
