@@ -16,7 +16,7 @@ const Bookmark = () => {
       <StProfileSection enableBG={enableBG}>
         <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />
         <StProfileDetails enableBG={enableBG}>
-          <StH1>김철수</StH1>
+          <StH1>김철수!</StH1>
           <StUserEmail>test1234@naver.com</StUserEmail>
           <StProfileEditButton onClick={openModal}>컴포넌트로 변경</StProfileEditButton>
         </StProfileDetails>
@@ -41,9 +41,7 @@ const Bookmark = () => {
       {/* 모달 */}
       {isModalOpen && (
         <StModalSection onClick={closeModal}>
-          <StModalContent>
-            컴포넌트로 변경
-          </StModalContent>
+          <StModalContent>컴포넌트로 변경</StModalContent>
         </StModalSection>
       )}
     </StBookmarkPage>
@@ -160,6 +158,6 @@ const StModalContent = styled.div`
   background-color: white;
   width: 750px;
   height: 580px;
-`
+`;
 
 export default Bookmark;
