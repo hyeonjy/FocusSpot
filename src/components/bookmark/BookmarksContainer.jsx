@@ -27,8 +27,7 @@ const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
 };
 
 const StBookmarkSection = styled.div`
-  /* TODO 반응형 구현시 바꾸어야 할 부분 */
-  width: 1280px;
+  width: var(--inner-width);
 
   display: flex;
   flex-direction: column;
