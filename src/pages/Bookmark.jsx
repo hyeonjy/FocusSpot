@@ -42,8 +42,8 @@ const Bookmark = () => {
       {/* 프로파일 섹션 */}
       <StProfileSection>
         <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />
-        <StProfileDetails>
-          <StH1>김철수</StH1>
+        <StProfileDetails enableBG={enableBG}>
+          <StH1>김철수!</StH1>
           <StUserEmail>test1234@naver.com</StUserEmail>
           <Button size="small" color="primary" fill={false} label="프로필 수정" handleClick={openModal} />
         </StProfileDetails>
@@ -67,9 +67,11 @@ const Bookmark = () => {
 
       {/* 모달 */}
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          조건부 컴포넌트 내용 필요
-        </Modal>
+        <StModalSection onClick={closeModal}>
+          <StModalContent>
+            컴포넌트로 변경
+          </StModalContent>
+        </StModalSection>
       )}
     </StBookmarkPage>
   );
@@ -146,15 +148,18 @@ const StBookmarkGird = styled.div`
 const StItemWrapper = styled.div`
   border: var(--color-gray6) 1px solid;
   width: 100%;
-  padding: 35px 40px 35px 20px;
-
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    border: var(--color-primary) 1px solid;
-    box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 8px;
-    transform: translateY(-7px);
-  }
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 5;
 `;
+
+const StModalContent = styled.div`
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  width: 750px;
+  height: 580px;
+`
 
 export default Bookmark;

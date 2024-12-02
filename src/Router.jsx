@@ -7,8 +7,9 @@ import Layout from './components/Layout';
 import Bookmark from './pages/Bookmark';
 import ProtectedRoute from './components/ProtectedRoute';
 
-import SharePreview from './pages/SharePreview'; // 공용컴포넌트 미리보는 페이지
+import Map2 from './pages/Map2';
 
+import SharePreview from './pages/SharePreview'; // 공용컴포넌트 미리보는 페이지
 
 const Router = () => {
   return (
@@ -24,6 +25,7 @@ const Router = () => {
             <Route path="/bookmark" element={<Bookmark />} />
           </Route>
         </Route>
+        <Route path="/map2" element={<Map2 />} />
       </Routes>
     </BrowserRouter>
   );
