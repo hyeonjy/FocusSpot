@@ -7,7 +7,7 @@ const useSearchCategories = (map, activeFilter, currentLocation) => {
     if (!map || !currentLocation) return;
 
     const ps = new kakao.maps.services.Places();
-    const currentLatLng = new kakao.maps.LatLng(currentLocation.lat, currentLocation.lng);
+    const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng);
     const keywords = activeFilter === '전체' ? ['스터디카페', '카페', '도서관'] : [activeFilter]; // 카테고리에 따라 검색할 키워드 설정
 
     const promises = keywords.map(

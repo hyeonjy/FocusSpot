@@ -19,7 +19,6 @@ const Maps = () => {
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
   };
-  console.log(markers);
 
   if (loading) return <p>지도를 로드 중입니다...</p>;
   if (error) return <p>지도를 로드하는 데 실패했습니다: {error.message}</p>;

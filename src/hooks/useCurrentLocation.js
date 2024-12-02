@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 
-const useCurrentLocation = (defaultCenter = { lat: 33.450701, lng: 126.570667 }) => {
+const defaultCenter = { lat: 33.450701, lng: 126.570667 };
+
+const useCurrentLocation = () => {
   const [location, setLocation] = useState({
     center: defaultCenter,
     errMsg: null,
