@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 const useSearchCategories = (map, activeFilter, currentLocation) => {
   const [markers, setMarkers] = useState([]);
+  const [places, setPlaces] = useState([]); // 장소 검색 결과를 저장하는 배열
 
   useEffect(() => {
     if (!map || !currentLocation) return;
@@ -45,12 +46,13 @@ const useSearchCategories = (map, activeFilter, currentLocation) => {
         };
       });
 
+      setPlaces(allPlaces);
       setMarkers(newMarkers); // 마커 상태 업데이트
       map.setBounds(bounds); // 지도 범위 설정
     });
   }, [currentLocation, activeFilter]);
 
-  return markers;
+  return { markers, places };
 };
 
 export default useSearchCategories;

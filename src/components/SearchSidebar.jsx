@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 
-const SearchSidebar = () => {
+const SearchSidebar = ({ activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -11,18 +11,15 @@ const SearchSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // NOTE : 임시 데이터 추후 변경
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
   return (
     <StContainer $isSidebarOpen={isSidebarOpen}>
       <StTitle>
-        현재 위치 <span>전체</span> 결과 총 <span>14</span>개
+        현재 위치 <span>{activeFilter}</span> 결과 총 <span>{places.length}</span>개
       </StTitle>
       <StSearchList>
-        {items.map((item, index) => (
-          <StListItemWrapper key={item} $isFirstChild={index === 0}>
-            <ListItem key={item} handleClick={openModal} />
+        {places.map((place, index) => (
+          <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
+            <ListItem key={place.id} itemData={place} handleClick={openModal} />
           </StListItemWrapper>
         ))}
       </StSearchList>

@@ -8,16 +8,16 @@ const defaultData = {
 };
 
 const ListItem = ({ handleClick, itemData = defaultData }) => {
-  // TODO: 주소 분리하는 로직 필요
-  const streetAddress = itemData.address.split('\n');
+  const streetAddress = itemData.category_name.split('>');
+  const combinedAddress = streetAddress.slice(-1).join(', ').trim();
+
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      <StTitle>{itemData.name}</StTitle>
-      <StCategory>{itemData.category}</StCategory>
-      <StAddress>{streetAddress[0]}</StAddress>
-      <StAddress>{streetAddress[1]}</StAddress>
-      <StPhone>010-2549-3854</StPhone>
+      <StTitle>{itemData.place_name}</StTitle>
+      <StCategory>{combinedAddress}</StCategory>
+      <StAddress>{itemData.road_address_name}</StAddress>
+      <StPhone>{itemData.phone || '전화번호 없음'}</StPhone>
     </StContainer>
   );
 };
