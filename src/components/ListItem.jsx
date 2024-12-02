@@ -1,9 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ListItem = ({ handleClick, itemData }) => {
+const defaultData = {
+  name: '감자 카페',
+  category: '스터디카페',
+  address: '감자나라 고구마시 옥수수구 초당동'
+};
+
+const ListItem = ({ handleClick, itemData = defaultData }) => {
   // TODO: 주소 분리하는 로직 필요
-  const streetAddress = itemData.address.split("\n");
+  const streetAddress = itemData.address.split('\n');
   return (
     <StContainer>
       <button onClick={handleClick}></button>

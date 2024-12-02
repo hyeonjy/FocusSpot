@@ -38,4 +38,7 @@ export const getMostBookmarkedSpots = async (limit = 10) => {
 };
 
 // 북마크 추가하기
+// x-위도
+// y-경도
+
 
