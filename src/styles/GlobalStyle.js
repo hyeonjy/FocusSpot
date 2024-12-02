@@ -91,5 +91,5 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
-  main { padding-top: 100px; }
+  main { padding: 100px 0; }
 `;
