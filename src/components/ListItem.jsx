@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 const ListItem = ({ handleClick, itemData }) => {
-  // console.log("ListItem =>", itemData);
+  console.log('ListItem =>', itemData);
 
   // TODO: 주소 분리하는 로직 필요
-  // const streetAddress = itemData.address.split("\n");
+  const streetAddress = itemData.address.split('\n');
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      {/* <StTitle>{itemData.name}</StTitle> */}
+      <StTitle>{itemData.name}</StTitle>
       <StCategory>스터디카페,스터디룸</StCategory>
-      {/* <StAddress>{streetAddress[0]}</StAddress>
-      <StAddress>{streetAddress[1]}</StAddress> */}
+      <StAddress>{streetAddress[0]}</StAddress>
+      <StAddress>{streetAddress[1]}</StAddress>
       <StPhone>010-2549-3854</StPhone>
     </StContainer>
   );
