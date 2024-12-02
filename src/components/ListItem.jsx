@@ -1,13 +1,22 @@
+import React from 'react';
 import styled from 'styled-components';
 
-const ListItem = ({ handleClick }) => {
+const defaultData = {
+  name: '감자 카페',
+  category: '스터디카페',
+  address: '감자나라 고구마시 옥수수구 초당동'
+};
+
+const ListItem = ({ handleClick, itemData = defaultData }) => {
+  // TODO: 주소 분리하는 로직 필요
+  const streetAddress = itemData.address.split('\n');
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      <StTitle>런앤런스터디카페 부개점</StTitle>
-      <StCategory>스터디카페,스터디룸</StCategory>
-      <StAddress>인천 부평구 길주남로 129 한아름프라자 4층 401, 402호 (우)21351</StAddress>
-      <StAddress>(지번) 부개동 12-126</StAddress>
+      <StTitle>{itemData.name}</StTitle>
+      <StCategory>{itemData.category}</StCategory>
+      <StAddress>{streetAddress[0]}</StAddress>
+      <StAddress>{streetAddress[1]}</StAddress>
       <StPhone>010-2549-3854</StPhone>
     </StContainer>
   );
