@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
-const ListItem = ({ handleClick }) => {
+const ListItem = ({ handleClick, itemData }) => {
+  console.log("ListItem =>", itemData);
+
+  // TODO: 주소 분리하는 로직 필요
+  const streetAddress = itemData.address.split("\n");
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      <StTitle>런앤런스터디카페 부개점</StTitle>
+      <StTitle>{itemData.name}</StTitle>
       <StCategory>스터디카페,스터디룸</StCategory>
-      <StAddress>인천 부평구 길주남로 129 한아름프라자 4층 401, 402호 (우)21351</StAddress>
-      <StAddress>(지번) 부개동 12-126</StAddress>
+      <StAddress>{streetAddress[0]}</StAddress>
+      <StAddress>{streetAddress[1]}</StAddress>
       <StPhone>010-2549-3854</StPhone>
     </StContainer>
   );
