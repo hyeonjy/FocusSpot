@@ -1,4 +1,4 @@
-import { signIn, googleSignOut, getUserAuth, googleSignIn } from "../api/googleAuth";
+import { googleSignOut, getUserAuth, googleSignIn } from "../api/googleAuth";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../zustand/userStore";
 import { useEffect } from "react";
