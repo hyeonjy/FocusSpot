@@ -10,7 +10,7 @@ const useFetchUserBookmarks = (userId) => {
   });
 
   return {
-    bookmarks: data,
+    bookmarks: data || [],
     isPending,
     isError
   };
