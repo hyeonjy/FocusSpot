@@ -31,7 +31,7 @@ export const getUserAuth = async () => {
 export const signIn = async () => {
     //이미 회원가입한 유저는 홈으로, 그렇지 않은 유저는 로그인 페이지에서 마저 회원정보를 등록하도록
     const isMember = true;
-    const redirectTo = (isMember) ? '' :'login' 
+    const redirectTo = (isMember) ? '' :'login';
     await googleSignIn(redirectTo);
     await getUserAuth();
 }
