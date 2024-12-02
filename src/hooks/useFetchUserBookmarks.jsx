@@ -1,31 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { getBookmarkByUserId } from '../api/bookmark';
 
 const useFetchUserBookmarks = (userId) => {
-  const [bookmarks, setBookmarks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ['bookmarks', userId],
+    queryFn: () => getBookmarkByUserId(userId),
+    enabled: !!userId,  // 아이디 확인!
+    retry: 2,   // TODO 
+  });
 
-  useEffect(() => {
-    // 유저 아이디 제공 안되어있을때
-    if (!userId) return;
-
-    const fetchBookmarks = async () => {
-      try {
-        setLoading(true);
-        const data = await getBookmarkByUserId(userId);
-        setBookmarks(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBookmarks();
-  }, [userId]);
-
-  return { bookmarks, loading, error };
+  return {
+    bookmarks: data,
+    isPending,
+    isError
+  };
 };
 
 export default useFetchUserBookmarks;
