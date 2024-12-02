@@ -60,6 +60,8 @@ const Map2 = () => {
 
     clearMarkers(); // 기존 마커 삭제
 
+    console.log('currentLocaton', currentLocation);
+
     // 키워드별로 검색을 실행하고 모든 결과를 병합
     const promises = keywords.map(
       (keyword) =>
@@ -124,7 +126,7 @@ const Map2 = () => {
     <StContainer>
       <StMap ref={mapRef}></StMap>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} />
-      <SearchResults places={places} />
+      <SearchResults places={places} activeFilter={activeFilter} />
     </StContainer>
   );
 };
