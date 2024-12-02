@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '../components/Modal';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
@@ -18,6 +18,18 @@ const Bookmark = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
   const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
+  // 렌더링 방지를 위해 useCallback으로 감싸봄
+  const handleShowDetail = useCallback((itemData) => {
+    console.log(`spot's card clicked`);
+    setModalContent({ type: 'detail', data: itemData });
+    setModalOpen(true);
+  }, []);
+
+  const handleShowProfile = useCallback(() => {
+    setModalOpen(true);
+    setModalContent({ type: 'profile', data: '제발 프로필 떠라ㅏㅏ' });
+  }, []);
+
   // // TODO 로딩화면 및 낙관적 업데이트 반영하기
   if (isPending) {
     return <div>로딩중...</div>;
@@ -27,21 +39,6 @@ const Bookmark = () => {
   if (isError) {
     return <div>에러 발생 {error.message}</div>;
   }
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const handleShowProfile = () => {
-    setModalOpen(true);
-    setModalContent({ type: 'profile', data: '제발 프로필 떠라ㅏㅏ' });
-  };
-
-  const handleShowDetail = (itemData) => {
-    console.log(`spot's card clicked`);
-    setModalContent({ type: 'detail', data: itemData });
-    setModalOpen(true);
-  };
 
   return (
     <StBookmarkPage>
@@ -54,7 +51,7 @@ const Bookmark = () => {
 
       {/* 모달 */}
       {modalOpen && (
-        <Modal isOpen={modalOpen} onClose={closeModal}>
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
           {modalContent.type === 'detail' ? <p>디테일 컴포넌트로 변경</p> : <p>프로필 수정 form으로 변경</p>}
         </Modal>
       )}

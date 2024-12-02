@@ -64,4 +64,4 @@ const StBookmarkGird = styled.ul`
   }
 `;
 
-export default BookmarksContainer
+export default React.memo(BookmarksContainer)

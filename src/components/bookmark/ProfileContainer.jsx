@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from '../Button';
 
 const ProfileContainer = ({ openModal }) => {
-    // TODO: 유저 정보 zustand에서 가져오는 부분 필요
+  // TODO: 유저 정보 zustand에서 가져오는 부분 필요
   return (
     <StProfileSection>
       <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />
@@ -55,4 +55,4 @@ const StUserEmail = styled.p`
   color: var(--color-gray2);
 `;
 
-export default ProfileContainer;
+export default React.memo(ProfileContainer);
