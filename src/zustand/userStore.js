@@ -1,8 +1,9 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-export const useUserStore = create(set => ({
-    isGonnaSignIn: true,
+export const useUserStore = create(persist(set => ({
+    isGonnaSignOut: true,
     isAuthenticated: false,
     setIsAuthenticated: (boolean) => set(() => ({ isAuthenticated: boolean })),
-    setIsGonnaSignIn: (boolean) => set(() => ({ isGonnaSignIn: boolean }))
-}))
+    setIsGonnaSignOut: (boolean) => set(() => ({ isGonnaSignOut: boolean }))
+})))
