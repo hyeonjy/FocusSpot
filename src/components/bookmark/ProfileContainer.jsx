@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 
-const ProfileContainer = ({ openModal }) => {
+const ProfileContainer = ({openModal}) => {
   return (
     <StProfileSection>
       <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />

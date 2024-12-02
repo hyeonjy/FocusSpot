@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ListItem = ({ handleClick, itemData }) => {
-  console.log("ListItem =>", itemData);
+  console.log("ListItem =>", itemData.name);
 
   // TODO: 주소 분리하는 로직 필요
   const streetAddress = itemData.address.split("\n");

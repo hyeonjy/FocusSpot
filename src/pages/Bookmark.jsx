@@ -7,9 +7,9 @@ import ProfileContainer from '../components/bookmark/ProfileContainer';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
-    mode: '',
+    type: '',
     data: null
   });
 
@@ -28,29 +28,27 @@ const Bookmark = () => {
     return <div>에러 발생 {error.message}</div>;
   }
 
-  const openModal = (mode = 'profile', data = null) => {
-    setModalContent(mode, data);
-    setIsModalOpen(true);
-  };
-
   const closeModal = () => {
-    setIsModalOpen(false);
-    setModalContent({
-      mode: '',
-      data: null
-    });
+    setModalOpen(false);
   };
 
-  const handleShowDetail = (i = '') => {
-    console.log(`spot's [${i}] card clicked`);
+  const handleShowProfile = () => {
+    setModalOpen(true);
+    setModalContent({ type: 'profile', data: '제발 프로필 떠라ㅏㅏ' });
+  };
+
+  const handleShowDetail = (itemData) => {
+    console.log(`spot's card clicked`);
     // TODO 정보 모달이 뜨게금 구현 필요
-    openModal();
+    setModalContent({ type: 'detail', data: itemData });
+    setModalOpen(true);
   };
 
   return (
     <StBookmarkPage>
       {/* 프로파일 섹션 */}
-      <ProfileContainer openModal={openModal} />
+      {/* openModal 부분이 props drilling 되고 있음 */}
+      <ProfileContainer openModal={handleShowProfile} />
 
       {/* 북마크 섹션 */}
       <StBookmarkSection>
@@ -62,12 +60,7 @@ const Bookmark = () => {
             return (
               <StItemWrapper key={bookmark.spot_id}>
                 {/* 현재 공용 컴포넌트 내용이 고정되어있어 유저 데이터로 변환 필요 */}
-                <ListItem
-                  handleClick={() => {
-                    openModal('bookmark', bookmark.spots);
-                  }}
-                  itemData={bookmark.spots}
-                />
+                <ListItem handleClick={() => handleShowDetail(bookmark.spots)} itemData={bookmark.spots} />
               </StItemWrapper>
             );
           })}
@@ -75,9 +68,9 @@ const Bookmark = () => {
       </StBookmarkSection>
 
       {/* 모달 */}
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          {modalContent.mode === 'profile' ? <div>유저 프로필</div> : <div>장소 디테일 페이지</div>}
+      {modalOpen && (
+        <Modal isOpen={modalOpen} onClose={closeModal}>
+          {modalContent.type === 'detail' ? <p>디테일 컴포넌트로 변경</p> : <p>프로필 수정 form으로 변경</p>}
         </Modal>
       )}
     </StBookmarkPage>
