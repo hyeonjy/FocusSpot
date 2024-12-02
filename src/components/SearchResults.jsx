@@ -1,35 +1,38 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const SearchResults = () => {
+const SearchResults = ({ places }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleList = () => {
     setIsOpen((prev) => !prev);
   };
 
+  console.log('places: ', places);
+
   return (
-    <StContainer $isOpen={isOpen}>
-      <StToggleButton onClick={toggleList}>{isOpen ? '>' : '<'}</StToggleButton>
-      <StSearchList $isOpen={isOpen}>
-        <StSearchItem>
-          <StSearchTitle>
-            <h3>A 런앤런스터디카페 부개점</h3>
-            <StBookMark>📌</StBookMark>
-          </StSearchTitle>
-          <p>인천 부평구 길주남로 129</p>
-          <p>010-2549-3854</p>
-        </StSearchItem>
-        <StSearchItem>
-          <StSearchTitle>
-            <h3>B 런앤런스터디카페 부개점</h3>
-            <StBookMark>📌</StBookMark>
-          </StSearchTitle>
-          <p>인천 부평구 길주남로 129</p>
-          <p>010-2549-3854</p>
-        </StSearchItem>
-      </StSearchList>
-    </StContainer>
+    <>
+      <StContainer $isOpen={isOpen}>
+        <StSearchList>
+          {places.map((place, index) => (
+            <Link to={place.place_url} key={index}>
+              <StSearchItem>
+                <StSearchTitle>
+                  <h3>{place.place_name}</h3>
+                  <StBookMark>📌</StBookMark>
+                </StSearchTitle>
+                <p>{place.road_address_name || place.address_name}</p>
+                <p>{place.phone || '전화번호 없음'}</p>
+              </StSearchItem>
+            </Link>
+          ))}
+        </StSearchList>
+      </StContainer>
+      <StToggleButton $isOpen={isOpen} onClick={toggleList}>
+        {isOpen ? '>' : '<'}
+      </StToggleButton>
+    </>
   );
 };
 
@@ -40,34 +43,49 @@ const StContainer = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  display: flex;
+  width: 365px;
   z-index: 10;
-  align-items: center;
+  background: white;
   transition: transform 0.3s ease;
-  transform: ${(props) => (props.$isOpen ? 'translateX(0)' : 'translateX(95%)')};
+  transform: ${(props) => (props.$isOpen ? 'translateX(0)' : 'translateX(365px)')};
+  border-left: 1px solid #dddddd;
+  overflow-y: auto;
 `;
 
 const StToggleButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: ${(props) => (props.$isOpen ? '365px' : '10px')};
+  transition: right 0.3s ease;
   background-color: #fff;
   border: 1px solid #dddddd;
   border-right: none;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  height: 58px;
+  height: 70px;
+  width: 30px;
   cursor: pointer;
   font-size: 18px;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 11;
 `;
 
 const StSearchList = styled.div`
-  width: 365px;
-  height: 100%;
-  overflow: hidden;
-  background: white;
-  border-left: ${(props) => (props.$isOpen ? '1px solid #DDDDDD' : 'none')};
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+`;
+
+const StSearchItem = styled.div`
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  p {
+    margin: 5px 0 0;
+    color: #555;
+  }
 `;
 
 const StSearchTitle = styled.div`
@@ -84,20 +102,5 @@ const StBookMark = styled.div`
   cursor: pointer;
   &:hover {
     background-color: #dddddd;
-  }
-`;
-
-const StSearchItem = styled.div`
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
-
-  h3 {
-    margin: 0;
-    font-size: 18px;
-  }
-
-  p {
-    margin: 5px 0 0;
-    color: #555;
   }
 `;
