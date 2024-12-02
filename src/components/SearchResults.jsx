@@ -1,37 +1,51 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import SearchModal from './SearchModal';
 
-const SearchResults = ({ places }) => {
+const SearchResults = ({ places, activeFilter }) => {
   const [isOpen, setIsOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const toggleList = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const openModal = (place) => {
+    setSelectedPlace(place);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPlace(null);
+    setIsModalOpen(false);
+  };
+
   console.log('places: ', places);
+  console.log('open: ', isModalOpen);
 
   return (
     <>
       <StContainer $isOpen={isOpen}>
         <StSearchList>
           {places.map((place, index) => (
-            <Link to={place.place_url} key={index}>
-              <StSearchItem>
-                <StSearchTitle>
-                  <h3>{place.place_name}</h3>
-                  <StBookMark>📌</StBookMark>
-                </StSearchTitle>
-                <p>{place.road_address_name || place.address_name}</p>
-                <p>{place.phone || '전화번호 없음'}</p>
-              </StSearchItem>
-            </Link>
+            <StSearchItem key={place.id} onClick={() => openModal(place)}>
+              <StSearchTitle>
+                <h3>{place.place_name}</h3>
+                <StBookMark>📌</StBookMark>
+              </StSearchTitle>
+              <p>{place.road_address_name || place.address_name}</p>
+              <p>{place.phone || '전화번호 없음'}</p>
+            </StSearchItem>
           ))}
         </StSearchList>
       </StContainer>
       <StToggleButton $isOpen={isOpen} onClick={toggleList}>
         {isOpen ? '>' : '<'}
       </StToggleButton>
+
+      {isModalOpen && <SearchModal place={selectedPlace} activeFilter={activeFilter} onClose={closeModal} />}
     </>
   );
 };

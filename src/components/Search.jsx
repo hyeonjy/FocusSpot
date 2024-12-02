@@ -5,26 +5,31 @@ const Search = ({ activeFilter, handleFilterClick }) => {
   return (
     <StSearchContainer>
       <StLogoBox>
-        <StLogo>✎ FOCUS SPOT</StLogo>
+        <img src="/white_logo.svg" />
         <StLoginButton>로그인</StLoginButton>
       </StLogoBox>
       <StSearchBox>
         <StSearchForm>
           <StSearchInput placeholder="장소를 검색해주세요." />
-          <div style={{ marginRight: '15px' }}>🔍</div>
+          <div style={{ marginRight: '15px' }}>
+            <img src="/search.svg" />
+          </div>
         </StSearchForm>
         <StButtonGroup>
           <StFilterButton $isActive={activeFilter === '전체'} onClick={() => handleFilterClick('전체')}>
             전체
           </StFilterButton>
           <StFilterButton $isActive={activeFilter === '스터디카페'} onClick={() => handleFilterClick('스터디카페')}>
-            ✎ 스터디카페
+            <img src={activeFilter === '스터디카페' ? '/white_pencil.svg' : '/navy_pencil.svg'} />
+            <p>스터디카페</p>
           </StFilterButton>
           <StFilterButton $isActive={activeFilter === '도서관'} onClick={() => handleFilterClick('도서관')}>
-            📖 도서관
+            <img src={activeFilter === '도서관' ? '/white_book.svg' : '/navy_book.svg'} />
+            <p>도서관</p>
           </StFilterButton>
           <StFilterButton $isActive={activeFilter === '카페'} onClick={() => handleFilterClick('카페')}>
-            🧋 카페
+            <img src={activeFilter === '카페' ? '/white_coffee.svg' : '/navy_coffee.svg'} />
+            <p>카페</p>
           </StFilterButton>
         </StButtonGroup>
       </StSearchBox>
@@ -55,12 +60,6 @@ const StLogoBox = styled.div`
   border-top-right-radius: 10px;
   padding: 12px;
   height: 60px;
-`;
-
-const StLogo = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
 `;
 
 const StLoginButton = styled.button`
@@ -105,7 +104,13 @@ const StFilterButton = styled.button`
   padding: 10px 15px;
   font-size: 14px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   &:hover {
     background: #e0e0e0;
+  }
+  p {
+    margin-left: 5px;
   }
 `;
