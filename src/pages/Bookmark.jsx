@@ -6,8 +6,13 @@ import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
 
 const Bookmark = () => {
-  const emptyCard = Array(8).fill({});
+  // const emptyCard = Array(8).fill({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({
+    mode: '',
+    data: null
+  });
+
   // 테스트용 유저 uuid
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
@@ -23,13 +28,18 @@ const Bookmark = () => {
     return <div>에러 발생 {error.message}</div>;
   }
 
-  // TODO 북마크 존재 안하는 경우 구현 필요
-  if (bookmarks) {
-    console.log(bookmarks);
-  }
+  const openModal = (mode = 'profile', data = null) => {
+    setModalContent(mode, data);
+    setIsModalOpen(true);
+  };
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent({
+      mode: '',
+      data: null
+    });
+  };
 
   const handleShowDetail = (i = '') => {
     console.log(`spot's [${i}] card clicked`);
@@ -47,11 +57,17 @@ const Bookmark = () => {
         <StH1>내가 북마크한 곳</StH1>
         <StHr />
         <StBookmarkGird>
+          {/* TODO 북마크가 존재하지 않을때 처리 구현 필요 */}
           {bookmarks.map((bookmark) => {
             return (
               <StItemWrapper key={bookmark.spot_id}>
                 {/* 현재 공용 컴포넌트 내용이 고정되어있어 유저 데이터로 변환 필요 */}
-                <ListItem handleClick={() => handleShowDetail()} itemData={bookmark.spots} />
+                <ListItem
+                  handleClick={() => {
+                    openModal('bookmark', bookmark.spots);
+                  }}
+                  itemData={bookmark.spots}
+                />
               </StItemWrapper>
             );
           })}
@@ -61,7 +77,7 @@ const Bookmark = () => {
       {/* 모달 */}
       {isModalOpen && (
         <Modal isOpen={isModalOpen} onClose={closeModal}>
-          컴포넌트 조건부 렌더링 필요
+          {modalContent.mode === 'profile' ? <div>유저 프로필</div> : <div>장소 디테일 페이지</div>}
         </Modal>
       )}
     </StBookmarkPage>
@@ -74,43 +90,8 @@ const StBookmarkPage = styled.div`
   align-items: center;
 `;
 
-const StProfileSection = styled.div`
-  /* TODO 반응형 구현시 바꾸어야 할 부분 */
-  height: 140px;
-  width: 1280px;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  margin-top: 30px;
-  margin-bottom: 30px;
-`;
-
-const StProfilePicture = styled.img`
-  border-radius: 50%;
-  height: 100%;
-  width: auto;
-  aspect-ratio: 1/1;
-`;
-
-const StProfileDetails = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-
-  height: 100%;
-
-  margin-left: 40px;
-`;
-
 const StH1 = styled.p`
   font-size: 30px;
-`;
-
-const StUserEmail = styled.p`
-  font-size: 15px;
-  color: var(--color-gray2);
 `;
 
 const StBookmarkSection = styled.div`
