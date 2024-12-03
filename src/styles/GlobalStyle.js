@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
+import theme from './theme';
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -20,6 +21,12 @@ export const GlobalStyle = createGlobalStyle`
     --color-red: #DE0505;
     --drop-shadow: 3px 4px 13px rgba(0, 0, 0, 0.15);
     --inner-width: 1280px; 
+
+    @media ${theme.device.start} {
+      --inner-width: 90%;
+    }
+
+
   }
 
   * {
@@ -36,6 +43,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     /* background-color: var(--background);*/
+    
   } 
 
   h1 {
@@ -91,5 +99,10 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
-  main { padding: 100px 0; }
+  main { 
+    padding: 100px 0;
+    overflow: hidden;
+  }
+
+
 `;

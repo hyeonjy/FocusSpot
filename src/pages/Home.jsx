@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import CarouselList from '../components/CarouselList';
-import ListItem from '../components/ListItem';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
+import theme from '../styles/theme';
+import ListSection from '../components/home/ListSection';
 
 const Home = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
@@ -35,72 +35,23 @@ const Home = () => {
         </p>
       </StBanner>
 
-      <StListSection>
-        <StInner>
-          <StH3>주변 스터디카페</StH3>
-          <StList>
-            <CarouselList>
-              {bookmarks.map((bookmark) => {
-                return <ListItem key={bookmark.spot_id} itemData={bookmark.spots} />;
-              })}
-            </CarouselList>
-          </StList>
-        </StInner>
-      </StListSection>
-      <StListSection>
-        <StInner>
-          <StH3>주변 도서관</StH3>
-          <StList>
-            <CarouselList>
-              {bookmarks.map((bookmark) => {
-                return <ListItem key={bookmark.spot_id} itemData={bookmark.spots} />;
-              })}
-            </CarouselList>
-          </StList>
-        </StInner>
-      </StListSection>
+      <ListSection title="주변 스터디카페" listData={bookmarks} />
+      <ListSection title="주변 도서관" listData={bookmarks} />
     </>
   );
 };
 
-const StListSection = styled.section`
-  margin-top: 100px;
-`;
-
-const StH3 = styled.h3`
-  font-size: 30px;
-  font-weight: 500;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-`;
-
-const StList = styled.div`
-  .slick-list {
-    padding: 40px 0 10px;
-    margin: 0 -14px;
-  }
-  li {
-    border: var(--color-gray6) 1px solid;
-    margin: 0 14px;
-    padding: 35px 40px 35px 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    &:hover {
-      border: var(--color-primary) 1px solid;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
-      transform: translateY(-7px);
-    }
-  }
-`;
-
-// -------------------------
-
 const StMainVisual = styled.section`
+  position: relative;
   width: 100%;
   padding: 50px 0 160px;
+  @media ${theme.device.tablet} {
+    padding: 150px 0 200px;
+  }
 `;
 
 const StInner = styled.div`
-  width: 1280px;
+  width: var(--inner-width);
   margin: 0 auto;
 `;
 
@@ -108,13 +59,28 @@ const Stflex = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+  @media ${theme.device.tablet} {
+    flex-wrap: wrap;
+  }
 `;
 
 const StTitleArea = styled.div`
+  @media ${theme.device.mobile} {
+    text-align: center;
+    margin: 0 auto;
+  }
   h2 {
-    font-size: 50px;
+    font-size: 3.1vw;
     font-weight: 500;
     letter-spacing: -2.5px;
+    @media ${theme.device.laptop} {
+      font-size: 30px;
+    }
+    @media ${theme.device.mobile} {
+      font-size: 27px;
+      letter-spacing: -1px;
+    }
   }
   p {
     font-weight: 400;
@@ -130,13 +96,38 @@ const StTitleArea = styled.div`
     text-align: center;
     color: var(--color-white);
     background: var(--color-primary);
+    @media ${theme.device.tablet} {
+      width: 160px;
+      padding: 15px 0 13px;
+    }
+    @media ${theme.device.mobile} {
+      margin: 60px auto;
+    }
   }
 `;
 
 const StVisualImage = styled.div`
-  width: 500px;
-  height: 630px;
+  width: 39.0625%;
+  max-width: 500px;
+  aspect-ratio: 1/1.26;
   background: url('/main_visual_img.jpg') no-repeat 50% 50%;
+  background-size: cover;
+  position: relative;
+
+  @media ${theme.device.tablet} {
+    position: absolute;
+    right: 5%;
+    bottom: 100px;
+    z-index: -1;
+    width: 250px;
+    opacity: 0.2;
+  }
+  @media ${theme.device.mobile} {
+    right: 50%;
+    bottom: 130px;
+    aspect-ratio: 1/0.8;
+    margin-right: -125px;
+  }
 `;
 
 const StBanner = styled.section`
@@ -147,16 +138,43 @@ const StBanner = styled.section`
   flex-direction: column;
   justify-content: center;
   background: url('/main_section_bg.jpg') no-repeat 50% 50%;
-
+  @media ${theme.device.laptop} {
+    padding: 30px;
+  }
+  @media ${theme.device.tablet} {
+    height: 280px;
+    background-size: cover;
+    background: none;
+  }
   strong {
     font-size: 40px;
     font-weight: 500;
     letter-spacing: -2px;
+    line-height: 1.3;
+    word-break: keep-all;
+    @media ${theme.device.laptop} {
+      font-size: 30px;
+    }
+    @media ${theme.device.laptop} {
+      font-size: 25px;
+    }
   }
   p {
     font-size: 20px;
     margin-top: 30px;
     line-height: 1.4;
+    word-break: keep-all;
+    @media ${theme.device.laptop} {
+      font-size: 18px;
+    }
+    @media ${theme.device.tablet} {
+      font-size: 16px;
+    }
+  }
+  p br {
+    @media ${theme.device.tablet} {
+      display: none;
+    }
   }
 `;
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 
-const SearchSidebar = () => {
+const SearchSidebar = ({ searchWord, activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -11,46 +11,20 @@ const SearchSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  // NOTE : 임시 데이터 추후 변경
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
   return (
     <StContainer $isSidebarOpen={isSidebarOpen}>
       <StTitle>
-        현재 위치 <span>전체</span> 결과 총 <span>14</span>개
+        현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{places.length}</span>개
       </StTitle>
       <StSearchList>
-        {items.map((item, index) => (
-          <StListItemWrapper key={item} $isFirstChild={index === 0}>
-            <ListItem key={item} handleClick={openModal} />
+        {places.map((place, index) => (
+          <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
+            <ListItem key={place.id} itemData={place} handleClick={openModal} />
           </StListItemWrapper>
         ))}
       </StSearchList>
       <StButton title={`${isSidebarOpen ? '검색 리스트 닫기' : '검색 리스트 열기'}`} onClick={toggleSidebar}>
-        {/* NOTE : 임시 svg, 따로 제공해줄지, react-icons사용할지 논의 */}
-        {isSidebarOpen ? (
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            viewBox="0 0 192 512"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path>
-          </svg>
-        ) : (
-          <svg
-            stroke="currentColor"
-            fill="currentColor"
-            viewBox="0 0 192 512"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M192 384.662V127.338c0-17.818-21.543-26.741-34.142-14.142L29.196 241.858c-7.81 7.81-7.81 20.474 0 28.284l128.662 128.662C170.457 411.404 192 402.48 192 384.662z"></path>
-          </svg>
-        )}
+        {isSidebarOpen ? <img src="/close.svg" /> : <img src="/open.svg" />}
       </StButton>
     </StContainer>
   );

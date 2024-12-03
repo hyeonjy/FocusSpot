@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import theme from '../styles/theme';
 
 const Header = () => {
   const [isLogin, setIsLogin] = useState(false); // 임시 auth state
@@ -49,6 +50,14 @@ const StHeader = styled.header`
   width: 100%;
   height: 100px;
   background: var(--color-white);
+  z-index: 999;
+  border-bottom: 1px solid #eee;
+  @media ${theme.device.laptop} {
+    height: 80px;
+  }
+  @media ${theme.device.mobile} {
+    height: 60px;
+  }
 `;
 
 const StInner = styled.div`
@@ -62,12 +71,28 @@ const StInner = styled.div`
 
 const StH1 = styled.h1`
   width: 232px;
+  img {
+    max-width: 100%;
+  }
+  @media ${theme.device.laptop} {
+    width: 190px;
+  }
+  @media ${theme.device.tablet} {
+    width: 160px;
+  }
+  @media ${theme.device.mobile} {
+    width: 140px;
+  }
 `;
 
 const StNav = styled.nav`
   ul {
     display: flex;
     gap: 50px;
+    @media ${theme.device.mobile} {
+      gap: 20px;
+      font-size: 14px;
+    }
   }
 `;
 
