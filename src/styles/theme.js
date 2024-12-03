@@ -2,7 +2,7 @@ const deviceSizes = {
   start: '1360px',
   laptop: '1024px',
   tablet: '768px',
-  mobile: '375px'
+  mobile: '420px'
 };
 
 const device = {
