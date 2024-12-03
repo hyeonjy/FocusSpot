@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
@@ -58,19 +58,56 @@ const Maps = () => {
         onDragEnd={handleDrag}
       >
         {markers.map((marker, index) => (
-          <MapMarker
-            key={`${marker.title}-${index}`}
-            position={marker.position}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: {
-                width: 24,
-                height: 35
-              }
-            }}
-            title={marker.title}
-          />
+          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
+            <button>
+              <img
+                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
+                style={{
+                  width: '36px',
+                  height: '691px',
+                  clip: `rect(${(index + 1) * 10}px, 36px, 46px, 0px)`,
+                  position: 'absolute',
+                  top: `-35px`,
+                  left: '-13px'
+                }}
+              />
+            </button>
+          </CustomOverlayMap>
         ))}
+        {/* {markers.map((marker, index) => (
+          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
+            <button>
+              <img
+                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
+                style={{
+                  width: '36px',
+                  height: '691px',
+                  clip: `rect(56px, 36px, 93px, 0px)`,
+                  position: 'absolute',
+                  top: `-81px`,
+                  left: '-13px'
+                }}
+              />
+            </button>
+          </CustomOverlayMap>
+        ))} */}
+        {/* {markers.map((marker, index) => (
+          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
+            <button>
+              <img
+                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
+                style={{
+                  width: '36px',
+                  height: '691px',
+                  clip: `rect(102px, 36px, 139px, 0px)`,
+                  position: 'absolute',
+                  top: `-81px`,
+                  left: '-13px'
+                }}
+              />
+            </button>
+          </CustomOverlayMap>
+        ))} */}
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
       <AddressList addresses={addresses} />
