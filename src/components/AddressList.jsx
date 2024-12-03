@@ -7,7 +7,7 @@ const AddressList = ({ addresses }) => {
       <StMap
         stroke="currentColor"
         fill="#2F3B84"
-        stroke-width="0"
+        strokeWidth="0"
         viewBox="0 0 384 512"
         height="1em"
         width="1em"

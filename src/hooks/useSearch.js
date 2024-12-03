@@ -15,6 +15,8 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
   };
 
   const createSearchPromises = (keywords) => {
+    const kakao = window.kakao;
+
     const ps = new kakao.maps.services.Places();
     const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng);
 
@@ -38,6 +40,8 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
   };
 
   const handleSearchResults = (results) => {
+    const kakao = window.kakao;
+
     const allPlaces = results.flat(); // 각 카테고리별 검색 결과를 합침
     const bounds = new kakao.maps.LatLngBounds(); // 지도 범위 설정
 
