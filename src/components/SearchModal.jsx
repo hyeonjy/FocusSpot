@@ -66,14 +66,22 @@ const StModal = styled.div`
   width: 100%;
   /* text-align: center; */
   position: relative;
+  z-index: 15;
 
-  h1 {
+  header {
+    margin-top: 25px;
+    margin-left: 5px;
+  }
+
+  header > h1 {
     font-size: 30px;
     font-weight: 400;
   }
 
   main {
-    padding-top: 20px;
+    padding: 10px;
+    margin-top: 50px;
+    margin-bottom: 10px;
   }
 
   main > h1 {
@@ -117,10 +125,13 @@ const StButtonBox = styled.div`
 `;
 
 const StTackButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid #00115e;
   border-radius: 3px;
   margin-right: 12px;
-  padding: 4px;
+  padding: 5px;
   cursor: pointer;
   &:hover {
     background-color: #dddddd;
