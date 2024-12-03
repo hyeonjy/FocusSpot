@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import CarouselList from '../components/CarouselList';
-import ListItem from '../components/ListItem';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import theme from '../styles/theme';
+import ListSection from '../components/home/ListSection';
 
 const Home = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
@@ -36,30 +35,8 @@ const Home = () => {
         </p>
       </StBanner>
 
-      <StListSection>
-        <StInner>
-          <StH3>주변 스터디카페</StH3>
-          <StList>
-            <CarouselList>
-              {bookmarks.map((bookmark) => {
-                return <ListItem key={bookmark.spot_id} itemData={bookmark.spots} />;
-              })}
-            </CarouselList>
-          </StList>
-        </StInner>
-      </StListSection>
-      <StListSection>
-        <StInner>
-          <StH3>주변 도서관</StH3>
-          <StList>
-            <CarouselList>
-              {bookmarks.map((bookmark) => {
-                return <ListItem key={bookmark.spot_id} itemData={bookmark.spots} />;
-              })}
-            </CarouselList>
-          </StList>
-        </StInner>
-      </StListSection>
+      <ListSection title="주변 스터디카페" listData={bookmarks} />
+      <ListSection title="주변 도서관" listData={bookmarks} />
     </>
   );
 };
@@ -197,39 +174,6 @@ const StBanner = styled.section`
   p br {
     @media ${theme.device.tablet} {
       display: none;
-    }
-  }
-`;
-
-const StListSection = styled.section`
-  margin-top: 100px;
-`;
-
-const StH3 = styled.h3`
-  font-size: 30px;
-  font-weight: 500;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  @media ${theme.device.tablet} {
-    font-size: 20px;
-    padding-bottom: 15px;
-  }
-`;
-
-const StList = styled.div`
-  .slick-list {
-    padding: 40px 0 10px;
-    margin: 0 -14px;
-  }
-  li {
-    border: var(--color-gray6) 1px solid;
-    margin: 0 14px;
-    padding: 35px 40px 35px 20px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    &:hover {
-      border: var(--color-primary) 1px solid;
-      box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
-      transform: translateY(-7px);
     }
   }
 `;

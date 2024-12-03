@@ -18,6 +18,8 @@ const Bookmark = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
   const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
+  // 북마크 추가 테스트
+
   // 렌더링 방지를 위해 useCallback으로 감싸봄
   const handleShowDetail = useCallback((itemData) => {
     console.log(`spot's card clicked`);
