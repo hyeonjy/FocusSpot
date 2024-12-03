@@ -14,7 +14,7 @@ const Maps = () => {
   const [map, setMap] = useState();
   const [addresses, setAddresses] = useState([]);
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
-  const activeFilter = searchParams.get('filter') || '전체'; // URL에서 filter 가져오기
+  const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
   const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
 
   useEffect(() => {
@@ -27,12 +27,14 @@ const Maps = () => {
   // 필터 버튼 클릭 핸들러
   const handleFilterClick = (filter) => {
     setSearchParams({ filter }); // URL 쿼리 파라미터 업데이트
+    setActiveFiler(filter);
     setSearchWord(''); // 검색어 초기화
   };
 
   // 검색 제출 핸들러
   const handleSearchSubmit = (word) => {
     setSearchWord(word);
+    setActiveFiler(word);
     setSearchParams({ filter: word }); // 필터 초기화
   };
 
