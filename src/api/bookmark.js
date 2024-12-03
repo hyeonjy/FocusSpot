@@ -41,12 +41,14 @@ export const addBookmark = async (itemData, userId) => {
     // DB에 존재하는 스팟이라면 (유저 중 누군가 이미 저장한 장소인 경우)
     // 저장 하지 않는다
     // 1. 장소가 DB에 존재하는 확인
+    // 장소명과 주소 일치 확인
     const { data: existingSpot, error: spotCheckError } = await supabase
       .from('spots')
       .select('id')
       .eq('place_name', itemData.place_name)
       .eq('address_name', itemData.address_name)
-      .single();
+      .maybeSingle();
+    // 주의: single()은 에러가 뜹니다
 
     if (spotCheckError && spotCheckError.code !== 'PGRST116') {
       // 일치하는 row가 없을 때 에러 코드 = 'PGRST116'
@@ -56,7 +58,6 @@ export const addBookmark = async (itemData, userId) => {
 
     // 존재한다면 spot의 id 저장
     let spotId = existingSpot?.id;
-
     // 2. 장소가 DB에 존재하지 않는다면 새로 저장
     // kakao에서 제공하는 itemData 객체에서 필요한 데이터만 저장
     if (!spotId) {
@@ -93,8 +94,13 @@ export const addBookmark = async (itemData, userId) => {
         }
       ])
       .select();
-
     if (bookmarkInsertError) throw bookmarkInsertError;
+
+    // 성공값 반환
+    return {
+      success: true,
+      bookmark: bookmarkData
+    };
   } catch (error) {
     console.error('Error ->', error);
     throw error;
