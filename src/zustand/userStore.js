@@ -2,23 +2,19 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const useUserStore = create(persist(set => ({
-    isGonnaSignOut: true,
-    isAuthenticated: false,
-    setIsAuthenticated: (boolean) => set(() => ({ isAuthenticated: boolean })),
-    setIsGonnaSignOut: (boolean) => set(() => ({ isGonnaSignOut: boolean }))
+  id: null,
+  name: null,
+  email: null,
+  profileImg: null,
+  isAuthenticated: false,
+  isSigningUp: false,
+  setId: (userId) => set(() => ({ id: userId })),
+  setName: (userName) => set(() => ({ name: userName })),
+  setEmail: (userEmail) => set(() => ({ email: userEmail })),
+  setProfileImg: (userProfileImg) => set(() => ({ profileImg: userProfileImg })),
+  setIsAuthenticated: (boolean) => set(() => ({ isAuthenticated: boolean })),
+  setIsSigningUp: (boolean) => set(() => ({ isSigningUp: boolean })),
 }), {
-    name: "userAuth",
+  name: "userAuth",
 }
 ))
-
-/*
-create(
-  persist(
-    {
-      name: "todos-storage", // 저장소 이름을 설정해요!
-      // getStorage: () => sessionStorage, // localStorage가 아닌 곳에 저정하고 싶다면!
-    }
-  )
-);
-
-*/
