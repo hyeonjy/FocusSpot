@@ -10,14 +10,15 @@ import useCurrentLocation from '../hooks/useCurrentLocation';
 
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchWord, setSearchWord] = useState('');
+  const [searchWord, setSearchWord] = useState(''); // 장소 검색 단어
   const [map, setMap] = useState();
-  const [addresses, setAddresses] = useState([]);
+  const [addresses, setAddresses] = useState([]); // 지도에서 보고 있는 위치 표시 ex) 부산 > 해운대구 > 우동
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
   const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
-  const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
+  const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
 
   useEffect(() => {
+    // 현재 보고 있는 지도 위치 표시 업데이트 ex) 부산 > 수영구 > 망미동
     if (places.length > 0) {
       const filterAddress = places[0].address_name.split(' ').slice(0, 3);
       setAddresses(filterAddress);
@@ -38,6 +39,7 @@ const Maps = () => {
     setSearchParams({ filter: word }); // 필터 초기화
   };
 
+  // 지도 드래그 endpoint로 지도 위치 표시 업데이트 핸들러
   const handleDrag = async () => {
     const newCenter = map.getCenter();
     const newLat = newCenter.getLat();
@@ -59,6 +61,17 @@ const Maps = () => {
         onCreate={setMap}
         onDragEnd={handleDrag}
       >
+        <MapMarker
+          image={{
+            src: '/dot.svg',
+            size: {
+              width: 40,
+              height: 40
+            }
+          }}
+          position={currentLocation.center}
+          title="현재 위치"
+        />
         {markers.map((marker, index) => (
           <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
             <button title={marker.title}>
