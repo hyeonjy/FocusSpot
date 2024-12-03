@@ -15,6 +15,7 @@ const Bookmark = () => {
     data: null
   });
   const [isDetail, setIsDetail] = useState(false);
+  const [bookmarkActivated, setBookmarkActivated] = useState(true);
 
   // 테스트용 유저 uuid
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
@@ -57,7 +58,13 @@ const Bookmark = () => {
       <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
 
       {/* 모달 */}
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail} itemData={modalContent.data}>
+      <Modal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        isDetail={isDetail}
+        itemData={modalContent.data}
+        bookmarkActivated={bookmarkActivated}
+      >
         {modalContent.type === 'detail' ? (
           <DetailContent place={modalContent.data} />
         ) : (

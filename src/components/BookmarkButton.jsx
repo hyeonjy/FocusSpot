@@ -4,9 +4,9 @@ import { useUserStore } from '../zustand/userStore';
 import useAddBookmark from '../hooks/useAddBookmark';
 import useDeleteBookmark from '../hooks/useDeleteBookmark';
 
-const BookmarkButton = ({ itemData }) => {
+const BookmarkButton = ({ itemData, bookmarkActivated }) => {
   const { id: userId } = useUserStore();
-  const [activated, setActivated] = useState(false);
+  const [activated, setActivated] = useState(bookmarkActivated);
   const { mutate: addBookmark, isPending: adding } = useAddBookmark(userId);
   const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(userId);
 
