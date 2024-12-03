@@ -1,18 +1,18 @@
-const deviceSizes = {
-  start: '1360px',
-  laptop: '1024px',
-  tablet: '768px',
-  mobile: '420px'
+export const deviceSizes = {
+  start: 1360,
+  laptop: 1024,
+  tablet: 768,
+  mobile: 420
 };
 
 const device = {
-  start: `screen and (max-width: ${deviceSizes.start})`,
-  laptop: `screen and (max-width: ${deviceSizes.laptop})`,
-  tablet: `screen and (max-width: ${deviceSizes.tablet})`,
-  mobile: `screen and (max-width: ${deviceSizes.mobile})`
+  start: `screen and (max-width: ${deviceSizes.start}px)`,
+  laptop: `screen and (max-width: ${deviceSizes.laptop}px)`,
+  tablet: `screen and (max-width: ${deviceSizes.tablet}px)`,
+  mobile: `screen and (max-width: ${deviceSizes.mobile}px)`
 };
 
-const theme = {
+export const theme = {
   device
 };
 
