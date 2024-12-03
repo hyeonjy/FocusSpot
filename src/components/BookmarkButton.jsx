@@ -5,11 +5,12 @@ import useAddBookmark from '../hooks/useAddBookmark';
 import useDeleteBookmark from '../hooks/useDeleteBookmark';
 
 const BookmarkButton = ({ itemData }) => {
-  const { id } = useUserStore();
+  const { id: userId } = useUserStore();
   const [activated, setActivated] = useState(false);
-  const { mutate: addBookmark, isPending: adding } = useAddBookmark(id);
-  const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(id);
+  const { mutate: addBookmark, isPending: adding } = useAddBookmark(userId);
+  const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(userId);
 
+  // 버튼 기능
   const toggleBookmark = () => {
     setActivated((prev) => !prev);
     if (activated) {
