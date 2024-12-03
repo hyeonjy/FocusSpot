@@ -4,7 +4,7 @@ import supabase from "./superbaseClient"
 const hostingUrl = 'http://localhost:8088'
 
 export const googleSignIn = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
             queryParams: {
@@ -14,7 +14,9 @@ export const googleSignIn = async () => {
             redirectTo: `${hostingUrl}/login`
         },
     });
-    if(error) console.error(error);
+    if (error) console.error(error);
+    console.log(data);
+    return data
 }
 
 export const googleSignOut = async () => {
@@ -23,6 +25,22 @@ export const googleSignOut = async () => {
 }
 
 export const getUserAuth = async () => {
-    const { error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
     if (error) console.error(error);
+    return data
+}
+
+export const getUserData = async () => {
+    const data = await getUserAuth();
+    const { data: userData, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', data.user.email)
+        .single();
+    console.error(error);
+    if (userData) {
+        const { id, email, name, profile_picture } = userData;
+
+        return { userId: id, email, name, profileImg: profile_picture }
+    }
 }
