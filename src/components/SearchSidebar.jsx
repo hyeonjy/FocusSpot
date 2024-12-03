@@ -1,32 +1,47 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
+import SearchModal from './SearchModal';
 
 const SearchSidebar = ({ searchWord, activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
-  const openModal = () => setIsModalOpen(true);
+  const openModal = (place) => {
+    setSelectedPlace(place);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPlace(null);
+    setIsModalOpen(false);
+  };
+
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
   return (
-    <StContainer $isSidebarOpen={isSidebarOpen}>
-      <StTitle>
-        현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{places.length}</span>개
-      </StTitle>
-      <StSearchList>
-        {places.map((place, index) => (
-          <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
-            <ListItem key={place.id} itemData={place} handleClick={openModal} />
-          </StListItemWrapper>
-        ))}
-      </StSearchList>
-      <StButton title={`${isSidebarOpen ? '검색 리스트 닫기' : '검색 리스트 열기'}`} onClick={toggleSidebar}>
-        {isSidebarOpen ? <img src="/close.svg" /> : <img src="/open.svg" />}
-      </StButton>
-    </StContainer>
+    <>
+      <StContainer $isSidebarOpen={isSidebarOpen}>
+        <StTitle>
+          현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{places.length}</span>개
+        </StTitle>
+        <StSearchList>
+          {places.map((place, index) => (
+            <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
+              <ListItem key={place.id} index={index} itemData={place} handleClick={() => openModal(place)} />
+            </StListItemWrapper>
+          ))}
+        </StSearchList>
+        <StButton title={`${isSidebarOpen ? '검색 리스트 닫기' : '검색 리스트 열기'}`} onClick={toggleSidebar}>
+          {isSidebarOpen ? <img src="/close.svg" /> : <img src="/open.svg" />}
+        </StButton>
+      </StContainer>
+
+      {isModalOpen && <SearchModal place={selectedPlace} activeFilter={activeFilter} onClose={closeModal} />}
+    </>
   );
 };
 
@@ -41,7 +56,7 @@ const StContainer = styled.aside`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 5px 0px 15px 0px;
   transform: translate3d(${({ $isSidebarOpen }) => ($isSidebarOpen ? '0' : '380px')}, 0, 0);
   transition: transform 300ms ease-in-out;
-  z-index: 99999;
+  z-index: 12;
 `;
 
 const StTitle = styled.h2`
@@ -88,7 +103,7 @@ const StButton = styled.button`
   border-radius: 4px 0px 0px 4px;
   transform: translateY(-50%);
   box-shadow: rgba(0, 0, 0, 0.1) -4px 1px 4px 0px;
-  z-index: 99999;
+  z-index: 12;
 
   &:focus {
     box-shadow: rgba(0, 0, 0, 0.1) -4px 1px 4px 0px;
