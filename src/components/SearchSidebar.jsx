@@ -5,7 +5,7 @@ import SearchModal from './SearchModal';
 
 const SearchSidebar = ({ searchWord, activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   const openModal = (place) => {
