@@ -4,6 +4,7 @@ import Modal from '../components/Modal';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
+import SearchModal from '../components/SearchModal';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -54,7 +55,11 @@ const Bookmark = () => {
       {/* 모달 */}
       {modalOpen && (
         <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-          {modalContent.type === 'detail' ? <p>디테일 컴포넌트로 변경</p> : <p>프로필 수정 form으로 변경</p>}
+          {modalContent.type === 'detail' ? (
+            <SearchModal place={modalContent.data} activeFilter="" onClose={() => setModalOpen(false)} />
+          ) : (
+            <p>프로필 수정 form으로 변경</p>
+          )}
         </Modal>
       )}
     </StBookmarkPage>

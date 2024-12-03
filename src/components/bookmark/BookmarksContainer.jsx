@@ -14,7 +14,6 @@ const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
           bookmarks.map((bookmark, i) => {
             return (
               <ListItem
-                index={i}
                 key={bookmark.spot_id}
                 handleClick={() => onShowDetail(bookmark.spots)}
                 itemData={bookmark.spots}

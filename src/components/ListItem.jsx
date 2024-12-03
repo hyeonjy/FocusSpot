@@ -24,7 +24,7 @@ const ListItem = ({ index, handleClick, itemData = defaultData }) => {
     <StContainer>
       <button onClick={handleClick}></button>
       <StHeaderWrapper>
-        <StIndex>{index + 1}</StIndex>
+        {index > -1 && <StIndex>{index + 1}</StIndex>}
         <StTitle>{itemData.place_name}</StTitle>
       </StHeaderWrapper>
       <StCategory>{finalCategory}</StCategory>
