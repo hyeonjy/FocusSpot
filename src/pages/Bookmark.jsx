@@ -4,6 +4,7 @@ import Modal from '../components/Modal';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
+import DetailContent from '../components/DetailContent';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -12,6 +13,7 @@ const Bookmark = () => {
     type: '',
     data: null
   });
+  const [isDetail, setIsDetail] = useState(false);
 
   // 테스트용 유저 uuid
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
@@ -23,12 +25,14 @@ const Bookmark = () => {
   // 렌더링 방지를 위해 useCallback으로 감싸봄
   const handleShowDetail = useCallback((itemData) => {
     console.log(`spot's card clicked`);
+    setIsDetail(true);
     setModalContent({ type: 'detail', data: itemData });
     setModalOpen(true);
   }, []);
 
   const handleShowProfile = useCallback(() => {
     setModalOpen(true);
+    setIsDetail(false);
     setModalContent({ type: 'profile', data: '제발 프로필 떠라ㅏㅏ' });
   }, []);
 
@@ -52,11 +56,13 @@ const Bookmark = () => {
       <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
 
       {/* 모달 */}
-      {modalOpen && (
-        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-          {modalContent.type === 'detail' ? <p>디테일 컴포넌트로 변경</p> : <p>프로필 수정 form으로 변경</p>}
-        </Modal>
-      )}
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail}>
+        {modalContent.type === 'detail' ? (
+          <DetailContent place={modalContent.data} />
+        ) : (
+          <p>프로필 수정 form으로 변경</p>
+        )}
+      </Modal>
     </StBookmarkPage>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import SearchModal from './SearchModal';
+import Modal from './Modal';
+import DetailContent from './DetailContent';
 
 const SearchResults = ({ places, activeFilter }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -45,7 +45,9 @@ const SearchResults = ({ places, activeFilter }) => {
         {isOpen ? '>' : '<'}
       </StToggleButton>
 
-      {isModalOpen && <SearchModal place={selectedPlace} activeFilter={activeFilter} onClose={closeModal} />}
+      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true}>
+        <DetailContent place={selectedPlace} activeFilter={activeFilter} />
+      </Modal>
     </>
   );
 };
