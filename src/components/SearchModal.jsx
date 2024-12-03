@@ -4,8 +4,15 @@ import styled from 'styled-components';
 const SearchModal = ({ place, activeFilter, onClose }) => {
   if (!place) return null;
 
+  // 클릭된 요소가 모달 영역이 아니면 닫기
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <StModalOverlay>
+    <StModalOverlay onClick={handleOverlayClick}>
       <StModal>
         <header>
           <StModalCategory>{place.category_name.split('>').pop().trim()}</StModalCategory>
