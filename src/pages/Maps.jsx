@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
