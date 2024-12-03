@@ -17,7 +17,7 @@ export const getAddressByCoordinates = async (lat, lng) => {
 export const createSearchPromises = (currentLocation, keywords, searchWord) => {
   const kakao = window.kakao;
   const ps = new kakao.maps.services.Places();
-  const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng);
+  const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng); // LatLng 객체만들기
 
   return keywords.map((keyword) => {
     return new Promise((resolve) => {
