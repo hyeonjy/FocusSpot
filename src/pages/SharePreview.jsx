@@ -5,6 +5,7 @@ import ListItem from '../components/ListItem';
 import Modal from '../components/Modal';
 import AuthForm from '../components/AuthForm';
 import AuthContainer from '../components/AuthContainer';
+import Search2 from '../components/Search2';
 
 const SharePreview = () => {
   const [inputValue, setInputValue] = useState('');
@@ -33,16 +34,14 @@ const SharePreview = () => {
         />
       </div>
 
-      <ul style={{ marginTop: '20px', maxWidth: '300px' }}>
-        <ListItem handleClick={openModal} />
-      </ul>
-
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <AuthForm mode="edit"></AuthForm>
       </Modal>
 
       <AuthContainer mode="login"></AuthContainer>
       <AuthContainer mode="signup"></AuthContainer>
+
+      <Search2 />
     </>
   );
 };

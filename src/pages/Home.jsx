@@ -65,10 +65,11 @@ const Home = () => {
 };
 
 const StMainVisual = styled.section`
+  position: relative;
   width: 100%;
   padding: 50px 0 160px;
   @media ${theme.device.tablet} {
-    padding: 20vw 0;
+    padding: 150px 0 200px;
   }
 `;
 
@@ -82,24 +83,26 @@ const Stflex = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  position: relative;
   @media ${theme.device.tablet} {
     flex-wrap: wrap;
   }
 `;
 
 const StTitleArea = styled.div`
-  @media ${theme.device.tablet} {
-    margin: 0 auto;
+  @media ${theme.device.mobile} {
     text-align: center;
+    margin: 0 auto;
   }
-
   h2 {
     font-size: 3.1vw;
     font-weight: 500;
     letter-spacing: -2.5px;
     @media ${theme.device.laptop} {
       font-size: 30px;
+    }
+    @media ${theme.device.mobile} {
+      font-size: 27px;
+      letter-spacing: -1px;
     }
   }
   p {
@@ -119,7 +122,9 @@ const StTitleArea = styled.div`
     @media ${theme.device.tablet} {
       width: 160px;
       padding: 15px 0 13px;
-      margin: 30px auto;
+    }
+    @media ${theme.device.mobile} {
+      margin: 60px auto;
     }
   }
 `;
@@ -133,7 +138,18 @@ const StVisualImage = styled.div`
   position: relative;
 
   @media ${theme.device.tablet} {
-    display: none;
+    position: absolute;
+    right: 5%;
+    bottom: 100px;
+    z-index: -1;
+    width: 250px;
+    opacity: 0.2;
+  }
+  @media ${theme.device.mobile} {
+    right: 50%;
+    bottom: 130px;
+    aspect-ratio: 1/0.8;
+    margin-right: -125px;
   }
 `;
 
@@ -151,6 +167,7 @@ const StBanner = styled.section`
   @media ${theme.device.tablet} {
     height: 280px;
     background-size: cover;
+    background: none;
   }
   strong {
     font-size: 40px;
@@ -193,6 +210,10 @@ const StH3 = styled.h3`
   font-weight: 500;
   padding-bottom: 20px;
   border-bottom: 1px solid #ccc;
+  @media ${theme.device.tablet} {
+    font-size: 20px;
+    padding-bottom: 15px;
+  }
 `;
 
 const StList = styled.div`
