@@ -7,13 +7,11 @@ export const useUserStore = create(persist(set => ({
   email: null,
   profileImg: null,
   isAuthenticated: false,
-  isSigningUp: false,
   setId: (userId) => set(() => ({ id: userId })),
   setName: (userName) => set(() => ({ name: userName })),
   setEmail: (userEmail) => set(() => ({ email: userEmail })),
   setProfileImg: (userProfileImg) => set(() => ({ profileImg: userProfileImg })),
   setIsAuthenticated: (boolean) => set(() => ({ isAuthenticated: boolean })),
-  setIsSigningUp: (boolean) => set(() => ({ isSigningUp: boolean })),
 }), {
   name: "userAuth",
 }
