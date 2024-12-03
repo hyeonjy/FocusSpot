@@ -41,7 +41,7 @@ const SearchSidebar = ({ searchWord, activeFilter, places }) => {
         </StButton>
       </StContainer>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true} itemData={selectedPlace}>
         <DetailContent place={selectedPlace} activeFilter={activeFilter} />
       </Modal>
     </>

@@ -28,7 +28,7 @@ const StAddressList = styled.ol`
   background-color: var(--color-white);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
   transform: translateX(-50%);
-  z-index: 99999;
+  z-index: 800;
 
   img {
     margin-right: 10px;

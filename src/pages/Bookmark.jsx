@@ -5,6 +5,7 @@ import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
 import DetailContent from '../components/DetailContent';
+import { useUserStore } from '../zustand/userStore';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -17,7 +18,7 @@ const Bookmark = () => {
 
   // 테스트용 유저 uuid
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
-  const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
+  const { id: userId } = useUserStore();
   const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
   // 북마크 추가 테스트
@@ -56,7 +57,7 @@ const Bookmark = () => {
       <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
 
       {/* 모달 */}
-      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail}>
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail} itemData={modalContent.data}>
         {modalContent.type === 'detail' ? (
           <DetailContent place={modalContent.data} />
         ) : (

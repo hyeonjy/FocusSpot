@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import BookmarkButton from './BookmarkButton';
 
-const Modal = ({ isOpen, onClose, children, isDetail = null }) => {
+const Modal = ({ isOpen, onClose, children, isDetail = null, itemData }) => {
   // 스크롤 비활성화
   useEffect(() => {
     if (isOpen) {
@@ -23,7 +23,7 @@ const Modal = ({ isOpen, onClose, children, isDetail = null }) => {
     <StOverlay onClick={onClose} $isOpen={isOpen}>
       <StModalContainer onClick={(e) => e.stopPropagation()} $isOpen={isOpen}>
         {isDetail && (
-            <BookmarkButton/>
+          <BookmarkButton itemData={itemData} />
         )}
         <StCloseButton onClick={onClose}>X</StCloseButton>
         {children}
