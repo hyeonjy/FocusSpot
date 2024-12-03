@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import useKakaoLoader from '../hooks/useKakaoLoader';
+import React, { useState } from 'react';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
@@ -8,20 +7,23 @@ import useCurrentLocation from '../hooks/useCurrentLocation';
 import useSearchCategories from '../hooks/useSearchCategories';
 
 const Maps = () => {
-  const { loading, error } = useKakaoLoader();
+  const [searchWord, setSearchWord] = useState('');
   const [activeFilter, setActiveFilter] = useState('전체'); // 장소 카테고리 필터
   const [map, setMap] = useState();
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
-  const markers = useSearchCategories(map, activeFilter, currentLocation);
-  // const [places, setPlaces] = useState([]); // 장소 검색 결과를 저장하는 배열
+  const { markers, places } = useSearchCategories(map, activeFilter, currentLocation, searchWord);
   const addresses = ['경기도', '부천시 원미구', '상2동']; // NOTE : 임시 현재 주소 데이터
 
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
+    setSearchWord('');
   };
+  console.log(markers);
 
-  if (loading) return <p>지도를 로드 중입니다...</p>;
-  if (error) return <p>지도를 로드하는 데 실패했습니다: {error.message}</p>;
+  const handleSearchSubmit = (word) => {
+    setSearchWord(word);
+    setActiveFilter('');
+  };
 
   return (
     <>
@@ -49,9 +51,9 @@ const Maps = () => {
           />
         ))}
       </Map>
-      <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} />
+      <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
       <AddressList addresses={addresses} />
-      <SearchSidebar />
+      <SearchSidebar places={places} activeFilter={activeFilter} />
     </>
   );
 };

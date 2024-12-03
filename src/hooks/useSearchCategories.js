@@ -1,18 +1,25 @@
 import { useEffect, useState } from 'react';
 
-const useSearchCategories = (map, activeFilter, currentLocation) => {
+const useSearchCategories = (map, activeFilter, currentLocation, searchWord) => {
   const [markers, setMarkers] = useState([]);
+  const [places, setPlaces] = useState([]); // 장소 검색 결과를 저장하는 배열
 
   useEffect(() => {
     if (!map || !currentLocation) return;
 
     const ps = new kakao.maps.services.Places();
     const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng);
-    const keywords = activeFilter === '전체' ? ['스터디카페', '카페', '도서관'] : [activeFilter]; // 카테고리에 따라 검색할 키워드 설정
+    const keywords = searchWord
+      ? [searchWord]
+      : activeFilter === '전체'
+      ? ['스터디카페', '카페', '도서관']
+      : [activeFilter];
 
     const promises = keywords.map(
       (keyword) =>
         new Promise((resolve) => {
+          const options = searchWord ? {} : { location: currentLatLng, radius: 5000 };
+
           ps.keywordSearch(
             keyword,
             (data, status) => {
@@ -22,7 +29,7 @@ const useSearchCategories = (map, activeFilter, currentLocation) => {
                 resolve([]); // 결과가 없으면 빈 배열
               }
             },
-            { location: currentLatLng, radius: 5000 } // 현재 위치를 기준으로 5km 이내
+            options // 현재 위치를 기준으로 5km 이내
           );
         })
     );
@@ -45,12 +52,13 @@ const useSearchCategories = (map, activeFilter, currentLocation) => {
         };
       });
 
+      setPlaces(allPlaces);
       setMarkers(newMarkers); // 마커 상태 업데이트
       map.setBounds(bounds); // 지도 범위 설정
     });
-  }, [currentLocation, activeFilter]);
+  }, [currentLocation, activeFilter, searchWord]);
 
-  return markers;
+  return { markers, places };
 };
 
 export default useSearchCategories;
