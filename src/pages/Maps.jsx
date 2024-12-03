@@ -70,7 +70,7 @@ const Maps = () => {
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
       <AddressList addresses={addresses} />
-      <SearchSidebar places={places} activeFilter={activeFilter} />
+      <SearchSidebar searchWord={searchWord} places={places} activeFilter={activeFilter} />
     </>
   );
 };
