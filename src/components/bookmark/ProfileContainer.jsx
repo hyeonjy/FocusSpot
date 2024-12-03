@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
+import { useUserStore } from '../../zustand/userStore';
 
 const ProfileContainer = ({ openModal }) => {
   // TODO: 유저 정보 zustand에서 가져오는 부분 필요
+  const { name, email, profileImg } = useUserStore();
   return (
     <StProfileSection>
-      <StProfilePicture alt={'profile image'} src={'https://www.w3schools.com/css/paris.jpg'} />
+      <StProfilePicture alt={'profile image'} src={profileImg} />
       <StProfileDetails>
-        <StH1>김철수!</StH1>
-        <StUserEmail>test1234@naver.com</StUserEmail>
+        <StH1>{name}</StH1>
+        <StUserEmail>{email}</StUserEmail>
         <Button size="small" color="primary" fill={false} label="프로필 수정" handleClick={openModal} />
       </StProfileDetails>
     </StProfileSection>
