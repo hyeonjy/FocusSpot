@@ -4,14 +4,14 @@ import AddressList from '../components/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useCurrentLocation from '../hooks/useCurrentLocation';
-import useSearchCategories from '../hooks/useSearchCategories';
+import useSearch from '../hooks/useSearch';
 
 const Maps = () => {
   const [searchWord, setSearchWord] = useState('');
   const [activeFilter, setActiveFilter] = useState('전체'); // 장소 카테고리 필터
   const [map, setMap] = useState();
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
-  const { markers, places } = useSearchCategories(map, activeFilter, currentLocation, searchWord);
+  const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
   const addresses = ['경기도', '부천시 원미구', '상2동']; // NOTE : 임시 현재 주소 데이터
 
   const handleFilterClick = (filter) => {
