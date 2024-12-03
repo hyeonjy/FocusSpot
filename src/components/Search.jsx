@@ -1,7 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const Search = ({ activeFilter, handleFilterClick }) => {
+const Search = ({ activeFilter, handleFilterClick, onSearchSubmit }) => {
+  const [text, setText] = useState('');
+
+  const handleSearchChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setText('');
+    onSearchSubmit(text);
+  };
+
   return (
     <StSearchContainer>
       <StLogoBox>
@@ -9,11 +21,11 @@ const Search = ({ activeFilter, handleFilterClick }) => {
         <StLoginButton>로그인</StLoginButton>
       </StLogoBox>
       <StSearchBox>
-        <StSearchForm>
-          <StSearchInput placeholder="장소를 검색해주세요." />
-          <div style={{ marginRight: '15px' }}>
+        <StSearchForm onSubmit={handleSubmit}>
+          <StSearchInput placeholder="장소를 검색해주세요." value={text} onChange={handleSearchChange} />
+          <button style={{ marginRight: '15px' }}>
             <img src="/search.svg" />
-          </div>
+          </button>
         </StSearchForm>
         <StButtonGroup>
           <StFilterButton $isActive={activeFilter === '전체'} onClick={() => handleFilterClick('전체')}>
