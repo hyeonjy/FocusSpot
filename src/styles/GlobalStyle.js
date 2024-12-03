@@ -43,6 +43,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     /* background-color: var(--background);*/
+    
   } 
 
   h1 {
@@ -98,7 +99,10 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
-  main { padding: 100px 0; }
+  main { 
+    padding: 100px 0;
+    overflow: hidden;
+  }
 
 
 `;
