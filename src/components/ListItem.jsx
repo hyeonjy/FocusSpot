@@ -9,7 +9,7 @@ const defaultData = {
   phone: '010-1234-3456'
 };
 
-const ListItem = ({ handleClick, itemData = defaultData }) => {
+const ListItem = ({ index, handleClick, itemData = defaultData }) => {
   // 세부 카테고리를 위한 trimming
   // 원래 데이터 - 서비스,산업 > 전문대행 > 공간대여 > 스터디카페,스터디룸
   const categories = itemData.category_name.split('>');
@@ -23,7 +23,10 @@ const ListItem = ({ handleClick, itemData = defaultData }) => {
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      <StTitle>{itemData.place_name}</StTitle>
+      <StHeaderWrapper>
+        <StIndex>{index + 1}</StIndex>
+        <StTitle>{itemData.place_name}</StTitle>
+      </StHeaderWrapper>
       <StCategory>{finalCategory}</StCategory>
       {itemData.road_address_name && <StAddress>{itemData.road_address_name}</StAddress>}
       {itemData.address_name && <StAddress>{trimmedAddress}</StAddress>}
@@ -46,6 +49,20 @@ const StContainer = styled.li`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+`;
+
+const StHeaderWrapper = styled.header`
+  display: flex;
+`;
+
+const StIndex = styled.p`
+  position: relative;
+  top: 1px;
+  font-size: 18px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-secondary);
+  margin-right: 7px;
 `;
 
 const StTitle = styled.p`

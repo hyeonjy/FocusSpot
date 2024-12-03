@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
@@ -60,18 +60,21 @@ const Maps = () => {
         onDragEnd={handleDrag}
       >
         {markers.map((marker, index) => (
-          <MapMarker
-            key={`${marker.title}-${index}`}
-            position={marker.position}
-            image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: {
-                width: 24,
-                height: 35
-              }
-            }}
-            title={marker.title}
-          />
+          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
+            <button title={marker.title}>
+              <img
+                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
+                style={{
+                  width: '36px',
+                  height: '691px',
+                  clip: `rect(${10 + index * 46}px, 36px, ${10 + index * 46 + 36}px, 0px)`,
+                  position: 'absolute',
+                  top: `${-35 - index * 46}px`,
+                  left: '-13px'
+                }}
+              />
+            </button>
+          </CustomOverlayMap>
         ))}
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
