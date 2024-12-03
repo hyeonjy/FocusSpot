@@ -10,7 +10,7 @@ export const getBookmarkByUserId = async (userId) => {
     if (error) throw error;
     return data;
   } catch (error) {
-    console.log(error);
+    console.error('[FetchUserBookmark] Error ->', error);
     throw error;
   }
 };
@@ -29,7 +29,7 @@ export const getMostBookmarkedSpots = async (limit = 10) => {
     if (error) throw error;
     return data;
   } catch (error) {
-    console.log(error);
+    console.error('[FetchMostBookmarks] Error ->', error);
     throw error;
   }
 };
@@ -102,7 +102,19 @@ export const addBookmark = async (itemData, userId) => {
       bookmark: bookmarkData
     };
   } catch (error) {
-    console.error('Error ->', error);
+    console.error('[AddBookmark] Error ->', error);
+    throw error;
+  }
+};
+
+// 북마크 지우기
+export const deleteBookmark = async (spotId, userId) => {
+  try {
+    const { error } = await supabase.from('bookmarks').delete().eq('user_id', userId).eq('spot_id', spotId);
+    if (error) throw error
+    return true;
+  } catch (error) {
+    console.error('[DeleteBookmark] Error ->', error);
     throw error;
   }
 };

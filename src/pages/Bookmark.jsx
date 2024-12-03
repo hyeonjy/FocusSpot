@@ -35,7 +35,7 @@ const Bookmark = () => {
   const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
   // 북마크 추가 테스트
-  const { mutate: addBookmark, isPending: addPending, isError: addError } = useAddBookmark(userId);
+  const { mutate: addBookmark } = useAddBookmark(userId);
 
   // 렌더링 방지를 위해 useCallback으로 감싸봄
   const handleShowDetail = useCallback((itemData) => {
@@ -64,9 +64,15 @@ const Bookmark = () => {
     addBookmark({ itemData });
   };
 
+  const handleDeleteBookmark = () => {
+    console.log('북마크 제거 실행');
+  };
+
   return (
     <StBookmarkPage>
+      <br />
       <Button size="small" color="primary" fill={false} label="북마크 추가" handleClick={handleAddBookmark} />
+      <Button size="small" color="primary" fill={false} label="북마크 삭제" handleClick={handleDeleteBookmark} />
       {/* 프로파일 섹션 */}
       {/* openModal 부분이 props drilling 되고 있음 2단계 정도*/}
       <ProfileContainer openModal={handleShowProfile} />
