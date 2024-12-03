@@ -25,8 +25,8 @@ const ListItem = ({ handleClick, itemData = defaultData }) => {
       <button onClick={handleClick}></button>
       <StTitle>{itemData.place_name}</StTitle>
       <StCategory>{finalCategory}</StCategory>
-      <StAddress>{itemData.road_address_name || '제공된 주소 없음'}</StAddress>
-      <StAddress>{trimmedAddress || '제공된 주소 없음'}</StAddress>
+      {itemData.road_address_name && <StAddress>{itemData.road_address_name}</StAddress>}
+      {itemData.address_name && <StAddress>{trimmedAddress}</StAddress>}
       <StPhone>{itemData.phone ? itemData.phone : '전화번호 없음'}</StPhone>
     </StContainer>
   );

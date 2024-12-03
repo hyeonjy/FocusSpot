@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
+import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchWord, setSearchWord] = useState('');
   const [map, setMap] = useState();
+  const [addresses, setAddresses] = useState([]);
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
-
-  // URL에서 filter 가져오기
-  const activeFilter = searchParams.get('filter') || '전체';
-
+  const activeFilter = searchParams.get('filter') || '전체'; // URL에서 filter 가져오기
   const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
-  const addresses = ['경기도', '부천시 원미구', '상2동']; // NOTE: 임시 현재 주소 데이터
+
+  useEffect(() => {
+    if (places.length > 0) {
+      const filterAddress = places[0].address_name.split(' ').slice(0, 3);
+      setAddresses(filterAddress);
+    }
+  }, [places]);
 
   // 필터 버튼 클릭 핸들러
   const handleFilterClick = (filter) => {
@@ -31,6 +36,15 @@ const Maps = () => {
     setSearchParams({ filter: word }); // 필터 초기화
   };
 
+  const handleDrag = async () => {
+    const newCenter = map.getCenter();
+    const newLat = newCenter.getLat();
+    const newLng = newCenter.getLng();
+
+    const updatedAddresses = await getAddressByCoordinates(newLat, newLng);
+    setAddresses(updatedAddresses);
+  };
+
   return (
     <>
       <Map
@@ -41,6 +55,7 @@ const Maps = () => {
         }}
         level={3}
         onCreate={setMap}
+        onDragEnd={handleDrag}
       >
         {markers.map((marker, index) => (
           <MapMarker
@@ -59,7 +74,7 @@ const Maps = () => {
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
       <AddressList addresses={addresses} />
-      <SearchSidebar places={places} activeFilter={activeFilter} />
+      <SearchSidebar searchWord={searchWord} places={places} activeFilter={activeFilter} />
     </>
   );
 };
