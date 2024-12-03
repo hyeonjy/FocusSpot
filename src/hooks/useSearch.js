@@ -20,7 +20,7 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
 
     return keywords.map((keyword) => {
       return new Promise((resolve) => {
-        const options = searchWord ? {} : { location: currentLatLng, radius: 5000 };
+        const options = searchWord ? {} : { location: currentLatLng, radius: 1000 };
 
         ps.keywordSearch(
           keyword,
