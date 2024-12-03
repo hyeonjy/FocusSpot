@@ -1,28 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 import useSearch from '../hooks/useSearch';
+import { getAddressByCoordinates } from '../api/map';
 
 const Maps = () => {
   const [searchWord, setSearchWord] = useState('');
   const [activeFilter, setActiveFilter] = useState('전체'); // 장소 카테고리 필터
   const [map, setMap] = useState();
+  const [addresses, setAddresses] = useState([]);
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
   const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
-  const addresses = ['경기도', '부천시 원미구', '상2동']; // NOTE : 임시 현재 주소 데이터
+
+  useEffect(() => {
+    if (places.length > 0) {
+      const filterAddress = places[0].address_name.split(' ').slice(0, 3);
+      setAddresses(filterAddress);
+    }
+  }, [places]);
 
   const handleFilterClick = (filter) => {
     setActiveFilter(filter);
     setSearchWord('');
   };
-  console.log(markers);
 
   const handleSearchSubmit = (word) => {
     setSearchWord(word);
     setActiveFilter('');
+  };
+
+  const handleDrag = async () => {
+    const newCenter = map.getCenter();
+    const newLat = newCenter.getLat();
+    const newLng = newCenter.getLng();
+
+    const updatedAddresses = await getAddressByCoordinates(newLat, newLng);
+    setAddresses(updatedAddresses);
   };
 
   return (
@@ -35,6 +51,7 @@ const Maps = () => {
         }}
         level={3}
         onCreate={setMap}
+        onDragEnd={handleDrag}
       >
         {markers.map((marker, index) => (
           <MapMarker
