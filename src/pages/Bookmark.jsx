@@ -6,6 +6,7 @@ import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
 import Button from '../components/Button';
 import useAddBookmark from '../hooks/useAddBookmark';
+import useDeleteBookmark from '../hooks/useDeleteBookmark';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -36,6 +37,7 @@ const Bookmark = () => {
 
   // 북마크 추가 테스트
   const { mutate: addBookmark } = useAddBookmark(userId);
+  const { mutate: deleteBookmark } = useDeleteBookmark(userId);
 
   // 렌더링 방지를 위해 useCallback으로 감싸봄
   const handleShowDetail = useCallback((itemData) => {
