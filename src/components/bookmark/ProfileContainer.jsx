@@ -19,7 +19,7 @@ const ProfileContainer = ({ openModal }) => {
 const StProfileSection = styled.div`
   /* TODO 반응형 구현시 바꾸어야 할 부분 */
   height: 140px;
-  width: 1280px;
+  width: var(--inner-width);
 
   display: flex;
   flex-direction: row;
@@ -40,9 +40,7 @@ const StProfileDetails = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
   height: 100%;
-
   margin-left: 40px;
 `;
 
