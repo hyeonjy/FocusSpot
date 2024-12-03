@@ -19,7 +19,7 @@ const SearchSidebar = ({ searchWord, activeFilter, places }) => {
       <StSearchList>
         {places.map((place, index) => (
           <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
-            <ListItem key={place.id} itemData={place} handleClick={openModal} />
+            <ListItem key={place.id} index={index} itemData={place} handleClick={openModal} />
           </StListItemWrapper>
         ))}
       </StSearchList>
