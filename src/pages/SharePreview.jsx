@@ -5,7 +5,7 @@ import ListItem from '../components/ListItem';
 import Modal from '../components/Modal';
 import AuthForm from '../components/AuthForm';
 import AuthContainer from '../components/AuthContainer';
-import Search2 from '../components/Search2';
+import Search from '../components/Search';
 
 const SharePreview = () => {
   const [inputValue, setInputValue] = useState('');
@@ -41,7 +41,7 @@ const SharePreview = () => {
       <AuthContainer mode="login"></AuthContainer>
       <AuthContainer mode="signup"></AuthContainer>
 
-      <Search2 />
+      <Search />
     </>
   );
 };
