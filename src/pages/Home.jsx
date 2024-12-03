@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CarouselList from '../components/CarouselList';
 import ListItem from '../components/ListItem';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
+import theme from '../styles/theme';
 
 const Home = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
@@ -63,6 +64,126 @@ const Home = () => {
   );
 };
 
+const StMainVisual = styled.section`
+  width: 100%;
+  padding: 50px 0 160px;
+  @media ${theme.device.tablet} {
+    padding: 20vw 0;
+  }
+`;
+
+const StInner = styled.div`
+  width: var(--inner-width);
+  margin: 0 auto;
+`;
+
+const Stflex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  @media ${theme.device.tablet} {
+    flex-wrap: wrap;
+  }
+`;
+
+const StTitleArea = styled.div`
+  @media ${theme.device.tablet} {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 3.1vw;
+    font-weight: 500;
+    letter-spacing: -2.5px;
+    @media ${theme.device.laptop} {
+      font-size: 30px;
+    }
+  }
+  p {
+    font-weight: 400;
+    margin-top: 25px;
+    font-size: 18px;
+    letter-spacing: -1px;
+  }
+  a {
+    display: block;
+    width: 200px;
+    padding: 19px 0 16px;
+    margin-top: 60px;
+    text-align: center;
+    color: var(--color-white);
+    background: var(--color-primary);
+    @media ${theme.device.tablet} {
+      width: 160px;
+      padding: 15px 0 13px;
+      margin: 30px auto;
+    }
+  }
+`;
+
+const StVisualImage = styled.div`
+  width: 39.0625%;
+  max-width: 500px;
+  aspect-ratio: 1/1.26;
+  background: url('/main_visual_img.jpg') no-repeat 50% 50%;
+  background-size: cover;
+  position: relative;
+
+  @media ${theme.device.tablet} {
+    display: none;
+  }
+`;
+
+const StBanner = styled.section`
+  width: 100%;
+  height: 350px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  background: url('/main_section_bg.jpg') no-repeat 50% 50%;
+  @media ${theme.device.laptop} {
+    padding: 30px;
+  }
+  @media ${theme.device.tablet} {
+    height: 280px;
+    background-size: cover;
+  }
+  strong {
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -2px;
+    line-height: 1.3;
+    word-break: keep-all;
+    @media ${theme.device.laptop} {
+      font-size: 30px;
+    }
+    @media ${theme.device.laptop} {
+      font-size: 25px;
+    }
+  }
+  p {
+    font-size: 20px;
+    margin-top: 30px;
+    line-height: 1.4;
+    word-break: keep-all;
+    @media ${theme.device.laptop} {
+      font-size: 18px;
+    }
+    @media ${theme.device.tablet} {
+      font-size: 16px;
+    }
+  }
+  p br {
+    @media ${theme.device.tablet} {
+      display: none;
+    }
+  }
+`;
+
 const StListSection = styled.section`
   margin-top: 100px;
 `;
@@ -89,74 +210,6 @@ const StList = styled.div`
       box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
       transform: translateY(-7px);
     }
-  }
-`;
-
-// -------------------------
-
-const StMainVisual = styled.section`
-  width: 100%;
-  padding: 50px 0 160px;
-`;
-
-const StInner = styled.div`
-  width: 1280px;
-  margin: 0 auto;
-`;
-
-const Stflex = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const StTitleArea = styled.div`
-  h2 {
-    font-size: 50px;
-    font-weight: 500;
-    letter-spacing: -2.5px;
-  }
-  p {
-    font-weight: 400;
-    margin-top: 25px;
-    font-size: 18px;
-    letter-spacing: -1px;
-  }
-  a {
-    display: block;
-    width: 200px;
-    padding: 19px 0 16px;
-    margin-top: 60px;
-    text-align: center;
-    color: var(--color-white);
-    background: var(--color-primary);
-  }
-`;
-
-const StVisualImage = styled.div`
-  width: 500px;
-  height: 630px;
-  background: url('/main_visual_img.jpg') no-repeat 50% 50%;
-`;
-
-const StBanner = styled.section`
-  width: 100%;
-  height: 350px;
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
-  background: url('/main_section_bg.jpg') no-repeat 50% 50%;
-
-  strong {
-    font-size: 40px;
-    font-weight: 500;
-    letter-spacing: -2px;
-  }
-  p {
-    font-size: 20px;
-    margin-top: 30px;
-    line-height: 1.4;
   }
 `;
 
