@@ -1,4 +1,5 @@
 export const getAddressByCoordinates = async (lat, lng) => {
+  const kakao = window.kakao;
   const geocoder = new kakao.maps.services.Geocoder();
 
   return new Promise((resolve) => {
@@ -14,6 +15,7 @@ export const getAddressByCoordinates = async (lat, lng) => {
 };
 
 export const createSearchPromises = (currentLocation, keywords, searchWord) => {
+  const kakao = window.kakao;
   const ps = new kakao.maps.services.Places();
   const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng);
 
@@ -37,6 +39,7 @@ export const createSearchPromises = (currentLocation, keywords, searchWord) => {
 };
 
 export const searchAllResults = (map, results) => {
+  const kakao = window.kakao;
   const allPlaces = results.flat(); // 각 카테고리별 검색 결과를 합침
   const bounds = new kakao.maps.LatLngBounds(); // 지도 범위 설정
 
