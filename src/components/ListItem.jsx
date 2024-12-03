@@ -16,15 +16,15 @@ const ListItem = ({ handleClick, itemData = defaultData }) => {
   // 지번 주소를 위한 trimming
   // 원래 데이터 - 서울 양천구 신정동 952-5
   // 변형 데이터 - (지번) 신정동 952-5
-  const trimmedAddress = "(지번) " + itemData.address_name.split(' ').slice(-2).join(' ');
+  const trimmedAddress = '(지번) ' + itemData.address_name.split(' ').slice(-2).join(' ');
 
   return (
     <StContainer>
       <button onClick={handleClick}></button>
       <StTitle>{itemData.place_name}</StTitle>
       <StCategory>{finalCategory}</StCategory>
-      <StAddress>{itemData.road_address_name || '제공된 주소 없음'}</StAddress>
-      <StAddress>{trimmedAddress || '제공된 주소 없음'}</StAddress>
+      {itemData.road_address_name && <StAddress>{itemData.road_address_name}</StAddress>}
+      {itemData.address_name && <StAddress>{trimmedAddress}</StAddress>}
       <StPhone>{itemData.phone || '전화번호 없음'}</StPhone>
     </StContainer>
   );
