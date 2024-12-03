@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { CustomOverlayMap, Map } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
@@ -61,6 +61,17 @@ const Maps = () => {
         onCreate={setMap}
         onDragEnd={handleDrag}
       >
+        <MapMarker
+          image={{
+            src: '/dot.svg',
+            size: {
+              width: 40,
+              height: 40
+            }
+          }}
+          position={currentLocation.center}
+          title="현재 위치"
+        />
         {markers.map((marker, index) => (
           <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
             <button title={marker.title}>

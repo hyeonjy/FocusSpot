@@ -19,6 +19,7 @@ const useCurrentLocation = () => {
       return;
     }
 
+    // 현재 위치 가져오기
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) =>
         setLocation({
@@ -39,6 +40,35 @@ const useCurrentLocation = () => {
         timeout: 10000
       }
     );
+
+    // 위치 변경 감지
+    const watchId = navigator.geolocation.watchPosition(
+      ({ coords: { latitude, longitude } }) => {
+        console.log(latitude, longitude);
+        setLocation({
+          center: { lat: latitude, lng: longitude },
+          errMsg: null,
+          isLoading: false
+        });
+      },
+      () => {
+        alert('위치 정보 갱신 실패');
+        setLocation({
+          center: defaultCenter,
+          errMsg: '위치 정보를 갱신할 수 없습니다.',
+          isLoading: false
+        });
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 10000
+      }
+    );
+
+    // 컴포넌트 언마운트 시 위치 감지 종료
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+    };
   }, []);
 
   return location;
