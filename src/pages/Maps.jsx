@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
-import useCurrentLocation from '../hooks/useCurrentLocation';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
+import useCurrentLocation from '../hooks/useCurrentLocation';
 
 const Maps = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchWord, setSearchWord] = useState('');
-  const [activeFilter, setActiveFilter] = useState('전체'); // 장소 카테고리 필터
   const [map, setMap] = useState();
   const [addresses, setAddresses] = useState([]);
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
+  const activeFilter = searchParams.get('filter') || '전체'; // URL에서 filter 가져오기
   const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
 
   useEffect(() => {
@@ -22,14 +24,16 @@ const Maps = () => {
     }
   }, [places]);
 
+  // 필터 버튼 클릭 핸들러
   const handleFilterClick = (filter) => {
-    setActiveFilter(filter);
-    setSearchWord('');
+    setSearchParams({ filter }); // URL 쿼리 파라미터 업데이트
+    setSearchWord(''); // 검색어 초기화
   };
 
+  // 검색 제출 핸들러
   const handleSearchSubmit = (word) => {
     setSearchWord(word);
-    setActiveFilter('');
+    setSearchParams({ filter: word }); // 필터 초기화
   };
 
   const handleDrag = async () => {

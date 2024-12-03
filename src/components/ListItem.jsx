@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const defaultData = {
-  name: '감자 카페',
-  category: '스터디카페',
-  address: '감자나라 고구마시 옥수수구 초당동'
+  place_name: '감자 카페',
+  category_name: '서비스,산업 > 스터디카페,스터디룸',
+  address_name: '감자나라 고구마시 옥수수구 초당동',
+  road_address_name: '감자나라 고구마시 옥수수로 321',
+  phone: '010-1234-3456'
 };
 
 const ListItem = ({ handleClick, itemData = defaultData }) => {
@@ -25,7 +27,7 @@ const ListItem = ({ handleClick, itemData = defaultData }) => {
       <StCategory>{finalCategory}</StCategory>
       {itemData.road_address_name && <StAddress>{itemData.road_address_name}</StAddress>}
       {itemData.address_name && <StAddress>{trimmedAddress}</StAddress>}
-      <StPhone>{itemData.phone || '전화번호 없음'}</StPhone>
+      <StPhone>{itemData.phone ? itemData.phone : '전화번호 없음'}</StPhone>
     </StContainer>
   );
 };
