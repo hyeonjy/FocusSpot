@@ -49,6 +49,7 @@ const StHeader = styled.header`
   width: 100%;
   height: 100px;
   background: var(--color-white);
+  z-index: 999;
 `;
 
 const StInner = styled.div`

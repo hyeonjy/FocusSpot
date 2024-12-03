@@ -8,16 +8,24 @@ const defaultData = {
 };
 
 const ListItem = ({ handleClick, itemData = defaultData }) => {
-  // TODO: 주소 분리하는 로직 필요
-  const streetAddress = itemData.address.split('\n');
+  // 세부 카테고리를 위한 trimming
+  // 원래 데이터 - 서비스,산업 > 전문대행 > 공간대여 > 스터디카페,스터디룸
+  const categories = itemData.category_name.split('>');
+  const finalCategory = categories.slice(-1).join(', ').trim();
+
+  // 지번 주소를 위한 trimming
+  // 원래 데이터 - 서울 양천구 신정동 952-5
+  // 변형 데이터 - (지번) 신정동 952-5
+  const trimmedAddress = "(지번) " + itemData.address_name.split(' ').slice(-2).join(' ');
+
   return (
     <StContainer>
       <button onClick={handleClick}></button>
-      <StTitle>{itemData.name}</StTitle>
-      <StCategory>{itemData.category}</StCategory>
-      <StAddress>{streetAddress[0]}</StAddress>
-      <StAddress>{streetAddress[1]}</StAddress>
-      <StPhone>010-2549-3854</StPhone>
+      <StTitle>{itemData.place_name}</StTitle>
+      <StCategory>{finalCategory}</StCategory>
+      <StAddress>{itemData.road_address_name || '제공된 주소 없음'}</StAddress>
+      <StAddress>{trimmedAddress || '제공된 주소 없음'}</StAddress>
+      <StPhone>{itemData.phone || '전화번호 없음'}</StPhone>
     </StContainer>
   );
 };
