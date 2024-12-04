@@ -10,10 +10,15 @@ export const UserLogInAndOut = () => {
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
     const [isloggingOut, setIsLogginOut] = useState(false);
-    
     const { isAuthenticated, setIsAuthenticated, id, setId, setName, setEmail, setProfileImg } = useUserStore();
+
     const handleSignin = async () => {
-        await googleSignIn();
+        try{
+            await googleSignIn();
+        } catch(error) {
+            console.error(`소셜 로그인 실패 Error: ${error}`);
+            window.alert('소셜 로그인에 실패했습니다. 다시 시도해주세요.');
+        }
     };
     const handleSignOut = () => {
         setIsLogginOut(true);
@@ -27,18 +32,15 @@ export const UserLogInAndOut = () => {
     };
 
     useEffect(() => {
-        const signingIn = () => {
-            const hash = location.hash;
-            const params = new URLSearchParams(hash.replace('#', ''));
-            const userToken = params.get('access_token');
+        const hash = location.hash;
+        const params = new URLSearchParams(hash.replace('#', ''));
+        const userToken = params.get('access_token');
 
-            if (userToken) setToken(true);
-            if (token && id) {
-                window.alert('로그인에 성공했습니다. 홈으로 갑니다.');
-                navigate('/');
-            }
-        };
-        signingIn();
+        if (userToken) setToken(true);
+        if (token && id) {
+            window.alert('로그인에 성공했습니다. 홈으로 갑니다.');
+            navigate('/');
+        }
         
         return () => {
             if (token && id) setIsAuthenticated(true);
