@@ -20,11 +20,10 @@ const useCheckUserAuth = (setIsSigningUp) => {
                 setName(name);
                 setEmail(email);
                 setProfileImg(profileImg);
-                console.log('id is set')
+                //console.log('id is set')
             }
-            
             if (token && !userData) {
-                console.log('id ', id, 'token', token);
+                //console.log('id ', id, 'token', token);
                 setIsSigningUp(true);
             }
 

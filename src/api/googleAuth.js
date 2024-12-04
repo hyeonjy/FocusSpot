@@ -42,6 +42,7 @@ export const getUserDataFromSession = async () => {
 
         if (userData) {
             const { id, email, name, profile_picture } = userData;
+            console.log("The data is here");
 
             return { userId: id, email, name, profileImg: profile_picture }
         }
