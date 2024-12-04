@@ -23,7 +23,6 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                     const { userId, email, name, profileImg } = userData;
                     setUserData({ userId, email, name, profileImg });
                 }
-
                 
                 if (token && !userData) {
                     //토큰이 있으나 아직 유저 데이터가 없는 유저는 미등록 유저이므로 회원 정보 등록창
@@ -32,7 +31,7 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                     //그렇지 않은 유저는 일반창
                     setIsSigningUp(false);
                 }
-                setIsLoading(false);
+
             } catch (error) {
                 console.error(`회원 정보를 불러오는 중에 문제가 발생했습니다 Error: ${error}`);
                 Swal.fire({
