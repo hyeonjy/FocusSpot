@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomOverlayMap, MapMarker } from 'react-kakao-maps-sdk';
+import { CustomOverlayMap } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 
 const CustomOverlay = ({ place, index, overlayIndex, setOverlayIndex }) => {
@@ -94,7 +94,6 @@ const StCloseButton = styled.button`
   color: white;
 
   &:hover {
-    color: #cecece;
     color: tomato;
   }
 `;

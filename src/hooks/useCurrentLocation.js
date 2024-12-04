@@ -4,7 +4,7 @@ const defaultCenter = { lat: 33.450701, lng: 126.570667 };
 
 const useCurrentLocation = () => {
   const [location, setLocation] = useState({
-    center: defaultCenter,
+    center: null,
     errMsg: null,
     isLoading: true
   });
@@ -44,7 +44,6 @@ const useCurrentLocation = () => {
     // 위치 변경 감지
     const watchId = navigator.geolocation.watchPosition(
       ({ coords: { latitude, longitude } }) => {
-        console.log(latitude, longitude);
         setLocation({
           center: { lat: latitude, lng: longitude },
           errMsg: null,
