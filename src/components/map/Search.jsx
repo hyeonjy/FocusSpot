@@ -33,11 +33,14 @@ const Search = ({ activeFilter, handleFilterClick, onSearchSubmit }) => {
           <Link to="/">
             <img src="/white_logo.svg" />
           </Link>
-          {isAuthenticated ? (
-            <StLoginButton onClick={handleSignOut}>로그아웃</StLoginButton>
-          ) : (
-            <StLoginButton onClick={() => navigate('/login')}>로그인</StLoginButton>
-          )}
+          <StButtonsWrapper>
+            {isAuthenticated && <StMyPageButton onClick={() => navigate('/bookmark')}>마이페이지</StMyPageButton>}
+            {isAuthenticated ? (
+              <StLoginButton onClick={handleSignOut}>로그아웃</StLoginButton>
+            ) : (
+              <StLoginButton onClick={() => navigate('/login')}>로그인</StLoginButton>
+            )}
+          </StButtonsWrapper>
         </StLogoBox>
         <StSearchBox>
           <StSearchForm onSubmit={handleSubmit}>
@@ -123,7 +126,22 @@ const StLogoBox = styled.div`
   }
 `;
 
+const StButtonsWrapper = styled.div`
+  gap: 5px;
+`
+
 const StLoginButton = styled.button`
+  border: 1px solid white;
+  border-radius: 30px;
+  background-color: #00115e;
+  padding: 6px 18px;
+  font-size: 13px;
+  color: white;
+  cursor: pointer;
+`;
+
+const StMyPageButton = styled.button`
+margin-right: 10px;
   border: 1px solid white;
   border-radius: 30px;
   background-color: #00115e;
