@@ -26,17 +26,18 @@ const BookmarkButton = ({ itemData }) => {
     if (!isAuthenticated) {
       Swal.fire({
         icon: 'warning',
+        iconColor: 'var(--color-primary)',
         title: '로그인이 필요합니다',
         text: '북마크 기능 사용을 위해서는 로그인이 필요합니다',
-        confirmButtonText: '로그인하기',
-        confirmButtonColor: '#3085d6',
         cancelButtonText: '지도로 돌아가기',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: 'var(--color-gray4)',
+        confirmButtonText: '로그인하기',
+        confirmButtonColor: 'var(--color-primary)',
         showCancelButton: true
       }).then((result) => {
         if (result.isConfirmed) {
           // 로그인 페이지로 이동
-          window.location.href = '/login'; 
+          window.location.href = '/login';
         }
       });
       return;
