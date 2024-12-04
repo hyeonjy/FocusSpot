@@ -6,24 +6,8 @@ import { useUserStore } from '../../zustand/userStore';
 import { googleSignOut } from '../../api/googleAuth';
 
 const Header = () => {
-  const { isAuthenticated, setId, setName, setEmail, setProfileImg, setIsAuthenticated } = useUserStore();
+  const { isAuthenticated, handleSignOut } = useUserStore();
   const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    // 홈으로 이동
-    navigate('/');
-
-    // db에서 signout 처리
-    await googleSignOut();
-    // 로그아웃 할때 정보 지우기
-    setId(null);
-    setName(null);
-    setEmail(null);
-    setProfileImg(null);
-    // 제일 마지막에 지우기
-    // ProtectedRoute와 관련이 있음
-    setIsAuthenticated(false);
-  };
 
   return (
     <StHeader>
@@ -45,7 +29,13 @@ const Header = () => {
                   <Link to="/bookmark">마이페이지</Link>
                 </li>
                 <li>
-                  <button type="button" onClick={handleSignOut}>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      await handleSignOut();
+                      navigate('/');
+                    }}
+                  >
                     로그아웃
                   </button>
                 </li>
