@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import google_icon from "../../../public/google_icon.svg"
 import styled from "styled-components";
 import Spinner from "../Spinner";
+import Swal from "sweetalert2";
 
-export const UserLogIn = ({ isLoading }) => {
+export const UserLogIn = ({ isLoading, setIsLoading }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [token, setToken] = useState(null);
@@ -17,19 +18,29 @@ export const UserLogIn = ({ isLoading }) => {
       await googleSignIn();
     } catch (error) {
       console.error(`소셜 로그인 실패 Error: ${error}`);
-      window.alert('소셜 로그인에 실패했습니다. 다시 시도해주세요.');
+      Swal.fire({
+        text: "소셜 로그인에 실패했습니다. 다시 시도해주세요.",
+        icon: "error"
+      });
     }
   };
 
   useEffect(() => {
+    setIsLoading(false);
     const hash = location.hash;
     const params = new URLSearchParams(hash.replace('#', ''));
     const userToken = params.get('access_token');
 
     if (userToken) setToken(true);
     if (token && id) {
-      window.alert('로그인에 성공했습니다. 홈으로 갑니다.');
-      navigate('/');
+      Swal.fire({
+        text: "로그인에 성공했습니다. 홈으로 갑니다.",
+        icon: "success",
+        iconColor: 'var(--color-primary)',
+      }).then(() => {
+        navigate('/');
+      });
+
     }
 
     return () => {

@@ -9,7 +9,7 @@ const Login = () => {
   const [isSigningUp, setIsSigningUp] = useState(false);
   useCheckUserAuth({ setIsSigningUp, setIsLoading });
 
-  return <StContainer>{isSigningUp ? <AppSignUp /> : <UserLogIn isLoading={isLoading} />}</StContainer>;
+  return <StContainer>{isSigningUp ? <AppSignUp /> : <UserLogIn isLoading={isLoading} setIsLoading={setIsLoading} />}</StContainer>;
 };
 
 export default Login;

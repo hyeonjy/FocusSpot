@@ -4,6 +4,7 @@ import { useUserStore } from '../../zustand/userStore';
 import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../../api/supabaseSignin';
 import Button from '../Button';
 import ImageUpload from '../ImageUpload';
+import Swal from 'sweetalert2';
 
 export const AppSignUp = () => {
   const navigate = useNavigate();
@@ -28,11 +29,20 @@ export const AppSignUp = () => {
       setProfileImg(profileImg);
       setIsAuthenticated(true);
 
-      window.alert('회원 정보 등록에 성공했습니다');
-      navigate('/');
+      Swal.fire({
+        text: "회원 정보 등록에 성공했습니다.",
+        icon: "success",
+        iconColor: 'var(--color-primary)',
+      }).then(() => {
+        navigate('/');
+      });
     } catch (error) {
       console.error(`신규 유저 정보 생성 에러 Error: ${error}`);
-      window.alert('회원 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      Swal.fire({
+        text: "회원 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.",
+        icon: "error",
+        iconColor: 'var(--color-primary)',
+      });
     }
   };
 
@@ -48,7 +58,7 @@ export const AppSignUp = () => {
               <StInputTitle>
                 이름 <StRed>*</StRed>
               </StInputTitle>
-              <StInput name='nickName' id='nickName' placeholder='이름을 입력해주세요' maxlength='10'/>
+            <StInput name='nickName' id='nickName' placeholder='이름을 입력해주세요' maxLength='10'/>
             </li>
           </StAuthUl>
           <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
