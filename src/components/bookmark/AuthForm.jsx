@@ -105,10 +105,11 @@ const StAuthForm = styled.ul`
   }
 `;
 
-const StFlex = styled.ul`
+const StFlex = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  padding-bottom: 30px;
   ul {
     width: 47%;
   }
@@ -121,7 +122,7 @@ const StAuthFormLeft = styled.ul`
   flex-direction: column;
   justify-content: space-around;
   max-height: 313px;
-
+  margin: 0 auto;
   li {
     margin: 20px 0;
   }
