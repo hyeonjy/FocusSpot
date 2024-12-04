@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
-import SearchModal from './SearchModal';
+import Modal from './Modal';
+import DetailContent from './DetailContent';
 
 const SearchSidebar = ({ searchWord, activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,18 +34,21 @@ const SearchSidebar = ({ searchWord, activeFilter, places }) => {
             <div>검색결과가 없습니다.</div>
           ) : (
             places.map((place, index) => (
-              <StListItemWrapper key={place.id} $isFirstChild={index === 0}>
-                <ListItem key={place.id} index={index} itemData={place} handleClick={() => openModal(place)} />
-              </StListItemWrapper>
-            ))
-          )}
+            <StListItemWrapper key={`${place.id}-${index}`} $isFirstChild={index === 0}>
+              <ListItem index={index} itemData={place} handleClick={() => openModal(place)} />
+            </StListItemWrapper>
+          ))
+          }
+
         </StSearchList>
         <StButton title={`${isSidebarOpen ? '검색 리스트 닫기' : '검색 리스트 열기'}`} onClick={toggleSidebar}>
           {isSidebarOpen ? <img src="/close.svg" /> : <img src="/open.svg" />}
         </StButton>
       </StContainer>
 
-      {isModalOpen && <SearchModal place={selectedPlace} activeFilter={activeFilter} onClose={closeModal} />}
+      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true} itemData={selectedPlace}>
+        <DetailContent place={selectedPlace} activeFilter={activeFilter} />
+      </Modal>
     </>
   );
 };
