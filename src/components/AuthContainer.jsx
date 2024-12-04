@@ -12,7 +12,8 @@ const AuthContainer = ({ mode }) => {
 
 const StContainer = styled.section`
   width: 90%;
-  max-width: ${(props) => (props.mode === 'login' ? '400px' : '750px')};
+  /* max-width: ${(props) => (props.mode === 'login' ? '400px' : '750px')}; */
+  max-width: 400px;
   margin: 0 auto;
   padding: 50px;
   background: var(--color-white);
