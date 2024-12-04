@@ -90,6 +90,13 @@ const StBookmarkButton = styled.button`
 
   width: 30px;
   height: 30px;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    vertical-align: middle;
+    margin-top: -2px;
+  }
 
   // 추가된 이펙트
   border-color: ${(props) => (props.$isActivated ? 'var(--color-primary)' : 'var(--color-gray5)')};
