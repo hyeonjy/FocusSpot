@@ -1,20 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useUserStore } from '../zustand/userStore';
 import useAddBookmark from '../hooks/useAddBookmark';
 import useDeleteBookmark from '../hooks/useDeleteBookmark';
+import useIsUserBookmark from '../hooks/useIsUserBookmark';
+import Swal from 'sweetalert2';
 
-const BookmarkButton = ({ itemData, bookmarkActivated }) => {
-  const { id: userId } = useUserStore();
-  const [activated, setActivated] = useState(bookmarkActivated);
+const BookmarkButton = ({ itemData }) => {
+  const { id: userId, isAuthenticated } = useUserStore();
   const { mutate: addBookmark, isPending: adding } = useAddBookmark(userId);
   const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(userId);
+  const { isBookmarked, isPending, isError } = useIsUserBookmark(itemData.id, userId, isAuthenticated);
+
+  const [activated, setActivated] = useState(false);
+
+  // 초기 버튼 설정
+  useEffect(() => {
+    if (!isPending && !isError) {
+      setActivated(isBookmarked);
+    }
+  }, [isBookmarked, isPending, isError]);
 
   // 버튼 기능
   const toggleBookmark = () => {
+    if (!isAuthenticated) {
+      Swal.fire({
+        icon: 'warning',
+        title: '로그인이 필요합니다',
+        text: '북마크 기능 사용을 위해서는 로그인이 필요합니다',
+        confirmButtonText: '로그인하기',
+        confirmButtonColor: '#3085d6',
+        cancelButtonText: '지도로 돌아가기',
+        cancelButtonColor: '#d33',
+        showCancelButton: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 로그인 페이지로 이동
+          window.location.href = '/login'; 
+        }
+      });
+      return;
+    }
+
     setActivated((prev) => !prev);
     if (activated) {
-      deleteBookmark(itemData.spot_id, {
+      deleteBookmark(itemData.id, {
         onSuccess: () => setActivated(false)
       });
     } else {

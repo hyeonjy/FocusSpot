@@ -1,6 +1,7 @@
 import supabase from './superbaseClient';
 
 // 특정 유저의 북마크 모두 가져오기
+// api에서 error throw시 사용하는 페이지단에서 trycatch가 하나 더 필요
 export const getBookmarkByUserId = async (userId) => {
   try {
     const { data, error } = await supabase
@@ -11,6 +12,7 @@ export const getBookmarkByUserId = async (userId) => {
     return data;
   } catch (error) {
     console.error('[FetchUserBookmark] Error ->', error);
+    // return값으로 뱉어주는 혹은 error 메세지 나오게끔
     throw error;
   }
 };
@@ -21,7 +23,7 @@ export const getMostBookmarkedSpots = async (limit = 10) => {
   try {
     const { data, error } = await supabase
       .from('bookmarks')
-      .select(`spot_id, spots(id, name, latitude, longitude, address, category), count:count(*)`)
+      .select(`spot_id, spots(id, phone, place_name, x, y, address_name, category_name, road_address_name, place_url)`)
       .group(`spot_id, spots.id`) // bookmarks 테이블의 spot_id라는 column과 spots 테이블의 id 비교해서 grouping
       .order('count', { ascending: false })
       .limit(limit);
@@ -41,12 +43,10 @@ export const addBookmark = async (itemData, userId) => {
     // DB에 존재하는 스팟이라면 (유저 중 누군가 이미 저장한 장소인 경우)
     // 저장 하지 않는다
     // 1. 장소가 DB에 존재하는 확인
-    // 장소명과 주소 일치 확인
     const { data: existingSpot, error: spotCheckError } = await supabase
       .from('spots')
       .select('id')
-      .eq('place_name', itemData.place_name)
-      .eq('address_name', itemData.address_name)
+      .eq('id', itemData.id)
       .maybeSingle();
     // 주의: single()은 에러가 뜹니다
 
@@ -56,15 +56,14 @@ export const addBookmark = async (itemData, userId) => {
       throw spotCheckError;
     }
 
-    // 존재한다면 spot의 id 저장
-    let spotId = existingSpot?.id;
     // 2. 장소가 DB에 존재하지 않는다면 새로 저장
     // kakao에서 제공하는 itemData 객체에서 필요한 데이터만 저장
-    if (!spotId) {
+    if (!existingSpot) {
       const { data: newSpot, error: spotInsertError } = await supabase
         .from('spots')
         .insert([
           {
+            id: itemData.id,
             place_name: itemData.place_name,
             x: Number(itemData.x),
             y: Number(itemData.y),
@@ -79,9 +78,6 @@ export const addBookmark = async (itemData, userId) => {
         .single();
 
       if (spotInsertError) throw spotInsertError;
-
-      // 새로운 장소의 id로 저장
-      spotId = newSpot.id;
     }
 
     // 3. 북마크 table에 새로운 북마크 저장
@@ -90,7 +86,7 @@ export const addBookmark = async (itemData, userId) => {
       .insert([
         {
           user_id: userId,
-          spot_id: spotId
+          spot_id: itemData.id
         }
       ])
       .select();
@@ -111,7 +107,7 @@ export const addBookmark = async (itemData, userId) => {
 export const deleteBookmark = async (spotId, userId) => {
   try {
     const { error } = await supabase.from('bookmarks').delete().eq('user_id', userId).eq('spot_id', spotId);
-    if (error) throw error
+    if (error) throw error;
     return true;
   } catch (error) {
     console.error('[DeleteBookmark] Error ->', error);
@@ -119,5 +115,21 @@ export const deleteBookmark = async (spotId, userId) => {
   }
 };
 
-// TODO: 주변 카페 찾기 (later with map api)
-// TODO: 주변 도서관 찾기 (later with map api)
+// 카카오 데이터가 이미 유저의 북마크로 등록되어있는지 확인
+export const isUserBookmark = async (itemDataId, userId) => {
+  try {
+    // Check if a user's bookmark exists for a given map API id (kakao_id)
+    const { data, error } = await supabase
+      .from('bookmarks')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('spot_id', itemDataId);
+
+    if (error) throw error;
+
+    return data.length > 0;
+  } catch (error) {
+    console.error('[isUserBookmark] Error ->', error);
+    return false;
+  }
+};
