@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../styles/theme';
+import { useUserStore } from '../zustand/userStore';
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false); // 임시 auth state
+  const { isAuthenticated } = useUserStore();
 
   return (
     <StHeader>
@@ -20,7 +21,7 @@ const Header = () => {
             <li>
               <Link to="/map">지도보기</Link>
             </li>
-            {isLogin ? (
+            {isAuthenticated ? (
               <>
                 <li>
                   <Link to="/bookmark">마이페이지</Link>
