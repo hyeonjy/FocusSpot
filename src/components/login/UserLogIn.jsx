@@ -2,15 +2,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useUserStore } from "../../zustand/userStore";
 import { googleSignIn, googleSignOut } from "../../api/googleAuth";
 import { useEffect, useState } from "react";
+import google_icon from "../../../public/google_icon.svg"
 import styled from "styled-components";
-import Button from "../Button";
+import Spinner from "../Spinner";
 
-export const UserLogInAndOut = ({ isLoading }) => {
+export const UserLogIn = ({ isLoading }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
-    const [isloggingOut, setIsLogginOut] = useState(false);
-    const { isAuthenticated, setIsAuthenticated, id, setId, setName, setEmail, setProfileImg } = useUserStore();
+    const { setIsAuthenticated, id, setId, setName, setEmail, setProfileImg } = useUserStore();
 
     const handleSignin = async () => {
         try{
@@ -21,14 +21,12 @@ export const UserLogInAndOut = ({ isLoading }) => {
         }
     };
     const handleSignOut = () => {
-        setIsLogginOut(true);
         setId(null)
         setName(null)
         setEmail(null)
         setProfileImg(null);
 
         googleSignOut();
-        navigate('/');
     };
 
     useEffect(() => {
@@ -44,44 +42,54 @@ export const UserLogInAndOut = ({ isLoading }) => {
         
         return () => {
             if (token && id) setIsAuthenticated(true);
-            if (isloggingOut) setIsAuthenticated(false);
         }
-    }, [id, isloggingOut]);
+    }, [id]);
 
     return (
-        <StContainer>
-            {isLoading? '잠시만 기다려주세요':
-            isAuthenticated ? (
-                <>
-                    <StH2>로그아웃</StH2>
-                    <Button size="big" color="primary" fill={true} label="로그아웃" handleClick={handleSignOut} />
-                </>
-            ) : (
-                <>
-                    <StH2>로그인</StH2>
-                    <Button size="big" color="primary" fill={true} label="로그인" handleClick={handleSignin} />
-                </>
-            )}
-        </StContainer>
+      <>
+        {isLoading ? (
+          <Spinner/>
+        ) : (
+          <>
+            <StH2>로그인</StH2>
+            <StSocialLoginBtn onClick={handleSignin}>
+              <img src={google_icon} alt="signin_button_icon" />
+              <span>Google 계정으로 시작</span>
+            </StSocialLoginBtn>
+            <StRefer>Google 계정으로 시작할 수 있습니다</StRefer>
+          </>
+        )}
+      </>
     );
 };
 
-const StContainer = styled.section`
-  width: 90%;
-  max-width: ${(props) => (props.mode === 'login' ? '400px' : '750px')};
-  margin: 0 auto;
-  padding: 50px;
-  background: var(--color-white);
+const StH2 = styled.h2`
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 30px;
+  font-weight: 500;
+`;
+
+const StSocialLoginBtn = styled.button`
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-gray6);
   border-radius: 5px;
-  box-shadow: var(--drop-shadow);
-  & > button {
-    margin: 0 auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  color: var(--color-gray2);
+  span {
+    display: block;
+    margin-top: 2px;
   }
 `;
 
-const StH2 = styled.h2`
+const StRefer = styled.p`
+  margin-top: 15px;
+  font-size: 13px;
+  color: var(--color-gray3);
   text-align: center;
-  margin-bottom: 50px;
-  font-size: 30px;
-  font-weight: 500;
 `;
