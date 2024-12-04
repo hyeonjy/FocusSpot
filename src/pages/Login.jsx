@@ -10,7 +10,7 @@ const Login = () => {
 
   const view = isSigningUp ? <AppSignUp /> : <UserLogInAndOut />;
 
-  return <>{isLoading ? <div>잠시만 기다려주세요</div> : view}</>;
+  return <>{isSigningUp ? <AppSignUp /> : <UserLogInAndOut isLoading={isLoading} />}</>;
 };
 
 export default Login;

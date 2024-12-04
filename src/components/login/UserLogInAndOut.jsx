@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../Button";
 
-export const UserLogInAndOut = () => {
+export const UserLogInAndOut = ({ isLoading }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
@@ -50,7 +50,8 @@ export const UserLogInAndOut = () => {
 
     return (
         <StContainer>
-            {isAuthenticated ? (
+            {isLoading? '잠시만 기다려주세요':
+            isAuthenticated ? (
                 <>
                     <StH2>로그아웃</StH2>
                     <Button size="big" color="primary" fill={true} label="로그아웃" handleClick={handleSignOut} />

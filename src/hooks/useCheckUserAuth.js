@@ -35,7 +35,7 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                     setIsSigningUp(false);
                 }
                 setIsLoading(false);
-            } catch (error) { 
+            } catch (error) {
                 console.error(`회원 정보를 불러오는 중에 문제가 발생했습니다 Error: ${error}`);
                 window.alert('회원 정보 불러오기에 실패했습니다.');
             }
