@@ -4,7 +4,6 @@ import Button from '../Button';
 import { useUserStore } from '../../zustand/userStore';
 
 const ProfileContainer = ({ openModal }) => {
-  // TODO: 유저 정보 zustand에서 가져오는 부분 필요
   const { name, email, profileImg } = useUserStore();
   return (
     <StProfileSection>

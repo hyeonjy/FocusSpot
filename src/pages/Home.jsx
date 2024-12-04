@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import theme from '../styles/theme';
 import ListSection from '../components/home/ListSection';
@@ -9,20 +9,33 @@ const Home = () => {
   const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
   const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
 
+  const titleRef = useRef(null);
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    // 애니메이션 클래스를 추가
+    if (titleRef.current) {
+      titleRef.current.classList.add('fade-in');
+    }
+    if (imageRef.current) {
+      imageRef.current.classList.add('fade-in');
+    }
+  }, []);
+
   return (
     <>
       <StMainVisual>
         <StInner>
           <Stflex>
-            <StTitleArea>
+            <StTitleArea ref={titleRef}>
               <h2>
                 빠르고 편리하게 찾아보는
                 <br />내 주변 집중 공간
               </h2>
               <p>당신의 집중력을 높여줄 장소를 쉽게 찾는 방법</p>
-              <Link to="">스터디카페 찾기</Link>
+              <Link to={`/map?filter=스터디카페`}>스터디카페 찾기</Link>
             </StTitleArea>
-            <StVisualImage></StVisualImage>
+            <StVisualImage ref={imageRef}></StVisualImage>
           </Stflex>
         </StInner>
       </StMainVisual>
@@ -40,6 +53,18 @@ const Home = () => {
     </>
   );
 };
+
+// 애니메이션 정의
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const StMainVisual = styled.section`
   position: relative;
@@ -104,6 +129,9 @@ const StTitleArea = styled.div`
       margin: 60px auto;
     }
   }
+  &.fade-in {
+    animation: ${fadeIn} 1s ease forwards;
+  }
 `;
 
 const StVisualImage = styled.div`
@@ -113,6 +141,7 @@ const StVisualImage = styled.div`
   background: url('/main_visual_img.jpg') no-repeat 50% 50%;
   background-size: cover;
   position: relative;
+  opacity: 0;
 
   @media ${theme.device.tablet} {
     position: absolute;
@@ -127,6 +156,10 @@ const StVisualImage = styled.div`
     bottom: 130px;
     aspect-ratio: 1/0.8;
     margin-right: -125px;
+  }
+  &.fade-in {
+    animation: ${fadeIn} 1s ease forwards;
+    animation-delay: 0.7s; /* 지연 시간 추가 */
   }
 `;
 
