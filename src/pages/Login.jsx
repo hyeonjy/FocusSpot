@@ -3,16 +3,27 @@ import useCheckUserAuth from '../hooks/useCheckUserAuth';
 import { UserLogIn } from '../components/login/UserLogIn';
 import { AppSignUp } from '../components/login/AppSignUp';
 import styled from 'styled-components';
+import Spinner from '../components/common/Spinner';
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSigningUp, setIsSigningUp] = useState(false);
   useCheckUserAuth({ setIsSigningUp, setIsLoading });
 
-  return <StContainer>{isSigningUp ? <AppSignUp /> : <UserLogIn isLoading={isLoading} />}</StContainer>;
+  if (isLoading) return <StWrapper><StContainer><Spinner /></StContainer></StWrapper>;
+  
+  return <StWrapper><StContainer>{isSigningUp ? <AppSignUp /> : <UserLogIn />}</StContainer></StWrapper>;
 };
 
 export default Login;
+
+const StWrapper = styled.div`
+  width: 100%;
+  height: calc(100vh - 200px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const StContainer = styled.section`
   width: 90%;

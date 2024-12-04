@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useUserStore } from '../zustand/userStore';
 import { getUserDataFromSession, googleSignOut } from '../api/googleAuth';
 import { useLocation } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
     const location = useLocation();
-    const { isAuthenticated, id, setId, setName, setEmail, setProfileImg } = useUserStore();
+    const { isAuthenticated, setId, setName, setEmail, setProfileImg } = useUserStore();
 
     useEffect(() => {
         const setUserAuth = async () => {
@@ -37,12 +38,23 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                 setIsLoading(false);
             } catch (error) {
                 console.error(`회원 정보를 불러오는 중에 문제가 발생했습니다 Error: ${error}`);
-                window.alert('회원 정보 불러오기에 실패했습니다.');
+                Swal.fire({
+                    text: "회원 정보 불러오기에 실패했습니다.",
+                    icon: "error",
+                    iconColor: 'var(--color-primary)',
+                });
+            } finally { 
+                setIsLoading(false); 
             }
         };
         setUserAuth();
 
-    }, [id, isAuthenticated]);
+        return () => {
+            //유저가 회원 정보 등록중에 창을 나간다면 세션을 끊음
+            if (!isAuthenticated) googleSignOut();
+        }
+
+    }, []);
 
 }
 
