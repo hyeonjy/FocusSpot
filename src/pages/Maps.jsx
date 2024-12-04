@@ -8,14 +8,22 @@ import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
 
+const resultsPerPage = 15;
+const markersPerPage = 15;
+
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchWord, setSearchWord] = useState(''); // 장소 검색 단어
   const [map, setMap] = useState();
   const [addresses, setAddresses] = useState([]); // 지도에서 보고 있는 위치 표시 ex) 부산 > 해운대구 > 우동
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
   const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
-  const { data, isPending, isError } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
+  const { data, isPending } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
+
+  const totalPages = Math.ceil(data?.allPlaces.length / resultsPerPage); // 페이지 : 최대 페이지마다 15개씩만 보여주기
+  const currentPlaces = data?.allPlaces.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage); // 현재 페이지에 맞는 장소들
+  const currentMarkers = data?.newMarkers.slice((currentPage - 1) * markersPerPage, currentPage * markersPerPage); // 현재 페이지에 맞는 마커만 표시
 
   useEffect(() => {
     // 현재 보고 있는 지도 위치 표시 업데이트 ex) 부산 > 수영구 > 망미동
@@ -30,6 +38,7 @@ const Maps = () => {
     setSearchParams({ filter }); // URL 쿼리 파라미터 업데이트
     setActiveFiler(filter);
     setSearchWord(''); // 검색어 초기화
+    setCurrentPage(1);
   };
 
   // 검색 제출 핸들러
@@ -37,7 +46,10 @@ const Maps = () => {
     setSearchWord(word);
     setActiveFiler(word);
     setSearchParams({ filter: word }); // 필터 초기화
+    setCurrentPage(1);
   };
+
+  const handlePageChange = (page) => setCurrentPage(page);
 
   // 지도 드래그 endpoint로 지도 위치 표시 업데이트 핸들러
   const handleDrag = async () => {
@@ -75,7 +87,7 @@ const Maps = () => {
           title="현재 위치"
         />
         {!isPending &&
-          data.newMarkers.map((marker, index) => (
+          currentMarkers.map((marker, index) => (
             <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
               <button title={marker.title}>
                 <img
@@ -95,7 +107,16 @@ const Maps = () => {
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
       <AddressList addresses={addresses} />
-      {!isPending && <SearchSidebar searchWord={searchWord} places={data.allPlaces} activeFilter={activeFilter} />}
+      {!isPending && (
+        <SearchSidebar
+          searchWord={searchWord}
+          places={currentPlaces}
+          activeFilter={activeFilter}
+          totalPlaces={data?.allPlaces.length}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </>
   );
 };

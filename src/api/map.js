@@ -23,7 +23,6 @@ export const searchAllResults = async (map, currentLocation, keywords, searchWor
   const promises = keywords.map((keyword) => {
     return new Promise((resolve) => {
       // 검색 옵션 => searchWord면 국내 모두 검색, filter클릭시엔 반경 3km에서 검색
-      // TODO : 임시 반경3km
       const options = searchWord ? {} : { location: currentLatLng, radius: 3000 };
 
       ps.keywordSearch(
