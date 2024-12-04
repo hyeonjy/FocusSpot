@@ -31,3 +31,23 @@ export const getUserSession = async () => {
 
     return data;
 }
+
+// 프로필 업데이트를 위함
+export const updateUserProfile = async (userName, userEmail, imgStoragePath) => {
+  const { data: imgPath, error: pathErr } = supabase.storage.from('profile-images').getPublicUrl(imgStoragePath);
+  if (pathErr) throw pathErr;
+
+  const { data: updatedUser, error: tableErr } = await supabase
+    .from('users')
+    .update({
+      name: userName,
+      profile_picture: imgPath?.publicUrl || null // Only update if a new image is uploaded
+    })
+    .eq('email', userEmail)
+    .select()
+    .single();
+
+  if (tableErr) throw tableErr;
+
+  return updatedUser;
+};

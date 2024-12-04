@@ -21,7 +21,6 @@ const useDeleteBookmark = (userId) => {
     },
     onError: (error) => {
       console.error('[useDeleteBookmark] Error:', error);
-      // TODO: 유저에게 알림창 띄우기
     }
   });
 };

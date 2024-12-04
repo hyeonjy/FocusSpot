@@ -3,26 +3,30 @@ import styled from 'styled-components';
 import ListItem from '../common/ListItem';
 import BookmarksLoading from './BookmarksLoding';
 
-const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
+const BookmarksContainer = ({ bookmarks, onShowDetail, isLoading = false }) => {
   return (
     <StBookmarkSection>
       <StH1>내가 북마크한 곳</StH1>
       <StHr />
-      <StBookmarkGird>
-        {bookmarks.length === 0 ? (
-          <BookmarksLoading />
-        ) : (
-          bookmarks.map((bookmark, i) => {
-            return (
-              <ListItem
-                key={bookmark.spot_id}
-                handleClick={() => onShowDetail(bookmark.spots)}
-                itemData={bookmark.spots}
-              />
-            );
-          })
-        )}
-      </StBookmarkGird>
+      {isLoading ? (
+        <BookmarksLoading />
+      ) : (
+        <StBookmarkGird>
+          {bookmarks.length === 0 ? (
+            <p>저장한 북마크가 없습니다.</p>
+          ) : (
+            bookmarks.map((bookmark, i) => {
+              return (
+                <ListItem
+                  key={bookmark.spot_id}
+                  handleClick={() => onShowDetail(bookmark.spots)}
+                  itemData={bookmark.spots}
+                />
+              );
+            })
+          )}
+        </StBookmarkGird>
+      )}
     </StBookmarkSection>
   );
 };

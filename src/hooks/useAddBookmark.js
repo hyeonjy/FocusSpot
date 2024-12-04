@@ -21,7 +21,6 @@ const useAddBookmark = (userId) => {
     },
     onError: (error) => {
       console.error('[useAddBookmark] Error:', error);
-      // TODO: 알림창 띄우기
     }
   });
 };

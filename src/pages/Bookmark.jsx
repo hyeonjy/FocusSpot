@@ -6,10 +6,9 @@ import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
 import DetailContent from '../components/common/DetailContent';
 import { useUserStore } from '../zustand/userStore';
-import AuthForm from '../components/bookmark/AuthForm';
+import EditForm from '../components/bookmark/EditForm';
 
 const Bookmark = () => {
-  // const emptyCard = Array(8).fill({});
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     type: '',
@@ -43,11 +42,11 @@ const Bookmark = () => {
       <ProfileContainer openModal={handleShowProfile} />
 
       {/* 북마크 섹션 */}
-      <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
+      <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} isLoading={isLoading} />
 
       {/* 모달 */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail} itemData={modalContent.data}>
-        {modalContent.type === 'detail' ? <DetailContent place={modalContent.data} /> : <AuthForm mode="edit" />}
+        {modalContent.type === 'detail' ? <DetailContent place={modalContent.data} /> : <EditForm mode="edit" />}
       </Modal>
     </StBookmarkPage>
   );

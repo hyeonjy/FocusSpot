@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const InputText = ({ inputType, inputName, placeholderText, handleChange }) => {
-  return <StContainer type={inputType} name={inputName} id={inputName} placeholder={placeholderText} onChange={handleChange} />;
+const InputText = ({ inputType, inputName, placeholderText, handleChange, value }) => {
+  return <StContainer type={inputType} name={inputName} id={inputName} placeholder={placeholderText} onChange={handleChange} value={value} />;
 };
 
 const StContainer = styled.input`
