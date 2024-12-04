@@ -36,7 +36,9 @@ const EditForm = () => {
       Swal.fire({
         text: '프로필이 성공적으로 수정되었습니다.',
         icon: 'success',
-        iconColor: 'var(--color-primary)'
+        iconColor: 'var(--color-primary)',
+        confirmButtonText: 'OK',
+        confirmButtonColor: 'var(--color-primary)'
       });
     } catch (error) {
       console.log(`회원 정보 수정 에러 Error: ${error}`);

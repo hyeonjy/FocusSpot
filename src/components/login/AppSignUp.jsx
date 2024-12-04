@@ -31,9 +31,11 @@ export const AppSignUp = () => {
       setIsAuthenticated(true);
 
       Swal.fire({
-        text: "회원 정보 등록에 성공했습니다.",
-        icon: "success",
+        text: '회원 정보 등록에 성공했습니다.',
+        icon: 'success',
         iconColor: 'var(--color-primary)',
+        confirmButtonText: 'OK',
+        confirmButtonColor: 'var(--color-primary)'
       }).then(() => {
         navigate('/');
       });
