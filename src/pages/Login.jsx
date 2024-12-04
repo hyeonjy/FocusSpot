@@ -10,7 +10,7 @@ const Login = () => {
 
   const view = isSigningUp ? <AppSignUp /> : <UserLogInAndOut />;
 
-  return <>{isSigningUp ? <AppSignUp /> : <UserLogInAndOut />}</>;
+  return <>{isSigningUp ? <AppSignUp /> : <UserLogInAndOut isLoading={isLoading} />}</>;
 };
 
 export default Login;
