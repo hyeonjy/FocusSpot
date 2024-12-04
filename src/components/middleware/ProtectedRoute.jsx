@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useUserStore } from '../zustand/userStore';
+import { useUserStore } from '../../zustand/userStore';
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useUserStore();

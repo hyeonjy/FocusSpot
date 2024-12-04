@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useUserStore } from '../zustand/userStore';
-import useAddBookmark from '../hooks/useAddBookmark';
-import useDeleteBookmark from '../hooks/useDeleteBookmark';
-import useIsUserBookmark from '../hooks/useIsUserBookmark';
+import { useUserStore } from '../../zustand/userStore';
+import useAddBookmark from '../../hooks/useAddBookmark';
+import useDeleteBookmark from '../../hooks/useDeleteBookmark';
+import useIsUserBookmark from '../../hooks/useIsUserBookmark';
 import Swal from 'sweetalert2';
 
 const BookmarkButton = ({ itemData }) => {

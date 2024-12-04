@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../zustand/userStore';
 import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../../api/supabaseSignin';
-import Button from '../Button';
-import ImageUpload from '../ImageUpload';
+import Button from '../common/Button';
+import ImageUpload from '../common/ImageUpload';
 
 export const AppSignUp = () => {
   const navigate = useNavigate();
@@ -38,21 +38,21 @@ export const AppSignUp = () => {
 
   return (
     <>
-        <StH2>회원 정보 등록</StH2>
-        <StForm onSubmit={handleOnSubmit}>
-          <StAuthUl>
-            <li>
-              <ImageUpload />
-            </li>
-            <li>
-              <StInputTitle>
-                이름 <StRed>*</StRed>
-              </StInputTitle>
-              <StInput name='nickName' id='nickName' placeholder='이름을 입력해주세요' maxlength='10'/>
-            </li>
-          </StAuthUl>
-          <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
-        </StForm>
+      <StH2>회원 정보 등록</StH2>
+      <StForm onSubmit={handleOnSubmit}>
+        <StAuthUl>
+          <li>
+            <ImageUpload />
+          </li>
+          <li>
+            <StInputTitle>
+              이름 <StRed>*</StRed>
+            </StInputTitle>
+            <StInput name="nickName" id="nickName" placeholder="이름을 입력해주세요" maxlength="10" />
+          </li>
+        </StAuthUl>
+        <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
+      </StForm>
     </>
   );
 };

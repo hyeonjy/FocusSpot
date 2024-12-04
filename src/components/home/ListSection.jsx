@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import theme from '../../styles/theme';
-import CarouselList from '../CarouselList';
-import ListItem from '../ListItem';
+import CarouselList from '../common/CarouselList';
+import ListItem from '../common/ListItem';
 
 const ListSection = ({ title, listData }) => {
   return (
