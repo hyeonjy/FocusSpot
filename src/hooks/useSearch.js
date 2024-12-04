@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react';
-import { createSearchPromises, searchAllResults } from '../api/map';
+import { searchAllResults } from '../api/map';
+import { useQuery } from '@tanstack/react-query';
 
 const useSearch = (map, activeFilter, currentLocation, searchWord) => {
-  const [markers, setMarkers] = useState([]);
-  const [places, setPlaces] = useState([]); // 장소 검색 결과를 저장하는 배열
-
   const getSearchKeywords = () => {
     // 검색단어를 입력한 경우
     if (searchWord) {
@@ -17,19 +14,15 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
     return [activeFilter];
   };
 
-  useEffect(() => {
-    if (!map || !currentLocation) return;
+  const keywords = getSearchKeywords(); // 검색 키워드 갖고오기
 
-    const keywords = getSearchKeywords(); // 검색 키워드 갖고오기
-    const promises = createSearchPromises(currentLocation, keywords, searchWord); // 검색 Promise 생성
-    Promise.all(promises).then((results) => {
-      const { allPlaces, newMarkers } = searchAllResults(map, results);
-      setPlaces(allPlaces);
-      setMarkers(newMarkers);
-    }); // 모두 검색하고 마커 데이터를 설정
-  }, [currentLocation, activeFilter, searchWord]);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ['search', activeFilter, searchWord],
+    queryFn: () => searchAllResults(map, currentLocation, keywords, searchWord),
+    enabled: !!map && !!currentLocation
+  });
 
-  return { markers, places };
+  return { data, isPending, isError };
 };
 
 export default useSearch;

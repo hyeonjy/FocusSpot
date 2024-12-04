@@ -63,7 +63,6 @@ const Bookmark = () => {
         onClose={() => setModalOpen(false)}
         isDetail={isDetail}
         itemData={modalContent.data}
-        bookmarkActivated={bookmarkActivated}
       >
         {modalContent.type === 'detail' ? (
           <DetailContent place={modalContent.data} />
