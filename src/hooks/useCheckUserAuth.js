@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
     const location = useLocation();
-    const { isAuthenticated, setId, setName, setEmail, setProfileImg } = useUserStore();
+    const { isAuthenticated, setUserData } = useUserStore();
 
     useEffect(() => {
         const setUserAuth = async () => {
@@ -21,10 +21,7 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                 //유저가 등록되어 있다면 전역상태로 관리하고 있는 유저 정보 업데이트
                 if (userData) {
                     const { userId, email, name, profileImg } = userData;
-                    setId(userId);
-                    setName(name);
-                    setEmail(email);
-                    setProfileImg(profileImg);
+                    setUserData({ userId, email, name, profileImg });
                 }
 
                 

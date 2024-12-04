@@ -29,6 +29,18 @@ export const useUserStore = create(
         } catch (error) {
           console.error('Sign out failed:', error);
         }
+      },
+      setUserData: ({ userId, email, name, profileImg }) => {
+        try {
+          set(() => ({
+            id: userId,
+            name: name,
+            email: email,
+            profileImg: profileImg,
+          }));
+        } catch (error) {
+          console.error('Setting user data failed:', error);
+        }
       }
     }),
     {
