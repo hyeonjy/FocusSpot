@@ -11,7 +11,7 @@ const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
         {bookmarks.length === 0 ? (
           <p>저장된 북마크가 없습니다.</p>
         ) : (
-          bookmarks.map((bookmark) => {
+          bookmarks.map((bookmark, i) => {
             return (
               <ListItem
                 key={bookmark.spot_id}

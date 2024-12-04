@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
-import SearchModal from './SearchModal';
+import Modal from './Modal';
+import DetailContent from './DetailContent';
 
 const SearchSidebar = ({ searchWord, activeFilter, places }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   const openModal = (place) => {
@@ -40,7 +41,9 @@ const SearchSidebar = ({ searchWord, activeFilter, places }) => {
         </StButton>
       </StContainer>
 
-      {isModalOpen && <SearchModal place={selectedPlace} activeFilter={activeFilter} onClose={closeModal} />}
+      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true} itemData={selectedPlace}>
+        <DetailContent place={selectedPlace} activeFilter={activeFilter} />
+      </Modal>
     </>
   );
 };
