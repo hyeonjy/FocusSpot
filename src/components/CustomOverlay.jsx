@@ -5,30 +5,40 @@ import styled from 'styled-components';
 const CustomOverlay = ({ place, index, overlayIndex, setOverlayIndex }) => {
   return (
     <>
-      <MapMarker
-        position={{ lat: place.y, lng: place.x }}
-        title={place.place_name}
-        onClick={() => setOverlayIndex(index)}
-      />
-
-      {overlayIndex === index && (
-        <CustomOverlayMap position={{ lat: place.y, lng: place.x }} xAnchor={0.5} yAnchor={1.5}>
-          <StCustomOverlayWrap>
-            <StTriangle />
-            <StHeader>
-              <StTitle>{place.place_name}</StTitle>
-              <StCloseButton onClick={() => setOverlayIndex(null)} title="닫기">
-                X
-              </StCloseButton>
-            </StHeader>
-            <StAddress>
-              <p>{place.road_address_name}</p>
-              <p>(지번){place.address_name}</p>
-              <StLink href={place.place_url}>홈페이지</StLink>
-            </StAddress>
-          </StCustomOverlayWrap>
-        </CustomOverlayMap>
-      )}
+      <CustomOverlayMap position={{ lat: place.y, lng: place.x }}>
+        <button title={place.place_name} onClick={() => setOverlayIndex(index)}>
+          <img
+            src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
+            style={{
+              width: '36px',
+              height: '691px',
+              clip: `rect(${10 + index * 46}px, 36px, ${10 + index * 46 + 36}px, 0px)`,
+              position: 'absolute',
+              top: `${-35 - index * 46}px`,
+              left: '-13px'
+            }}
+            onClick={() => setOverlayIndex(index)}
+          />
+        </button>
+        {overlayIndex === index && (
+          <>
+            <StCustomOverlayWrap>
+              <StTriangle />
+              <StHeader>
+                <StTitle>{place.place_name}</StTitle>
+                <StCloseButton onClick={() => setOverlayIndex(null)} title="닫기">
+                  X
+                </StCloseButton>
+              </StHeader>
+              <StAddress>
+                <p>{place.road_address_name}</p>
+                <p>(지번){place.address_name}</p>
+                <StLink href={place.place_url}>홈페이지</StLink>
+              </StAddress>
+            </StCustomOverlayWrap>
+          </>
+        )}
+      </CustomOverlayMap>
     </>
   );
 };
@@ -41,6 +51,9 @@ const StCustomOverlayWrap = styled.div`
   border-radius: 6px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   width: 300px;
+  top: -200px;
+  left: -150px;
+  z-index: 9999999;
 `;
 
 const StTriangle = styled.div`
