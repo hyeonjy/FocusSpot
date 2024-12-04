@@ -1,62 +1,61 @@
 import React, { useEffect, useState } from 'react';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import styled from 'styled-components';
 
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [searchWord, setSearchWord] = useState(''); // 장소 검색 단어
+  const [searchWord, setSearchWord] = useState('');
   const [map, setMap] = useState();
-  const [addresses, setAddresses] = useState([]); // 지도에서 보고 있는 위치 표시 ex) 부산 > 해운대구 > 우동
-  const currentLocation = useCurrentLocation(); // 초기 현재 위치
-  const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
-  const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
+  const [addresses, setAddresses] = useState([]);
+  const currentLocation = useCurrentLocation();
+  const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체');
+  const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord);
+  const [overlayIndex, setOverlayIndex] = useState(null);
 
   useEffect(() => {
-    // 현재 보고 있는 지도 위치 표시 업데이트 ex) 부산 > 수영구 > 망미동
     if (places.length > 0) {
       const filterAddress = places[0].address_name.split(' ').slice(0, 3);
       setAddresses(filterAddress);
     }
   }, [places]);
 
-  // 필터 버튼 클릭 핸들러
   const handleFilterClick = (filter) => {
-    setSearchParams({ filter }); // URL 쿼리 파라미터 업데이트
+    setSearchParams({ filter });
     setActiveFiler(filter);
-    setSearchWord(''); // 검색어 초기화
+    setSearchWord('');
+    setOverlayIndex(null);
   };
 
-  // 검색 제출 핸들러
   const handleSearchSubmit = (word) => {
     setSearchWord(word);
     setActiveFiler(word);
-    setSearchParams({ filter: word }); // 필터 초기화
+    setSearchParams({ filter: word });
+    setOverlayIndex(null);
   };
 
-  // 지도 드래그 endpoint로 지도 위치 표시 업데이트 핸들러
   const handleDrag = async () => {
     const newCenter = map.getCenter();
     const newLat = newCenter.getLat();
     const newLng = newCenter.getLng();
-
     const updatedAddresses = await getAddressByCoordinates(newLat, newLng);
     setAddresses(updatedAddresses);
   };
+
+  console.log('places: ', places);
+  console.log('markers: ', markers);
 
   return (
     <>
       <Map
         center={currentLocation.center}
-        style={{
-          width: '100%',
-          height: '100vh'
-        }}
+        style={{ width: '100%', height: '100vh' }}
         level={3}
         onCreate={setMap}
         onDragEnd={handleDrag}
@@ -72,22 +71,34 @@ const Maps = () => {
           position={currentLocation.center}
           title="현재 위치"
         />
-        {markers.map((marker, index) => (
-          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
-            <button title={marker.title}>
-              <img
-                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
-                style={{
-                  width: '36px',
-                  height: '691px',
-                  clip: `rect(${10 + index * 46}px, 36px, ${10 + index * 46 + 36}px, 0px)`,
-                  position: 'absolute',
-                  top: `${-35 - index * 46}px`,
-                  left: '-13px'
-                }}
-              />
-            </button>
-          </CustomOverlayMap>
+
+        {places.map((place, index) => (
+          <React.Fragment key={`${place.place_name}-${index}`}>
+            <MapMarker
+              position={{ lat: place.y, lng: place.x }}
+              title={place.place_name}
+              onClick={() => setOverlayIndex(index)}
+            />
+
+            {overlayIndex === index && (
+              <CustomOverlayMap position={{ lat: place.y, lng: place.x }} xAnchor={0.5} yAnchor={1.5}>
+                <StCustomOverlayWrap>
+                  <StTriangle />
+                  <StHeader>
+                    <StTitle>{place.place_name}</StTitle>
+                    <StCloseButton onClick={() => setOverlayIndex(null)} title="닫기">
+                      X
+                    </StCloseButton>
+                  </StHeader>
+                  <StAddress>
+                    <p>{place.road_address_name}</p>
+                    <p>(지번){place.address_name}</p>
+                    <StLink href={place.place_url}>홈페이지</StLink>
+                  </StAddress>
+                </StCustomOverlayWrap>
+              </CustomOverlayMap>
+            )}
+          </React.Fragment>
         ))}
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
@@ -98,3 +109,61 @@ const Maps = () => {
 };
 
 export default Maps;
+
+const StCustomOverlayWrap = styled.div`
+  position: relative;
+  background-color: white;
+  border-radius: 6px;
+  padding: 15px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  width: 270px;
+`;
+
+const StTriangle = styled.div`
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid white;
+`;
+
+const StHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const StTitle = styled.span`
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+const StCloseButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #dddddd;
+  }
+`;
+
+const StAddress = styled.div`
+  margin-top: 5px;
+`;
+
+const StLink = styled.a`
+  color: #007bff;
+  text-decoration: none;
+  text-align: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
