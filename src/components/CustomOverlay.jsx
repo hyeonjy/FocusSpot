@@ -39,9 +39,8 @@ const StCustomOverlayWrap = styled.div`
   position: relative;
   background-color: white;
   border-radius: 6px;
-  padding: 15px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  width: 270px;
+  width: 300px;
 `;
 
 const StTriangle = styled.div`
@@ -60,7 +59,13 @@ const StHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+
+  background-color: var(--color-primary);
+  color: white;
+  height: 30px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 20px 10px;
 `;
 
 const StTitle = styled.span`
@@ -73,14 +78,26 @@ const StCloseButton = styled.button`
   border: none;
   font-size: 20px;
   cursor: pointer;
+  color: white;
 
   &:hover {
-    color: #dddddd;
+    color: #cecece;
+    color: tomato;
   }
 `;
 
 const StAddress = styled.div`
   margin-top: 5px;
+  padding: 15px;
+
+  p {
+    margin-bottom: 5px;
+  }
+
+  p:nth-child(2) {
+    color: #7d7d7d;
+    font-size: 12px;
+  }
 `;
 
 const StLink = styled.a`
