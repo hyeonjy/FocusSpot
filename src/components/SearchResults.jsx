@@ -45,7 +45,7 @@ const SearchResults = ({ places, activeFilter }) => {
         {isOpen ? '>' : '<'}
       </StToggleButton>
 
-      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true}>
+      <Modal isOpen={isModalOpen} onClose={closeModal} isDetail={true} itemData={selectedPlace}>
         <DetailContent place={selectedPlace} activeFilter={activeFilter} />
       </Modal>
     </>
