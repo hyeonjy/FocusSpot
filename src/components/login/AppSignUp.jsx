@@ -5,6 +5,7 @@ import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../.
 import Button from '../common/Button';
 import ImageUpload from '../common/ImageUpload';
 import Swal from 'sweetalert2';
+import theme from '../../styles/theme';
 
 export const AppSignUp = () => {
   const navigate = useNavigate();
@@ -85,6 +86,9 @@ const StH2 = styled.h2`
   margin-bottom: 50px;
   font-size: 30px;
   font-weight: 500;
+  @media ${theme.device.mobile} {
+  font-size: 20px;
+  }
 `;
 
 const StForm = styled.form`

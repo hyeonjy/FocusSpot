@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../zustand/userStore';
 import { googleSignIn } from '../../api/googleAuth';
-import { useEffect} from 'react';
+import { useEffect } from 'react';
 import google_icon from '../../../public/google_icon.svg';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import theme from '../../styles/theme';
 
 export const UserLogIn = () => {
   const navigate = useNavigate();
@@ -55,6 +56,9 @@ const StH2 = styled.h2`
   margin-bottom: 30px;
   font-size: 30px;
   font-weight: 500;
+  @media ${theme.device.mobile} {
+  font-size: 20px;
+  }
 `;
 
 const StSocialLoginBtn = styled.button`
