@@ -4,14 +4,13 @@ import { useUserStore } from '../zustand/userStore';
 import useAddBookmark from '../hooks/useAddBookmark';
 import useDeleteBookmark from '../hooks/useDeleteBookmark';
 import useIsUserBookmark from '../hooks/useIsUserBookmark';
+import Swal from 'sweetalert2';
 
 const BookmarkButton = ({ itemData }) => {
-  const { id: userId } = useUserStore();
+  const { id: userId, isAuthenticated } = useUserStore();
   const { mutate: addBookmark, isPending: adding } = useAddBookmark(userId);
   const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(userId);
-
-  const kakaoId = itemData.id || itemData.kakao_id;
-  const { isBookmarked, isPending, isError } = useIsUserBookmark(kakaoId, userId);
+  const { isBookmarked, isPending, isError } = useIsUserBookmark(itemData.id, userId, isAuthenticated);
 
   const [activated, setActivated] = useState(false);
 
@@ -24,6 +23,25 @@ const BookmarkButton = ({ itemData }) => {
 
   // 버튼 기능
   const toggleBookmark = () => {
+    if (!isAuthenticated) {
+      Swal.fire({
+        icon: 'warning',
+        title: '로그인이 필요합니다',
+        text: '북마크 기능 사용을 위해서는 로그인이 필요합니다',
+        confirmButtonText: '로그인하기',
+        confirmButtonColor: '#3085d6',
+        cancelButtonText: '지도로 돌아가기',
+        cancelButtonColor: '#d33',
+        showCancelButton: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 로그인 페이지로 이동
+          window.location.href = '/login'; 
+        }
+      });
+      return;
+    }
+
     setActivated((prev) => !prev);
     if (activated) {
       deleteBookmark(itemData.id, {
