@@ -16,13 +16,21 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
 
   const keywords = getSearchKeywords(); // 검색 키워드 갖고오기
 
-  const { data, isPending, isError } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ['search', activeFilter, searchWord],
-    queryFn: () => searchAllResults(map, currentLocation, keywords, searchWord),
+    queryFn: async () => {
+      try {
+        return await searchAllResults(map, currentLocation, keywords, searchWord);
+      } catch (err) {
+        console.log('errr message: ', err.message);
+        throw new err();
+      }
+    },
+    retry: false,
     enabled: !!map && !!currentLocation
   });
 
-  return { data, isPending, isError };
+  return { data, isPending, isError, error };
 };
 
 export default useSearch;

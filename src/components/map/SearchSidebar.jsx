@@ -4,7 +4,7 @@ import ListItem from '../common/ListItem';
 import Modal from '../common/Modal';
 import DetailContent from '../common/DetailContent';
 
-const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPages, onPageChange }) => {
+const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces = '0', totalPages, onPageChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -45,10 +45,10 @@ const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPag
           현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{totalPlaces}</span>개
         </StTitle>
         <StSearchList ref={scrollRef}>
-          {places.length === 0 ? (
+          {!places ? (
             <div>검색결과가 없습니다.</div>
           ) : (
-            places.map((place, index) => (
+            places?.map((place, index) => (
               <StListItemWrapper key={`${place.id}-${index}`} $isFirstChild={index === 0}>
                 <ListItem index={index} itemData={place} handleClick={() => openModal(place)} />
               </StListItemWrapper>

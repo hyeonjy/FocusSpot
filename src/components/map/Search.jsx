@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useUserStore } from '../../zustand/userStore';
 
 const Search = ({ activeFilter, handleFilterClick, onSearchSubmit }) => {
   const [text, setText] = useState('');
+  const { isAuthenticated, handleSignOut } = useUserStore();
+  const navigate = useNavigate();
 
   const [isVisible, setIsVisible] = useState(true); // 토글용 state
   const toggleSearchUI = () => {
@@ -30,7 +33,11 @@ const Search = ({ activeFilter, handleFilterClick, onSearchSubmit }) => {
           <Link to="/">
             <img src="/white_logo.svg" />
           </Link>
-          <StLoginButton>로그인</StLoginButton>
+          {isAuthenticated ? (
+            <StLoginButton onClick={handleSignOut}>로그아웃</StLoginButton>
+          ) : (
+            <StLoginButton onClick={() => navigate('/login')}>로그인</StLoginButton>
+          )}
         </StLogoBox>
         <StSearchBox>
           <StSearchForm onSubmit={handleSubmit}>
