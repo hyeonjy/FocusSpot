@@ -31,7 +31,7 @@ export const searchAllResults = async (map, currentLocation, keywords, searchWor
           if (status === kakao.maps.services.Status.OK) {
             resolve(data); // 검색된 장소 데이터를 resolve
           } else {
-            resolve([]); // 결과가 없으면 빈 배열 반환
+            reject([]);
           }
         },
         options

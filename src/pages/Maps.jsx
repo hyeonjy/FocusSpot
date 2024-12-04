@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchSidebar from '../components/SearchSidebar';
 import AddressList from '../components/AddressList';
-import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import CustomOverlay from '../components/CustomOverlay';
 
 const resultsPerPage = 15;
 const markersPerPage = 15;
@@ -23,7 +24,7 @@ const Maps = () => {
 
   const totalPages = Math.ceil(data?.allPlaces.length / resultsPerPage); // 페이지 : 최대 페이지마다 15개씩만 보여주기
   const currentPlaces = data?.allPlaces.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage); // 현재 페이지에 맞는 장소들
-  const currentMarkers = data?.newMarkers.slice((currentPage - 1) * markersPerPage, currentPage * markersPerPage); // 현재 페이지에 맞는 마커만 표시
+  const [overlayIndex, setOverlayIndex] = useState(null);
 
   useEffect(() => {
     // 현재 보고 있는 지도 위치 표시 업데이트 ex) 부산 > 수영구 > 망미동
@@ -39,6 +40,7 @@ const Maps = () => {
     setActiveFiler(filter);
     setSearchWord(''); // 검색어 초기화
     setCurrentPage(1);
+    setOverlayIndex(null);
   };
 
   // 검색 제출 핸들러
@@ -47,6 +49,7 @@ const Maps = () => {
     setActiveFiler(word);
     setSearchParams({ filter: word }); // 필터 초기화
     setCurrentPage(1);
+    setOverlayIndex(null);
   };
 
   const handlePageChange = (page) => setCurrentPage(page);
@@ -87,22 +90,14 @@ const Maps = () => {
           title="현재 위치"
         />
         {!isPending &&
-          currentMarkers.map((marker, index) => (
-            <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
-              <button title={marker.title}>
-                <img
-                  src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
-                  style={{
-                    width: '36px',
-                    height: '691px',
-                    clip: `rect(${10 + index * 46}px, 36px, ${10 + index * 46 + 36}px, 0px)`,
-                    position: 'absolute',
-                    top: `${-35 - index * 46}px`,
-                    left: '-13px'
-                  }}
-                />
-              </button>
-            </CustomOverlayMap>
+          data?.allPlaces.map((place, index) => (
+            <CustomOverlay
+              key={`${place.place_name}-${index}`}
+              place={place}
+              index={index}
+              overlayIndex={overlayIndex}
+              setOverlayIndex={setOverlayIndex}
+            />
           ))}
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />
