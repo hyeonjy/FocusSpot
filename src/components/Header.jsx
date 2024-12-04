@@ -10,6 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
+    // 로그아웃 할때 정보 지우기
     setId(null);
     setName(null);
     setEmail(null);
