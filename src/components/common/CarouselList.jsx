@@ -7,7 +7,7 @@ import { deviceSizes } from '../../styles/theme';
 const CarouselList = ({ children }) => {
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,

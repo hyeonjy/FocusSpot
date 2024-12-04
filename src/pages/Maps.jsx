@@ -19,7 +19,7 @@ const Maps = () => {
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
   const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
-  const { data, isPending } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
+  const { data, isPending, isError, error } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
 
   const totalPages = Math.ceil(data?.allPlaces.length / resultsPerPage); // 페이지 : 최대 페이지마다 15개씩만 보여주기
   const currentPlaces = data?.allPlaces.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage); // 현재 페이지에 맞는 장소들
@@ -32,6 +32,11 @@ const Maps = () => {
       setAddresses(filterAddress);
     }
   }, [data]);
+
+  // console.log('error: ', error);
+  // console.log('iserror: ', isError);
+  // console.log('ispending: ', isPending);
+  // console.log('places: ', data);
 
   // 필터 버튼 클릭 핸들러
   const handleFilterClick = (filter) => {
@@ -92,7 +97,7 @@ const Maps = () => {
           title="현재 위치"
         />
         {!isPending &&
-          currentPlaces.map((place, index) => (
+          currentPlaces?.map((place, index) => (
             <CustomOverlay
               key={`${place.place_name}-${index}`}
               place={place}

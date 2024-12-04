@@ -21,7 +21,7 @@ export const searchAllResults = async (map, currentLocation, keywords, searchWor
 
   // 검색 Promise 생성
   const promises = keywords.map((keyword) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       // 검색 옵션 => searchWord면 국내 모두 검색, filter클릭시엔 반경 3km에서 검색
       const options = searchWord ? {} : { location: currentLatLng, radius: 3000 };
 
@@ -31,7 +31,7 @@ export const searchAllResults = async (map, currentLocation, keywords, searchWor
           if (status === kakao.maps.services.Status.OK) {
             resolve(data); // 검색된 장소 데이터를 resolve
           } else {
-            reject([]);
+            reject(new Error(`No results found for keyword: ${keyword}`));
           }
         },
         options
