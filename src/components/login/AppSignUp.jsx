@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../zustand/userStore';
-import { googleSignOut } from '../../api/googleAuth';
 import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../../api/supabaseSignin';
 import Button from '../Button';
-import InputText from '../InputText';
 import ImageUpload from '../ImageUpload';
 
 export const AppSignUp = () => {
@@ -34,13 +32,12 @@ export const AppSignUp = () => {
       navigate('/');
     } catch (error) {
       console.error(`신규 유저 정보 생성 에러 Error: ${error}`);
-      window.alert('세션 만료?');
+      window.alert('회원 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
     }
   };
 
   return (
     <>
-      <StContainer>
         <StH2>회원 정보 등록</StH2>
         <StForm onSubmit={handleOnSubmit}>
           <StAuthUl>
@@ -51,26 +48,25 @@ export const AppSignUp = () => {
               <StInputTitle>
                 이름 <StRed>*</StRed>
               </StInputTitle>
-              <InputText inputName={'nickName'} placeholderText="이름을 입력해주세요" />
+              <StInput name='nickName' id='nickName' placeholder='이름을 입력해주세요' maxlength='10'/>
             </li>
           </StAuthUl>
           <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
         </StForm>
-      </StContainer>
     </>
   );
 };
 
-const StContainer = styled.section`
-  width: 90%;
-  max-width: ${(props) => (props.mode === 'login' ? '400px' : '750px')};
-  margin: 0 auto;
-  padding: 50px;
-  background: var(--color-white);
-  border-radius: 5px;
-  box-shadow: var(--drop-shadow);
-  & > button {
-    margin: 0 auto;
+const StInput = styled.input`
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--color-gray5);
+  font-size: 15px;
+
+  &::placeholder {
+    color: var(--color-gray5);
   }
 `;
 
@@ -88,7 +84,7 @@ const StForm = styled.form`
 `;
 
 const StAuthUl = styled.ul`
-  width: 50%;
+  width: 70%;
   margin-bottom: 45px;
   li + li {
     margin-top: 28px;
