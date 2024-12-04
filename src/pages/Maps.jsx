@@ -10,7 +10,6 @@ import useCurrentLocation from '../hooks/useCurrentLocation';
 import CustomOverlay from '../components/CustomOverlay';
 
 const resultsPerPage = 15;
-const markersPerPage = 15;
 
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +51,10 @@ const Maps = () => {
     setOverlayIndex(null);
   };
 
-  const handlePageChange = (page) => setCurrentPage(page);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setOverlayIndex(null);
+  };
 
   // 지도 드래그 endpoint로 지도 위치 표시 업데이트 핸들러
   const handleDrag = async () => {
@@ -90,7 +92,7 @@ const Maps = () => {
           title="현재 위치"
         />
         {!isPending &&
-          data?.allPlaces.map((place, index) => (
+          currentPlaces.map((place, index) => (
             <CustomOverlay
               key={`${place.place_name}-${index}`}
               place={place}
