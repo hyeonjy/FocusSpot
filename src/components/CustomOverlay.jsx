@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const CustomOverlay = ({ place, index, overlayIndex, setOverlayIndex }) => {
   return (
     <>
-      <CustomOverlayMap position={{ lat: place.y, lng: place.x }}>
+      <CustomOverlayMap zIndex={overlayIndex === index ? 1 : 0} position={{ lat: place.y, lng: place.x }}>
         <button title={place.place_name} onClick={() => setOverlayIndex(index)}>
           <img
             src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
@@ -46,12 +46,12 @@ const CustomOverlay = ({ place, index, overlayIndex, setOverlayIndex }) => {
 export default CustomOverlay;
 
 const StCustomOverlayWrap = styled.div`
-  position: relative;
+  position: absolute;
   background-color: white;
   border-radius: 6px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   width: 300px;
-  top: -200px;
+  top: -177px;
   left: -150px;
   z-index: 9999999;
 `;
