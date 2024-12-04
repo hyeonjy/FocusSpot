@@ -1,21 +1,57 @@
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 import CarouselList from '../common/CarouselList';
 import ListItem from '../common/ListItem';
+import Modal from '../common/Modal';
+import DetailContent from '../common/DetailContent';
+import AuthForm from '../bookmark/AuthForm';
 
 const ListSection = ({ title, listData }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({
+    type: '',
+    data: null
+  });
+  const [isDetail, setIsDetail] = useState(false);
+
+  const handleShowDetail = useCallback((itemData) => {
+    setIsDetail(true);
+    setModalContent({ type: 'detail', data: itemData });
+    setModalOpen(true);
+  }, []);
+
+  const handleShowProfile = useCallback(() => {
+    setIsDetail(false);
+    setModalContent({ type: 'profile', data: '프로필 데이터' });
+    setModalOpen(true);
+  }, []);
+
   return (
     <StListSection>
       <StInner>
         <StH3>{title}</StH3>
         <StList>
-          <CarouselList>
-            {listData.map((data) => {
-              return <ListItem key={data.spot_id} itemData={data.spots} />;
-            })}
-          </CarouselList>
+          {listData && listData.length > 0 ? (
+            <CarouselList>
+              {listData.map((data) => (
+                <ListItem
+                  key={data.spot_id}
+                  itemData={data.spots}
+                  handleClick={() => handleShowDetail(data.spots)} // 모달 열기
+                />
+              ))}
+            </CarouselList>
+          ) : (
+            <StPanel>북마크한 장소가 없습니다</StPanel>
+          )}
         </StList>
       </StInner>
+
+      {/* 모달 */}
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail} itemData={modalContent.data}>
+        {modalContent.type === 'detail' ? <DetailContent place={modalContent.data} /> : <AuthForm mode="edit" />}
+      </Modal>
     </StListSection>
   );
 };
@@ -50,15 +86,17 @@ const StList = styled.div`
   }
   .slick-track {
     display: flex;
+    width: 100% !important;
   }
   .slick-slide {
     background: var(--color-white);
-    border: var(--color-gray6) 1px solid;
+    border: 1px solid var(--color-gray6);
     margin: 0 14px;
     padding: 35px 40px 35px 20px;
     transition: transform 0.2s, box-shadow 0.2s;
+
     &:hover {
-      border: var(--color-primary) 1px solid;
+      border: 1px solid var(--color-primary);
       box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
       transform: translateY(-7px);
     }
@@ -82,6 +120,14 @@ const StList = styled.div`
   .slick-next:before {
     content: '❯';
   }
+`;
+
+const StPanel = styled.p`
+  width: 100%;
+  padding: 80px 0;
+  text-align: center;
+  font-size: 25px;
+  color: var(--color-gray4);
 `;
 
 export default ListSection;

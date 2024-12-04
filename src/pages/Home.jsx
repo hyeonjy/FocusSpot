@@ -4,10 +4,11 @@ import styled, { keyframes } from 'styled-components';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import theme from '../styles/theme';
 import ListSection from '../components/home/ListSection';
+import { useUserStore } from '../zustand/userStore';
 
 const Home = () => {
-  const userId = 'f75f60ff-8c33-4aba-813b-6a6e18af9d1e';
-  const { bookmarks, isPending, isError, error } = useFetchUserBookmarks(userId);
+  const { id: userId } = useUserStore();
+  const { bookmarks, isPending, isLoading, isError, error } = useFetchUserBookmarks(userId);
 
   const titleRef = useRef(null);
   const imageRef = useRef(null);
@@ -48,8 +49,8 @@ const Home = () => {
         </p>
       </StBanner>
 
-      <ListSection title="주변 스터디카페" listData={bookmarks} />
-      <ListSection title="주변 도서관" listData={bookmarks} />
+      <ListSection title="북마크한 곳" listData={bookmarks} />
+      {/* <ListSection title="주변 도서관" listData={bookmarks} /> */}
     </>
   );
 };
