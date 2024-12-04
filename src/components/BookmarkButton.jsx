@@ -1,20 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useUserStore } from '../zustand/userStore';
 import useAddBookmark from '../hooks/useAddBookmark';
 import useDeleteBookmark from '../hooks/useDeleteBookmark';
+import useIsUserBookmark from '../hooks/useIsUserBookmark';
 
-const BookmarkButton = ({ itemData, bookmarkActivated }) => {
+const BookmarkButton = ({ itemData }) => {
   const { id: userId } = useUserStore();
-  const [activated, setActivated] = useState(bookmarkActivated);
   const { mutate: addBookmark, isPending: adding } = useAddBookmark(userId);
   const { mutate: deleteBookmark, isPending: deleting } = useDeleteBookmark(userId);
+
+  const kakaoId = itemData.id || itemData.kakao_id;
+  const { isBookmarked, isPending, isError } = useIsUserBookmark(kakaoId, userId);
+
+  const [activated, setActivated] = useState(false);
+
+  // 초기 버튼 설정
+  useEffect(() => {
+    if (!isPending && !isError) {
+      setActivated(isBookmarked);
+    }
+  }, [isBookmarked, isPending, isError]);
 
   // 버튼 기능
   const toggleBookmark = () => {
     setActivated((prev) => !prev);
     if (activated) {
-      deleteBookmark(itemData.spot_id, {
+      deleteBookmark(itemData.id, {
         onSuccess: () => setActivated(false)
       });
     } else {
