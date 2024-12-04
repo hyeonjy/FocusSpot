@@ -9,7 +9,7 @@ const Header = () => {
   const { isAuthenticated, setId, setName, setEmail, setProfileImg, setIsAuthenticated } = useUserStore();
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
     // 로그아웃 할때 정보 지우기
     setId(null);
     setName(null);
@@ -17,7 +17,7 @@ const Header = () => {
     setProfileImg(null);
     setIsAuthenticated(false);
 
-    googleSignOut();
+    await googleSignOut();
     navigate('/', { replace: true });
   };
 
