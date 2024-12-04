@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
-import DetailContent from './DetailContent';
+import DetailContent from '../common/DetailContent';
 
 const SearchResults = ({ places, activeFilter }) => {
   const [isOpen, setIsOpen] = useState(true);

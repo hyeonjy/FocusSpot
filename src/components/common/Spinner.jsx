@@ -1,8 +1,8 @@
 import styled, { keyframes } from 'styled-components';
-import theme from '../styles/theme';
+import theme from '../../styles/theme';
 
 const Spinner = () => {
-    return <StContainer />;
+  return <StContainer />;
 };
 
 const spin = keyframes`

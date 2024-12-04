@@ -1,10 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useUserStore } from "../../zustand/userStore";
-import { googleSignIn } from "../../api/googleAuth";
-import { useEffect, useState } from "react";
-import google_icon from "../../../public/google_icon.svg"
-import styled from "styled-components";
-import Spinner from "../Spinner";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../zustand/userStore';
+import { googleSignIn } from '../../api/googleAuth';
+import { useEffect, useState } from 'react';
+import google_icon from '../../../public/google_icon.svg';
+import styled from 'styled-components';
+import Spinner from '../common/Spinner';
 
 export const UserLogIn = ({ isLoading }) => {
   const location = useLocation();
@@ -34,7 +34,7 @@ export const UserLogIn = ({ isLoading }) => {
 
     return () => {
       if (token && id) setIsAuthenticated(true);
-    }
+    };
   }, [id]);
 
   return (

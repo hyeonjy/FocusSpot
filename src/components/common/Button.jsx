@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Button = ({ size = 'small', color = 'primary', fill = false, label, handleClick }) => {
+const Button = ({ size = 'small', type = 'button', color = 'primary', fill = false, label, handleClick }) => {
   return (
-    <StContainer type="button" $size={size} $color={color} $fill={fill} onClick={handleClick}>
+    <StContainer type={type} $size={size} $color={color} $fill={fill} onClick={handleClick}>
       {label}
     </StContainer>
   );

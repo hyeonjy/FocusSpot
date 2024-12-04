@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
-import profileImgDefault from '../assets/profile_img_default.svg';
+import profileImgDefault from '../../assets/profile_img_default.svg';
 import styled from 'styled-components';
 import Button from './Button';
-import { useUserStore } from '../zustand/userStore';
+import { useUserStore } from '../../zustand/userStore';
 
 const ImageUpload = () => {
   const fileInputRef = useRef(null); // input 요소를 참조하기 위한 ref
@@ -63,7 +63,7 @@ const ImageUpload = () => {
         <input
           type="file"
           accept="image/*"
-          name="profileImg" 
+          name="profileImg"
           id="profileImg"
           ref={fileInputRef} // ref를 통해 input 요소 참조
           onChange={readURL}

@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import InputText from './InputText';
-import Button from './Button';
-import ImageUpload from './ImageUpload';
+import InputText from '../common/InputText';
+import Button from '../common/Button';
+import ImageUpload from '../common/ImageUpload';
 
 const AuthForm = ({ mode }) => {
   const renderForm = {

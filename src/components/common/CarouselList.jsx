@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { deviceSizes } from '../styles/theme';
+import { deviceSizes } from '../../styles/theme';
 
 const CarouselList = ({ children }) => {
   const settings = {
