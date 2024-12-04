@@ -7,7 +7,6 @@ const ProtectedRoute = () => {
   // 임시 사용자 로그인 여부
   // let isAuthenticated = false;
 
-  //const isAuthenticated = true;
   return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} replace />;
 };
 
