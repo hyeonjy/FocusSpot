@@ -42,7 +42,7 @@ const Bookmark = () => {
       <ProfileContainer openModal={handleShowProfile} />
 
       {/* 북마크 섹션 */}
-      <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} />
+      <BookmarksContainer bookmarks={bookmarks} onShowDetail={handleShowDetail} isLoading={isLoading} />
 
       {/* 모달 */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} isDetail={isDetail} itemData={modalContent.data}>

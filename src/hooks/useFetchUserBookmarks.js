@@ -6,7 +6,7 @@ const useFetchUserBookmarks = (userId) => {
     queryKey: ['bookmarks', userId],
     queryFn: () => getBookmarkByUserId(userId),
     enabled: !!userId, // 아이디 확인!
-    retry: 2 // TODO
+    retry: 2 
   });
 
   return {
