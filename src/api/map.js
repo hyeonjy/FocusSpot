@@ -14,14 +14,17 @@ export const getAddressByCoordinates = async (lat, lng) => {
   });
 };
 
-export const createSearchPromises = (currentLocation, keywords, searchWord) => {
+export const searchAllResults = async (map, currentLocation, keywords, searchWord) => {
   const kakao = window.kakao;
   const ps = new kakao.maps.services.Places();
-  const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng); // LatLng 객체만들기
+  const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng); // LatLng 객체 생성
 
-  return keywords.map((keyword) => {
+  // 검색 Promise 생성
+  const promises = keywords.map((keyword) => {
     return new Promise((resolve) => {
-      const options = searchWord ? {} : { location: currentLatLng, radius: 1000 };
+      // 검색 옵션 => searchWord면 국내 모두 검색, filter클릭시엔 반경 3km에서 검색
+      // TODO : 임시 반경3km
+      const options = searchWord ? {} : { location: currentLatLng, radius: 3000 };
 
       ps.keywordSearch(
         keyword,
@@ -36,10 +39,9 @@ export const createSearchPromises = (currentLocation, keywords, searchWord) => {
       );
     });
   });
-};
 
-export const searchAllResults = (map, results) => {
-  const kakao = window.kakao;
+  // 모든 검색 결과 처리
+  const results = await Promise.all(promises);
   const allPlaces = results.flat(); // 각 카테고리별 검색 결과를 합침
   const bounds = new kakao.maps.LatLngBounds(); // 지도 범위 설정
 
@@ -55,6 +57,7 @@ export const searchAllResults = (map, results) => {
       title: place.place_name // 장소 이름을 마커의 타이틀로 설정
     };
   });
-  map.setBounds(bounds); // 지도 반경 설정(기본은 1km)
-  return { allPlaces, newMarkers };
+
+  map.setBounds(bounds); // 지도 반경 설정
+  return { allPlaces, newMarkers }; // 결과 반환
 };
