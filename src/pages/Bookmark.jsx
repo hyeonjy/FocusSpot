@@ -16,8 +16,7 @@ const Bookmark = () => {
     data: null
   });
   const [isDetail, setIsDetail] = useState(false);
-
-  // 테스트용 유저 uuid
+  
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
   const { id: userId } = useUserStore();
   const { bookmarks, isPending, isLoading, isError, error } = useFetchUserBookmarks(userId);
