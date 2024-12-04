@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../../styles/theme';
 import { useUserStore } from '../../zustand/userStore';
@@ -10,15 +10,19 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
+    // 홈으로 이동
+    navigate('/');
+
+    // db에서 signout 처리
+    await googleSignOut();
     // 로그아웃 할때 정보 지우기
     setId(null);
     setName(null);
     setEmail(null);
     setProfileImg(null);
+    // 제일 마지막에 지우기
+    // ProtectedRoute와 관련이 있음
     setIsAuthenticated(false);
-
-    await googleSignOut();
-    navigate('/', { replace: true });
   };
 
   return (

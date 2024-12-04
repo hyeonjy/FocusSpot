@@ -4,6 +4,8 @@ import { useUserStore } from '../../zustand/userStore';
 import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../../api/supabaseSignin';
 import Button from '../common/Button';
 import ImageUpload from '../common/ImageUpload';
+import Swal from 'sweetalert2';
+import theme from '../../styles/theme';
 
 export const AppSignUp = () => {
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ export const AppSignUp = () => {
       e.preventDefault();
 
       const sessionData = await getUserSession();
-      const session = sessionData.session; //3600초 지나면 만료되는구나
+      const session = sessionData.session;
       const userEmail = session.user.email;
       const userName = e.target.nickName.value;
       const file = e.target.profileImg.files[0];
@@ -28,31 +30,40 @@ export const AppSignUp = () => {
       setProfileImg(profileImg);
       setIsAuthenticated(true);
 
-      window.alert('회원 정보 등록에 성공했습니다');
-      navigate('/');
+      Swal.fire({
+        text: "회원 정보 등록에 성공했습니다.",
+        icon: "success",
+        iconColor: 'var(--color-primary)',
+      }).then(() => {
+        navigate('/');
+      });
     } catch (error) {
       console.error(`신규 유저 정보 생성 에러 Error: ${error}`);
-      window.alert('회원 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.');
+      Swal.fire({
+        text: "회원 정보 등록에 실패했습니다. 잠시 후 다시 시도해주세요.",
+        icon: "error",
+        iconColor: 'var(--color-primary)',
+      });
     }
   };
 
   return (
     <>
-      <StH2>회원 정보 등록</StH2>
-      <StForm onSubmit={handleOnSubmit}>
-        <StAuthUl>
-          <li>
-            <ImageUpload />
-          </li>
-          <li>
-            <StInputTitle>
-              이름 <StRed>*</StRed>
-            </StInputTitle>
-            <StInput name="nickName" id="nickName" placeholder="이름을 입력해주세요" maxlength="10" />
-          </li>
-        </StAuthUl>
-        <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
-      </StForm>
+        <StH2>회원 정보 등록</StH2>
+        <StForm onSubmit={handleOnSubmit}>
+          <StAuthUl>
+            <li>
+              <ImageUpload />
+            </li>
+            <li>
+              <StInputTitle>
+                이름 <StRed>*</StRed>
+              </StInputTitle>
+            <StInput name="nickName" id="nickName" placeholder="이름을 입력해주세요" maxLength="10"/>
+            </li>
+          </StAuthUl>
+          <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
+        </StForm>
     </>
   );
 };
@@ -75,6 +86,9 @@ const StH2 = styled.h2`
   margin-bottom: 50px;
   font-size: 30px;
   font-weight: 500;
+  @media ${theme.device.mobile} {
+  font-size: 20px;
+  }
 `;
 
 const StForm = styled.form`

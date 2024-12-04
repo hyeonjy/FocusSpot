@@ -1,15 +1,14 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../zustand/userStore';
 import { googleSignIn } from '../../api/googleAuth';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import google_icon from '../../../public/google_icon.svg';
 import styled from 'styled-components';
-import Spinner from '../common/Spinner';
+import Swal from 'sweetalert2';
+import theme from '../../styles/theme';
 
-export const UserLogIn = ({ isLoading }) => {
-  const location = useLocation();
+export const UserLogIn = () => {
   const navigate = useNavigate();
-  const [token, setToken] = useState(null);
   const { setIsAuthenticated, id } = useUserStore();
 
   const handleSignin = async () => {
@@ -17,40 +16,37 @@ export const UserLogIn = ({ isLoading }) => {
       await googleSignIn();
     } catch (error) {
       console.error(`소셜 로그인 실패 Error: ${error}`);
-      window.alert('소셜 로그인에 실패했습니다. 다시 시도해주세요.');
+      Swal.fire({
+        text: "소셜 로그인에 실패했습니다. 다시 시도해주세요.",
+        icon: "error"
+      });
     }
   };
 
   useEffect(() => {
-    const hash = location.hash;
-    const params = new URLSearchParams(hash.replace('#', ''));
-    const userToken = params.get('access_token');
-
-    if (userToken) setToken(true);
-    if (token && id) {
-      window.alert('로그인에 성공했습니다. 홈으로 갑니다.');
-      navigate('/');
+    if (id) {
+      Swal.fire({
+        text: "로그인에 성공했습니다. 홈으로 갑니다.",
+        icon: "success",
+        iconColor: 'var(--color-primary)',
+      }).then(() => {
+        navigate('/');
+      });
     }
 
     return () => {
-      if (token && id) setIsAuthenticated(true);
+      if (id) setIsAuthenticated(true);
     };
   }, [id]);
 
   return (
     <>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <>
-          <StH2>로그인</StH2>
-          <StSocialLoginBtn onClick={handleSignin}>
-            <img src={google_icon} alt="signin_button_icon" />
-            <span>Google 계정으로 시작</span>
-          </StSocialLoginBtn>
-          <StRefer>Google 계정으로 시작할 수 있습니다</StRefer>
-        </>
-      )}
+      <StH2>로그인</StH2>
+      <StSocialLoginBtn onClick={handleSignin}>
+        <img src={google_icon} alt="signin_button_icon" />
+        <span>Google 계정으로 시작</span>
+      </StSocialLoginBtn>
+      <StRefer>Google 계정으로 시작할 수 있습니다</StRefer>
     </>
   );
 };
@@ -60,6 +56,9 @@ const StH2 = styled.h2`
   margin-bottom: 30px;
   font-size: 30px;
   font-weight: 500;
+  @media ${theme.device.mobile} {
+  font-size: 20px;
+  }
 `;
 
 const StSocialLoginBtn = styled.button`
