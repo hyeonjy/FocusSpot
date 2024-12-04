@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../Button";
 
-export const UserLogInAndOut = () => {
+export const UserLogInAndOut = ({ userToken }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const [token, setToken] = useState(null);
