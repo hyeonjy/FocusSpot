@@ -9,33 +9,39 @@ import ImageUpload from '../ImageUpload';
 
 export const AppSignUp = () => {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useUserStore();
+  const { setIsAuthenticated, setId, setName, setEmail, setProfileImg } = useUserStore();
 
-  const handleSignOut = () => {
-    setIsAuthenticated(false);
-    googleSignOut();
-    navigate('/');
-  };
   const handleOnSubmit = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    const sessionData = await getUserSession();
-    const session = sessionData.session; //3600초 지나면 만료되는구나
-    const userEmail = session.user.email;
-    const userName = e.target.nickName.value;
-    const file = e.target.profileImg.files[0];
+      const sessionData = await getUserSession();
+      const session = sessionData.session; //3600초 지나면 만료되는구나
+      const userEmail = session.user.email;
+      const userName = e.target.nickName.value;
+      const file = e.target.profileImg.files[0];
 
-    const path = await uploadProfileImgToStore(userEmail, file);
-    await uploadUserProfile(userName, userEmail, path);
+      const path = await uploadProfileImgToStore(userEmail, file);
+      const newUserData = await uploadUserProfile(userName, userEmail, path);
+      const { id, name, email, profile_picture: profileImg } = newUserData;
+      setId(id);
+      setName(name);
+      setEmail(email);
+      setProfileImg(profileImg);
+      setIsAuthenticated(true);
 
-    setIsAuthenticated(true);
-    navigate('/');
+      window.alert('회원 정보 등록에 성공했습니다');
+      navigate('/');
+    } catch (error) {
+      console.error(`신규 유저 정보 생성 에러 Error: ${error}`);
+      window.alert('세션 만료?');
+    }
   };
 
   return (
     <>
       <StContainer>
-        <StH2>회원가입</StH2>
+        <StH2>회원 정보 등록</StH2>
         <StForm onSubmit={handleOnSubmit}>
           <StAuthUl>
             <li>
@@ -48,11 +54,9 @@ export const AppSignUp = () => {
               <InputText inputName={'nickName'} placeholderText="이름을 입력해주세요" />
             </li>
           </StAuthUl>
-          <Button size="big" color="primary" fill={true} type={'submit'} label="회원가입" />
+          <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />
         </StForm>
       </StContainer>
-
-      <button onClick={handleSignOut}>세션아웃</button>
     </>
   );
 };

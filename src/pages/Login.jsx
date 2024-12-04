@@ -4,10 +4,13 @@ import { UserLogInAndOut } from '../components/login/UserLogInAndOut';
 import { AppSignUp } from '../components/login/AppSignUp';
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [isSigningUp, setIsSigningUp] = useState(false);
-  useCheckUserAuth(setIsSigningUp);
+  useCheckUserAuth({setIsSigningUp, setIsLoading});
 
-  return <>{isSigningUp ? <AppSignUp /> : <UserLogInAndOut />}</>;
+  const view = isSigningUp ? <AppSignUp /> : <UserLogInAndOut />;
+
+  return <>{isLoading ? <div>잠시만 기다려주세요</div> : view}</>;
 };
 
 export default Login;
