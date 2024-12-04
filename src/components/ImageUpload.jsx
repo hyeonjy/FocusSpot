@@ -61,6 +61,8 @@ const ImageUpload = () => {
         <input
           type="file"
           accept="image/*"
+          name="profileImg" 
+          id="profileImg"
           ref={fileInputRef} // ref를 통해 input 요소 참조
           onChange={readURL}
           style={{ display: 'none' }}

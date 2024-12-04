@@ -15,7 +15,7 @@ export const googleSignIn = async () => {
         },
     });
     if (error) console.error(error);
-    console.log(data);
+
     return data
 }
 
@@ -30,17 +30,25 @@ export const getUserAuth = async () => {
     return data
 }
 
-export const getUserData = async () => {
-    const data = await getUserAuth();
-    const { data: userData, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', data.user.email)
-        .single();
-    console.error(error);
-    if (userData) {
-        const { id, email, name, profile_picture } = userData;
+export const getUserDataFromSession = async () => {
+    try {
+        const data = await getUserAuth();
+        const { data: userData, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('email', data.user.email)
+            .single();
+        console.error(error);
 
-        return { userId: id, email, name, profileImg: profile_picture }
+        if (userData) {
+            const { id, email, name, profile_picture } = userData;
+            console.log("The data is here");
+
+            return { userId: id, email, name, profileImg: profile_picture }
+        }
+        
+    } catch (err) {
+        console.error(err);
+        return null;
     }
 }
