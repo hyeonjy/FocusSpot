@@ -15,7 +15,7 @@ export const AppSignUp = () => {
       e.preventDefault();
 
       const sessionData = await getUserSession();
-      const session = sessionData.session; //3600초 지나면 만료되는구나
+      const session = sessionData.session;
       const userEmail = session.user.email;
       const userName = e.target.nickName.value;
       const file = e.target.profileImg.files[0];

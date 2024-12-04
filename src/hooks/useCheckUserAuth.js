@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
     const location = useLocation();
-    const { isAuthenticated, id, setId, setName, setEmail, setProfileImg } = useUserStore();
+    const { isAuthenticated, setId, setName, setEmail, setProfileImg } = useUserStore();
 
     useEffect(() => {
         const setUserAuth = async () => {
@@ -43,16 +43,18 @@ const useCheckUserAuth = ({ setIsSigningUp, setIsLoading }) => {
                     icon: "error",
                     iconColor: 'var(--color-primary)',
                 });
+            } finally { 
+                setIsLoading(false); 
             }
         };
         setUserAuth();
 
-        return ()=>{
+        return () => {
             //유저가 회원 정보 등록중에 창을 나간다면 세션을 끊음
-            if(!isAuthenticated) googleSignOut();
+            if (!isAuthenticated) googleSignOut();
         }
 
-    }, [id, isAuthenticated]);
+    }, []);
 
 }
 
