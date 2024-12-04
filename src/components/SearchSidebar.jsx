@@ -30,11 +30,16 @@ const SearchSidebar = ({ searchWord, activeFilter, places }) => {
           현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{places.length}</span>개
         </StTitle>
         <StSearchList>
-          {places.map((place, index) => (
+          {places.length === 0 ? (
+            <div>검색결과가 없습니다.</div>
+          ) : (
+            places.map((place, index) => (
             <StListItemWrapper key={`${place.id}-${index}`} $isFirstChild={index === 0}>
               <ListItem index={index} itemData={place} handleClick={() => openModal(place)} />
             </StListItemWrapper>
-          ))}
+          ))
+          }
+
         </StSearchList>
         <StButton title={`${isSidebarOpen ? '검색 리스트 닫기' : '검색 리스트 열기'}`} onClick={toggleSidebar}>
           {isSidebarOpen ? <img src="/close.svg" /> : <img src="/open.svg" />}

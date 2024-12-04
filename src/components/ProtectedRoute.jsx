@@ -11,7 +11,7 @@ const ProtectedRoute = () => {
   // if (isToken) isAuthenticated = true;
 
   //const isAuthenticated = true;
-  return isAuthenticated ? <Outlet /> : <Navigate to={"/login"} replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} replace />;
 };
 
 export default ProtectedRoute;

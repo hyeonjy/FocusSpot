@@ -7,6 +7,7 @@ import Search from '../components/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
+import CustomOverlay from '../components/CustomOverlay';
 
 const Maps = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const Maps = () => {
   const currentLocation = useCurrentLocation(); // 초기 현재 위치
   const [activeFilter, setActiveFiler] = useState(searchParams.get('filter') || '전체'); // URL에서 filter 가져오기
   const { markers, places } = useSearch(map, activeFilter, currentLocation, searchWord); // 검색한 위치정보들과 마커정보들
+  const [overlayIndex, setOverlayIndex] = useState(null);
 
   useEffect(() => {
     // 현재 보고 있는 지도 위치 표시 업데이트 ex) 부산 > 수영구 > 망미동
@@ -30,6 +32,7 @@ const Maps = () => {
     setSearchParams({ filter }); // URL 쿼리 파라미터 업데이트
     setActiveFiler(filter);
     setSearchWord(''); // 검색어 초기화
+    setOverlayIndex(null);
   };
 
   // 검색 제출 핸들러
@@ -37,6 +40,7 @@ const Maps = () => {
     setSearchWord(word);
     setActiveFiler(word);
     setSearchParams({ filter: word }); // 필터 초기화
+    setOverlayIndex(null);
   };
 
   // 지도 드래그 endpoint로 지도 위치 표시 업데이트 핸들러
@@ -48,6 +52,8 @@ const Maps = () => {
     const updatedAddresses = await getAddressByCoordinates(newLat, newLng);
     setAddresses(updatedAddresses);
   };
+
+  console.log('place:', places);
 
   return (
     <>
@@ -72,22 +78,14 @@ const Maps = () => {
           position={currentLocation.center}
           title="현재 위치"
         />
-        {markers.map((marker, index) => (
-          <CustomOverlayMap key={`${marker.title}-${index}`} position={marker.position}>
-            <button title={marker.title}>
-              <img
-                src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png"
-                style={{
-                  width: '36px',
-                  height: '691px',
-                  clip: `rect(${10 + index * 46}px, 36px, ${10 + index * 46 + 36}px, 0px)`,
-                  position: 'absolute',
-                  top: `${-35 - index * 46}px`,
-                  left: '-13px'
-                }}
-              />
-            </button>
-          </CustomOverlayMap>
+        {places.map((place, index) => (
+          <CustomOverlay
+            key={`${place.place_name}-${index}`}
+            place={place}
+            index={index}
+            overlayIndex={overlayIndex}
+            setOverlayIndex={setOverlayIndex}
+          />
         ))}
       </Map>
       <Search activeFilter={activeFilter} handleFilterClick={handleFilterClick} onSearchSubmit={handleSearchSubmit} />

@@ -22,12 +22,19 @@ const useSearch = (map, activeFilter, currentLocation, searchWord) => {
 
     const keywords = getSearchKeywords(); // 검색 키워드 갖고오기
     const promises = createSearchPromises(currentLocation, keywords, searchWord); // 검색 Promise 생성
-    Promise.all(promises).then((results) => {
-      const { allPlaces, newMarkers } = searchAllResults(map, results);
-      setPlaces(allPlaces);
-      setMarkers(newMarkers);
-    }); // 모두 검색하고 마커 데이터를 설정
-  }, [currentLocation, activeFilter, searchWord]);
+
+    Promise.all(promises)
+      .then((results) => {
+        const { allPlaces, newMarkers } = searchAllResults(map, results);
+        setPlaces(allPlaces);
+        setMarkers(newMarkers);
+      })
+      .catch(() => {
+        // Promise.all 자체가 reject로 빠지는 경우
+        setPlaces([]);
+        setMarkers([]);
+      });
+  }, [currentLocation, activeFilter]);
 
   return { markers, places };
 };

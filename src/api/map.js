@@ -20,7 +20,7 @@ export const createSearchPromises = (currentLocation, keywords, searchWord) => {
   const currentLatLng = new kakao.maps.LatLng(currentLocation.center.lat, currentLocation.center.lng); // LatLng 객체만들기
 
   return keywords.map((keyword) => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const options = searchWord ? {} : { location: currentLatLng, radius: 1000 };
 
       ps.keywordSearch(
@@ -29,7 +29,7 @@ export const createSearchPromises = (currentLocation, keywords, searchWord) => {
           if (status === kakao.maps.services.Status.OK) {
             resolve(data); // 검색된 장소 데이터를 resolve
           } else {
-            resolve([]); // 결과가 없으면 빈 배열 반환
+            reject([]);
           }
         },
         options
