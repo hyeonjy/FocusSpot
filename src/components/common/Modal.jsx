@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import BookmarkButton from './BookmarkButton';
 
-const Modal = ({ isOpen, onClose, children, isDetail = null, itemData}) => {
+const Modal = ({ isOpen, onClose, children, isDetail = null, itemData }) => {
   // 스크롤 비활성화
   useEffect(() => {
     if (isOpen) {

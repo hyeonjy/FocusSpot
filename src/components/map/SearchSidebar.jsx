@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import ListItem from './ListItem';
-import Modal from './Modal';
-import DetailContent from './DetailContent';
+import ListItem from '../common/ListItem';
+import Modal from '../common/Modal';
+import DetailContent from '../common/DetailContent';
 
 const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPages, onPageChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

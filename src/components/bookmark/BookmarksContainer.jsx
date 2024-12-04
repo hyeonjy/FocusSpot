@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import ListItem from '../ListItem';
+import ListItem from '../common/ListItem';
 import BookmarksLoading from './BookmarksLoding';
 
 const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
@@ -64,4 +64,4 @@ const StBookmarkGird = styled.ul`
   }
 `;
 
-export default React.memo(BookmarksContainer)
+export default React.memo(BookmarksContainer);

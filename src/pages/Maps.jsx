@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import SearchSidebar from '../components/SearchSidebar';
-import AddressList from '../components/AddressList';
+import SearchSidebar from '../components/map/SearchSidebar';
+import AddressList from '../components/map/AddressList';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-import Search from '../components/Search';
+import Search from '../components/map/Search';
 import useSearch from '../hooks/useSearch';
 import { getAddressByCoordinates } from '../api/map';
 import useCurrentLocation from '../hooks/useCurrentLocation';
-import CustomOverlay from '../components/CustomOverlay';
+import CustomOverlay from '../components/map/CustomOverlay';
 
 const resultsPerPage = 15;
 

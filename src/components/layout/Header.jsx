@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import theme from '../styles/theme';
-import { useUserStore } from '../zustand/userStore';
-import { googleSignOut } from '../api/googleAuth';
+import theme from '../../styles/theme';
+import { useUserStore } from '../../zustand/userStore';
+import { googleSignOut } from '../../api/googleAuth';
 
 const Header = () => {
   const { isAuthenticated, setId, setName, setEmail, setProfileImg, setIsAuthenticated } = useUserStore();

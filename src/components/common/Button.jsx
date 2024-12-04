@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
+<<<<<<< HEAD:src/components/Button.jsx
 const Button = ({ size = 'small', type='button', color = 'primary', fill = false, label, handleClick }) => {
+=======
+const Button = ({ size = 'small', type = 'button', color = 'primary', fill = false, label, handleClick }) => {
+>>>>>>> dev:src/components/common/Button.jsx
   return (
     <StContainer type={type} $size={size} $color={color} $fill={fill} onClick={handleClick}>
       {label}

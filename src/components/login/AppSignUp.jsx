@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../../zustand/userStore';
 import { getUserSession, uploadProfileImgToStore, uploadUserProfile } from '../../api/supabaseSignin';
-import Button from '../Button';
-import ImageUpload from '../ImageUpload';
+import Button from '../common/Button';
+import ImageUpload from '../common/ImageUpload';
 import Swal from 'sweetalert2';
 
 export const AppSignUp = () => {
@@ -58,7 +58,7 @@ export const AppSignUp = () => {
               <StInputTitle>
                 이름 <StRed>*</StRed>
               </StInputTitle>
-            <StInput name='nickName' id='nickName' placeholder='이름을 입력해주세요' maxLength='10'/>
+            <StInput name="nickName" id="nickName" placeholder="이름을 입력해주세요" maxLength="10"/>
             </li>
           </StAuthUl>
           <Button size="big" color="primary" fill={true} type={'submit'} label="등록" />

@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import Modal from '../components/Modal';
+import Modal from '../components/common/Modal';
 import useFetchUserBookmarks from '../hooks/useFetchUserBookmarks';
 import ProfileContainer from '../components/bookmark/ProfileContainer';
 import BookmarksContainer from '../components/bookmark/BookmarksContainer';
-import DetailContent from '../components/DetailContent';
+import DetailContent from '../components/common/DetailContent';
 import { useUserStore } from '../zustand/userStore';
-import AuthForm from '../components/AuthForm';
+import AuthForm from '../components/bookmark/AuthForm';
 
 const Bookmark = () => {
   // const emptyCard = Array(8).fill({});
@@ -16,7 +16,7 @@ const Bookmark = () => {
     data: null
   });
   const [isDetail, setIsDetail] = useState(false);
-  
+
   // Bookmark 컴포넌트가 props로 받거나 다른 상태 관리 통해 전달 받을 것
   const { id: userId } = useUserStore();
   const { bookmarks, isPending, isLoading, isError, error } = useFetchUserBookmarks(userId);
