@@ -105,5 +105,7 @@ export const GlobalStyle = createGlobalStyle`
     overflow: hidden;
   }
 
-
+  .swal2-popup {
+    font-family: var(--primary-font) !important; 
+  }
 `;

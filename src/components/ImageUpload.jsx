@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react';
 import profileImgDefault from '../assets/profile_img_default.svg';
 import styled from 'styled-components';
 import Button from './Button';
+import { useUserStore } from '../zustand/userStore';
 
 const ImageUpload = () => {
   const fileInputRef = useRef(null); // input 요소를 참조하기 위한 ref
-  const [previewSrc, setPreviewSrc] = useState(profileImgDefault); // 기본 이미지로 설정
-  const [isDeleteVisible, setIsDeleteVisible] = useState(false);
+  const { profileImg } = useUserStore();
+  const [previewSrc, setPreviewSrc] = useState(profileImg || profileImgDefault); // 기본 이미지로 설정
+  const [isDeleteVisible, setIsDeleteVisible] = useState(profileImg || false);
 
   const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
   const maxSize = 20 * 1024 * 1024; // 20MB

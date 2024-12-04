@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import theme from '../styles/theme';
+import { useUserStore } from '../zustand/userStore';
+import { googleSignOut } from '../api/googleAuth';
 
 const Header = () => {
-  const [isLogin, setIsLogin] = useState(false); // 임시 auth state
+  const { isAuthenticated, setId, setName, setEmail, setProfileImg, setIsAuthenticated } = useUserStore();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    // 로그아웃 할때 정보 지우기
+    setId(null);
+    setName(null);
+    setEmail(null);
+    setProfileImg(null);
+    setIsAuthenticated(false);
+
+    await googleSignOut();
+    navigate('/', { replace: true });
+  };
 
   return (
     <StHeader>
@@ -20,13 +35,15 @@ const Header = () => {
             <li>
               <Link to="/map">지도보기</Link>
             </li>
-            {isLogin ? (
+            {isAuthenticated ? (
               <>
                 <li>
                   <Link to="/bookmark">마이페이지</Link>
                 </li>
                 <li>
-                  <button type="button">로그아웃</button>
+                  <button type="button" onClick={handleSignOut}>
+                    로그아웃
+                  </button>
                 </li>
               </>
             ) : (

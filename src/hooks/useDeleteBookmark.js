@@ -12,10 +12,11 @@ const useDeleteBookmark = (userId) => {
       // Show SweetAlert notification for success
       Swal.fire({
         icon: 'info',
+        iconColor: 'var(--color-primary)',
         title: '북마크 제거 완료',
         text: '북마크가 제거되었습니다',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: 'var(--color-primary)'
       });
     },
     onError: (error) => {

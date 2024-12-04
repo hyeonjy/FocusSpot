@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import ListItem from '../ListItem';
+import BookmarksLoading from './BookmarksLoding';
 
 const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
   return (
@@ -9,7 +10,7 @@ const BookmarksContainer = ({ bookmarks, onShowDetail }) => {
       <StHr />
       <StBookmarkGird>
         {bookmarks.length === 0 ? (
-          <p>저장된 북마크가 없습니다.</p>
+          <BookmarksLoading />
         ) : (
           bookmarks.map((bookmark, i) => {
             return (

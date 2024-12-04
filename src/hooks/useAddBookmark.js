@@ -12,10 +12,11 @@ const useAddBookmark = (userId) => {
       queryClient.invalidateQueries(['bookmarks', userId]);
       Swal.fire({
         icon: 'success',
+        iconColor: 'var(--color-primary)',
         title: '북마크 추가 완료',
         text: '북마크를 성공적으로 추가했습니다',
         confirmButtonText: 'OK',
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: 'var(--color-primary)'
       });
     },
     onError: (error) => {

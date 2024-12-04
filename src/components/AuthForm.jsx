@@ -82,32 +82,6 @@ const AuthForm = ({ mode }) => {
               <InputText placeholderText="이름을 입력해주세요" />
             </li>
           </StAuthFormLeft>
-          <StAuthForm>
-            <li>
-              <StInputTitle>
-                회원 ID <StRed>*</StRed>
-              </StInputTitle>
-              <InputText placeholderText="ID를 입력해주세요" />
-            </li>
-            <li>
-              <StInputTitle>
-                이메일 <StRed>*</StRed>
-              </StInputTitle>
-              <InputText placeholderText="이메일을 입력해주세요" />
-            </li>
-            <li>
-              <StInputTitle>
-                비밀번호 <StRed>*</StRed>
-              </StInputTitle>
-              <InputText placeholderText="비밀번호를 입력해주세요" />
-            </li>
-            <li>
-              <StInputTitle>
-                비밀번호 확인 <StRed>*</StRed>
-              </StInputTitle>
-              <InputText placeholderText="비밀번호를 확인해주세요" />
-            </li>
-          </StAuthForm>
         </StFlex>
         <Button size="big" color="primary" fill={true} label="수정 완료" />
       </>
@@ -141,10 +115,16 @@ const StFlex = styled.ul`
 `;
 
 const StAuthFormLeft = styled.ul`
+  justify-self: center;
+  align-self: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   max-height: 313px;
+
+  li {
+    margin: 20px 0;
+  }
 `;
 
 const StInputTitle = styled.p`
