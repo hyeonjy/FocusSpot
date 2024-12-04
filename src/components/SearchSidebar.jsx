@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Modal from './Modal';
@@ -8,6 +8,7 @@ const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPag
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const scrollRef = useRef();
 
   const openModal = (place) => {
     setSelectedPlace(place);
@@ -23,8 +24,18 @@ const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPag
     setIsSidebarOpen((prev) => !prev);
   };
 
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const handlePageClick = (page) => {
     onPageChange(page);
+    scrollToTop();
   };
 
   return (
@@ -33,7 +44,7 @@ const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces, totalPag
         <StTitle>
           현재 위치 <span>{activeFilter || searchWord}</span> 결과 총 <span>{totalPlaces}</span>개
         </StTitle>
-        <StSearchList>
+        <StSearchList ref={scrollRef}>
           {places.length === 0 ? (
             <div>검색결과가 없습니다.</div>
           ) : (
