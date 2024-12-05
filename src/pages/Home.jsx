@@ -150,7 +150,7 @@ const StVisualImage = styled.div`
     bottom: 100px;
     z-index: -1;
     width: 250px;
-    opacity: 0.2;
+    opacity: 0.2 !important;
   }
   @media ${theme.device.mobile} {
     right: 50%;

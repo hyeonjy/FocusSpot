@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ListItem from '../common/ListItem';
 import Modal from '../common/Modal';
 import DetailContent from '../common/DetailContent';
+import theme from '../../styles/theme';
 
 const SearchSidebar = ({ searchWord, activeFilter, places, totalPlaces = '0', totalPages, onPageChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,6 +87,15 @@ const StContainer = styled.aside`
   transform: translate3d(${({ $isSidebarOpen }) => ($isSidebarOpen ? '0' : '380px')}, 0, 0);
   transition: transform 300ms ease-in-out;
   z-index: 12;
+
+  @media ${theme.device.tablet} {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 0;
+    height: 50vh;
+    width: 100vw;
+  }
 `;
 
 const StTitle = styled.h2`
@@ -164,6 +174,10 @@ const StButton = styled.button`
 
   &:focus {
     box-shadow: rgba(0, 0, 0, 0.1) -4px 1px 4px 0px;
+  }
+
+  @media ${theme.device.tablet} {
+    display: none;
   }
 `;
 
