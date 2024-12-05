@@ -199,7 +199,7 @@ Supabase의 강력한 보안 정책으로 데이터를 안전하게 보호하고
 ## 프로젝트 파일 구조
 
 ```
-team_code_gym
+FocusSpot
 ├── src
 │   ├── App.jsx
 │   ├── main.jsx
