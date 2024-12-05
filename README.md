@@ -70,7 +70,7 @@ FocusSpot은 카페, 스터디 카페, 도서관 등 다양한 학습 공간을 
 <summary>미리보기</summary>
 <div markdown="1">
 
-![Search](https://velog.velcdn.com/images/chay140/post/7b03c154-1ec2-489c-8970-9986f20cb429/image.gif)
+![Search](/public/FocusSpot-Search.gif)
 
 <br>
 </div>
@@ -87,7 +87,7 @@ FocusSpot은 카페, 스터디 카페, 도서관 등 다양한 학습 공간을 
 <summary>미리보기</summary>
 <div markdown="1">
 
-![SearchFilter](https://velog.velcdn.com/images/chay140/post/060aef85-0e46-4733-81c3-feec5d8ca067/image.gif)
+![SearchFilter](/public/FocusSpot-SearchFilter.gif)
 
 <br>
 </div>
@@ -106,7 +106,7 @@ FocusSpot은 카페, 스터디 카페, 도서관 등 다양한 학습 공간을 
 <summary>미리보기</summary>
 <div markdown="1">
 
-![Bookmarking](https://velog.velcdn.com/images/chay140/post/951c7617-f8eb-403b-912a-85fd0e397dfd/image.gif)
+![Bookmarking](/public/FocusSpot-Bookmarking.gif)
 
 <br>
 </div>
