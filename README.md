@@ -39,7 +39,7 @@ FocusSpot은 카페, 스터디 카페, 도서관 등 다양한 학습 공간을 
 |:---:|:---:|:---:|:---:|:---:|
 | <img src="https://avatars.githubusercontent.com/u/86361624?v=4" width="150px"> | <img src="https://avatars.githubusercontent.com/u/115481749?v=4" width="150px"> | <img src="https://avatars.githubusercontent.com/u/176360402?v=4" width="150px"> | <img src="https://avatars.githubusercontent.com/u/182470863?v=4" width="150px"> | <img src="https://avatars.githubusercontent.com/u/163554102?v=4" width="150px"> |
 | **팀장** | **팀원** | **팀원** | **팀원** | **팀원** |
-| 지도 API | 지도 API | 소셜 로그인 | 북마크 CRD 및 회원정보 수정 | 홈페이지, 디자인, 반응형 |
+| 지도카테고리, 마커커스텀오버레이 | 지도키워드검색, 현재위치불러오기 | 소셜로그인, 로그아웃 | 북마크 CRD 및 마이페이지수정 | 공통컴포넌트UI, 홈화면, 반응형 |
 
 ## 주요기능
 
