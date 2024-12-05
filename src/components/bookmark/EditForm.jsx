@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { updateUserProfile, uploadProfileImgToStore } from '../../api/supabaseSignin';
 
 const EditForm = () => {
-  const { name, email, setName, setProfileImg } = useUserStore();
+  const { name, email, profileImg, setName, setProfileImg } = useUserStore();
   const [userName, setUserName] = useState(name); // 인풋 창 보여주기용
 
   const handleProfileUpdate = async (e) => {
@@ -20,6 +20,17 @@ const EditForm = () => {
       const file = e.target.profileImg.files[0];
       let imgStoragePath = null;
 
+      if (!file && userName === name) {
+        Swal.fire({
+          text: '성공적으로 수정되었습니다.',
+          icon: 'success',
+          iconColor: 'var(--color-primary)',
+          confirmButtonText: 'OK',
+          confirmButtonColor: 'var(--color-primary)'
+        });
+        return;
+      }
+
       // 존재하는 파일인지 확인
       if (file) {
         imgStoragePath = await uploadProfileImgToStore(email, file);
@@ -30,7 +41,7 @@ const EditForm = () => {
 
       // zustand에 업데이트
       setName(updatedUser.name);
-      setProfileImg(updatedUser.profile_picture);
+      setProfileImg(updatedUser.profile_picture || profileImg);
 
       // 성공 알림
       Swal.fire({
