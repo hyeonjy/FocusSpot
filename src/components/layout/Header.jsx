@@ -100,9 +100,9 @@ const StNav = styled.nav`
   ul {
     display: flex;
     gap: 50px;
-    @media ${theme.device.mobile} {
-      gap: 20px;
-      font-size: 14px;
+    @media ${theme.device.tablet} {
+      gap: 15px;
+      font-size: 13px;
     }
   }
 `;

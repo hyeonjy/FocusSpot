@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useUserStore } from '../../zustand/userStore';
+import theme from '../../styles/theme';
 
 const Search = ({ activeFilter, handleFilterClick, onSearchSubmit }) => {
   const [text, setText] = useState('');
@@ -101,6 +102,11 @@ const StSearchWrapper = styled.div`
   transform: translateX(${({ $isVisible }) => ($isVisible ? '0' : '-100%')});
   transition: 0.5s ease;
   z-index: 10;
+
+  @media ${theme.device.tablet} {
+    top: 50px;
+    width: calc(100% - 80px);
+  }
 `;
 
 const StSearchContainer = styled.div`
@@ -128,7 +134,7 @@ const StLogoBox = styled.div`
 
 const StButtonsWrapper = styled.div`
   gap: 5px;
-`
+`;
 
 const StLoginButton = styled.button`
   border: 1px solid white;
@@ -141,7 +147,7 @@ const StLoginButton = styled.button`
 `;
 
 const StMyPageButton = styled.button`
-margin-right: 10px;
+  margin-right: 10px;
   border: 1px solid white;
   border-radius: 30px;
   background-color: #00115e;
@@ -174,6 +180,11 @@ const StSearchInput = styled.input`
 const StButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
+  @media ${theme.device.tablet} {
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
 `;
 
 const StFilterButton = styled.button`

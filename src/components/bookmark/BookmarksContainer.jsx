@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ListItem from '../common/ListItem';
 import BookmarksLoading from './BookmarksLoding';
+import theme from '../../styles/theme';
 
 const BookmarksContainer = ({ bookmarks, onShowDetail, isLoading = false }) => {
   return (
@@ -53,8 +54,18 @@ const StHr = styled.hr`
 
 const StBookmarkGird = styled.ul`
   display: grid;
-  grid-template-columns: repeat(4, minmax(300px, auto));
+  grid-template-columns: repeat(4, 1fr);
   gap: 25px;
+  @media ${theme.device.start} {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media ${theme.device.laptop} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media ${theme.device.tablet} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
   li {
     border: var(--color-gray6) 1px solid;
     width: 100%;

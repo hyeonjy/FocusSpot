@@ -51,7 +51,7 @@ const StContainer = styled.li`
   }
 `;
 
-const StHeaderWrapper = styled.header`
+const StHeaderWrapper = styled.div`
   display: flex;
 `;
 
